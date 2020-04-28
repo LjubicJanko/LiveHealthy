@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="03f53961-cc95-47c0-a742-e47cc788e593" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1b7id12K8BFEwhzqUs01GQ2ylNB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../drools-spring-kjar" />
+    <property name="restartRequiresConfirmation" value="false" />
+  </component>
+  <component name="RunManager" selected="Spring Boot.SampleApp (1)">
+    <configuration name="SampleApp (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="live-healthy-app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="live.healthy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="live.healthy.SampleApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SampleApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="live-healthy-app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sbnz.integracija.example.SampleApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.SampleApp (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="03f53961-cc95-47c0-a742-e47cc788e593" name="Default Changelist" comment="" />
+      <created>1587989615922</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587989615922</updated>
+      <workItem from="1587989619303" duration="9296000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="605" y="146" key="#com.intellij.ide.util.MemberChooser" timestamp="1587989701328">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="605" y="146" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860@0.0.1600.860" timestamp="1587989701328" />
+    <state x="835" y="182" key="#xdebugger.evaluate" timestamp="1588010592996">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="835" y="182" key="#xdebugger.evaluate/0.0.1600.860@0.0.1600.860" timestamp="1588010592996" />
+    <state x="580" y="185" key="FileChooserDialogImpl" timestamp="1588068301811">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="580" y="185" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1588068301811" />
+    <state width="1557" height="276" key="GridCell.Tab.0.bottom" timestamp="1588068380016">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1588068380016" />
+    <state width="1557" height="276" key="GridCell.Tab.0.center" timestamp="1588068380016">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1588068380016" />
+    <state width="1557" height="276" key="GridCell.Tab.0.left" timestamp="1588068380016">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1588068380016" />
+    <state width="1557" height="276" key="GridCell.Tab.0.right" timestamp="1588068380016">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1588068380016" />
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom" timestamp="1588068380017">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1588068380017" />
+    <state width="1557" height="276" key="GridCell.Tab.1.center" timestamp="1588068380016">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1588068380016" />
+    <state width="1557" height="276" key="GridCell.Tab.1.left" timestamp="1588068380016">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1588068380016" />
+    <state width="1557" height="276" key="GridCell.Tab.1.right" timestamp="1588068380016">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1588068380016" />
+    <state width="1557" height="276" key="GridCell.Tab.2.bottom" timestamp="1588068380017">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.2.bottom/0.0.1600.860@0.0.1600.860" timestamp="1588068380017" />
+    <state width="1557" height="276" key="GridCell.Tab.2.center" timestamp="1588068380017">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.2.center/0.0.1600.860@0.0.1600.860" timestamp="1588068380017" />
+    <state width="1557" height="276" key="GridCell.Tab.2.left" timestamp="1588068380017">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.2.left/0.0.1600.860@0.0.1600.860" timestamp="1588068380017" />
+    <state width="1557" height="276" key="GridCell.Tab.2.right" timestamp="1588068380017">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.2.right/0.0.1600.860@0.0.1600.860" timestamp="1588068380017" />
+    <state x="496" y="162" width="607" height="536" key="find.popup" timestamp="1587990676576">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="496" y="162" width="607" height="536" key="find.popup/0.0.1600.860@0.0.1600.860" timestamp="1587990676576" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1587990692263">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1587990692263" />
+  </component>
+</project>

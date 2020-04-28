@@ -1,0 +1,19 @@
+//created on: Apr 27, 2020
+package liveHealthy.basic
+
+import live.healthy.facts.dto.BodyInfoDto;
+import live.healthy.facts.dto.BodyTypeDto;
+import live.healthy.facts.DailyActivity;
+
+rule "Strong male body type"
+
+    when
+        $bi: BodyInfoDto(sex == true) and
+        $bodyTypeDto: BodyTypeDto()
+        //, dailyActivity == DailyActivity.AboveAverage
+    then
+    	$bodyTypeDto.setDescription("Jak");
+    	update($bodyTypeDto);
+
+end
+
