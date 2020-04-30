@@ -6,9 +6,6 @@ const ENDPOINTS = {
 
 export default {
     determine(bodyInfo) {
-        console.log(bodyInfo)
-        return Axios.post(ENDPOINTS.DETERMINE, bodyInfo, {responseType: 'blob'}).then(response => {
-            alert(response)
-        })
+        return Axios.post(ENDPOINTS.DETERMINE, bodyInfo);
     }
 }

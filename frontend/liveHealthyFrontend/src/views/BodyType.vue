@@ -1,17 +1,20 @@
 <template>
     <div>
-        <DetermineBodyTypeForm/>
+        <!-- <DetermineBodyTypeForm/> -->
+        <BodyTypeStepperForm/>
     </div>
 </template>
 
 <script>
 
-import DetermineBodyTypeForm from '../components/DetermineBodyTypeForm'
+// import DetermineBodyTypeForm from '../components/DetermineBodyTypeForm'
+import BodyTypeStepperForm  from '../components/BodyTypeStepperForm'
 
 export default {
     name: 'BodyType',
     components: {
-        DetermineBodyTypeForm
+        // DetermineBodyTypeForm,
+        BodyTypeStepperForm
     }
 }
 </script>
