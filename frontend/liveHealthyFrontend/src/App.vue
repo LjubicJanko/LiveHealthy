@@ -11,8 +11,7 @@
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <v-btn @click="goTo('/')">Login</v-btn>
-        <v-btn @click="goTo('/')">Register</v-btn>
+        <v-btn @click="goTo('/login')">Login</v-btn>
       </v-app-bar>
       <v-content>
         <router-view />

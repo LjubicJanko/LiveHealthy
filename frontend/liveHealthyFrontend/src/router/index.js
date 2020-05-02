@@ -2,9 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import BodyType from '../views/BodyType.vue'
-import ShowAllCertificates from '../views/ShowAllCertificates.vue'
-import CertificateOverview from '../views/CertificateOverview.vue'
-import CertificateRevokeListOverview from '../views/CertificateRevokeListOverview.vue'
+import Login from '../views/Login.vue'
+import SignIn from '../views/SignIn.vue'
 
 Vue.use(VueRouter)
 
@@ -18,6 +17,16 @@ Vue.use(VueRouter)
     path: '/body-type',
     name: 'BodyType',
     component: BodyType
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/signIn',
+    name: 'SignIn',
+    component: SignIn
   }
   
 ]
