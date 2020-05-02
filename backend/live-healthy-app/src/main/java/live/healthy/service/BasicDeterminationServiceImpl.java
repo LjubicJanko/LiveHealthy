@@ -28,6 +28,7 @@ public class BasicDeterminationServiceImpl implements BasicDeterminationService 
     @Override
     public BodyTypeDto determine(BodyInfoDto bodyInfoDto) {
         BodyTypeDto bodyTypeDto = new BodyTypeDto();
+        bodyTypeDto.setType("");
         KieSession kieSession = kieContainer.newKieSession();
 
         kieSession.insert(bodyInfoDto);

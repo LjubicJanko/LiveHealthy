@@ -183,7 +183,7 @@
         </v-card-title>
         <v-card-text>
           <v-row justify="space-around">
-            <v-col cols="5" v-if="sex == true">
+            <v-col cols="5" v-if="sex">
               <v-img
                 v-if="bodyType.type == 'endomorph'"
                 src="../resources/male_endomorph.jpg"
@@ -199,6 +199,24 @@
               <v-img
                 v-if="bodyType.type == 'ectomorph'"
                 src="../resources/male_ectomorph.jpg"
+                aspect-ratio="1.7"
+                contain
+              ></v-img>
+              <v-img
+                v-if="bodyType.type == 'ectomorph-mesomorph'"
+                src="../resources/male_ectomorph-mesomorph.jpg"
+                aspect-ratio="1.7"
+                contain
+              ></v-img>
+              <v-img
+                v-if="bodyType.type == 'mesomorph-endomorph'"
+                src="../resources/male_mesomorph-endomorph.jpg"
+                aspect-ratio="1.7"
+                contain
+              ></v-img>
+              <v-img
+                v-else
+                src="../resources/confused.jpg"
                 aspect-ratio="1.7"
                 contain
               ></v-img>
@@ -222,8 +240,26 @@
                 aspect-ratio="1.7"
                 contain
               ></v-img>
+              <v-img
+                v-if="bodyType.type == 'ectomorph-mesomorph'"
+                src="../resources/male_ectomorph-mesomorph.jpg"
+                aspect-ratio="1.7"
+                contain
+              ></v-img>
+              <v-img
+                v-if="bodyType.type == 'mesomorph-endomorph'"
+                src="../resources/male_mesomorph-endomorph.jpg"
+                aspect-ratio="1.7"
+                contain
+              ></v-img>
+              <v-img
+                v-if="bodyType.type == 'nonexistent'"
+                src="../resources/confused.jpg"
+                aspect-ratio="1.7"
+                contain
+              ></v-img>
             </v-col>
-            <v-col cols="5">{{bodyType.description}}</v-col>
+            <v-col cols="5"><span style="font-size: 25px; white-space: pre-wrap;">{{bodyType.description}}</span></v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
@@ -263,6 +299,7 @@ export default {
         bodyLook: this.bodyLook,
         weightTendations: this.weightTendations
       };
+      console.log(bodyInfo);
       BasicDeterminationService.determine(bodyInfo)
         .then(response => {
           this.bodyType = response.data;

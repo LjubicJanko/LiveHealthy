@@ -7,13 +7,14 @@ import live.healthy.facts.DailyActivity;
 import live.healthy.facts.BodyType;
 
 rule "Ectomorph body"
-
+    salience 3
+    activation-group "body-type"
     when
         $bi: BodyInfoDto(shoulders == "Narrower than my hips",
                         forearms == "Small", bodyLook == "Long and narrow",
                         weightTendations == "Have trouble gaining weight in the form of muscle or fat",
                         bodyTendations == "Stay skinny") and
-        $bodyTypeDto: BodyTypeDto()
+        $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("ectomorph");
     	$bodyTypeDto.setDescription("Ectomorphs are good at processing carbohydrates into energy and" +
@@ -25,13 +26,14 @@ rule "Ectomorph body"
 end
 
 rule "Mesomorph body"
-
+    salience 4
+    activation-group "body-type"
     when
         $bi: BodyInfoDto(shoulders == "The same width as my hips",
                                 forearms == "Average", bodyLook == "Square and rugged",
                                 weightTendations == "I can gain and lose without too much of a struggle",
                                 bodyTendations == "Stay lean, yet muscular") and
-        $bodyTypeDto: BodyTypeDto()
+        $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("mesomorph");
     	$bodyTypeDto.setDescription("You have the body type that finds it easiest to add new muscle and you don’t" +
@@ -43,12 +45,14 @@ rule "Mesomorph body"
 end
 
 rule "Endomorph body"
+    salience 5
+    activation-group "body-type"
     when
         $bi: BodyInfoDto(shoulders == "Wider than my hips",
                                         forearms == "Big", bodyLook == "Round and soft",
                                         weightTendations == "Gain weight easily, but find it hard to lose",
                                         bodyTendations == "Carry a bit of extra fat") and
-        $bodyTypeDto: BodyTypeDto()
+        $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("endomorph");
     	$bodyTypeDto.setDescription("Endomorphs are adept at storing fuel, with muscle and fat" +
