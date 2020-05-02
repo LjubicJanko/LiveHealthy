@@ -18,21 +18,6 @@ Vue.use(VueRouter)
     path: '/body-type',
     name: 'BodyType',
     component: BodyType
-  },
-  {
-    path: '/all-certificates',
-    name: 'ShowAllCertificates',
-    component: ShowAllCertificates
-  },
-  {
-    path: '/certificate/:id',
-    name: 'certificate',
-    component: CertificateOverview
-  },
-  {
-    path: '/crl',
-    name: 'certificateRevokeList',
-    component: CertificateRevokeListOverview
   }
   
 ]
