@@ -215,7 +215,7 @@
                 contain
               ></v-img>
               <v-img
-                v-else
+                v-if="bodyType.type == 'nonexistent'"
                 src="../resources/confused.jpg"
                 aspect-ratio="1.7"
                 contain

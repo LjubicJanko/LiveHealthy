@@ -3,7 +3,6 @@ package liveHealthy.basic;
 import live.healthy.facts.dto.BodyInfoDto;
 import live.healthy.facts.dto.BodyTypeDto;
 import live.healthy.facts.DailyActivity;
-import live.healthy.facts.BodyType;
 
 
 rule "Ectomorph - mesomorph"

@@ -1,11 +1,12 @@
-live\healthy\facts\dto\BodyInfoDto.class
-live\healthy\facts\dto\BodyTypeDto.class
-live\healthy\config\CorsConfig$1.class
 live\healthy\config\CorsConfig.class
+live\healthy\facts\user\User.class
 live\healthy\SampleApp.class
 live\healthy\service\BasicDeterminationService.class
 live\healthy\controller\BasicDeterminationController.class
 live\healthy\facts\DailyActivity.class
+live\healthy\service\BasicDeterminationServiceImpl.class
+live\healthy\facts\dto\BodyInfoDto.class
+live\healthy\facts\dto\BodyTypeDto.class
+live\healthy\config\CorsConfig$1.class
 live\healthy\facts\dto\LoginDto.class
 live\healthy\facts\BodyType.class
-live\healthy\service\BasicDeterminationServiceImpl.class
