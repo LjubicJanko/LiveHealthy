@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 
 @Entity
-@Table(name="AUTHORITY")
 public class Authority implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
@@ -16,7 +15,7 @@ public class Authority implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name="name")
+//    @Column(name="name")
     String name;
 
     @Override

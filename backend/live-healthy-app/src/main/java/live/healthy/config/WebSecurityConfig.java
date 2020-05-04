@@ -55,27 +55,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	TokenUtils tokenUtils;
 
+
+	@Autowired
+	private SecurityConfigurer securityConfigurer;
+
 	// Definisemo prava pristupa odredjenim URL-ovima
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-			// komunikacija izmedju klijenta i servera je stateless
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			
-			// za neautorizovane zahteve posalji 401 gresku
-			.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
-			
-			// svim korisnicima dopusti da pristupe putanjama /auth/** i /h2-console/**
-			.authorizeRequests()
-			.antMatchers("/auth/**").permitAll()
-			.antMatchers("/h2-console/**").permitAll()
-			
-			// svaki zahtev mora biti autorizovan
-			.anyRequest().authenticated().and()
-			
-			// presretni svaki zahtev filterom
-			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService), BasicAuthenticationFilter.class);
 
+		// TODO delete this and uncomment code below
+//		http.authorizeRequests().antMatchers("/").permitAll();
+
+		http.httpBasic().disable();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+				.authorizeRequests()
+				.antMatchers("/api/auth/**").permitAll()
+				.antMatchers("/api/basic/**").permitAll()
+				.anyRequest().authenticated().and();
+		http.apply(securityConfigurer);
 		http.csrf().disable();
 	}
 
@@ -83,8 +81,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
-		web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
-		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
+//		web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
+//		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
+
+
+//        TODO delete this and uncomment code below
+//        web.ignoring().antMatchers(HttpMethod.POST, "/**");
+//        web.ignoring().antMatchers(HttpMethod.GET, "/**");
+//        web.ignoring().antMatchers(HttpMethod.PUT, "/**");
+
+		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+		web.ignoring().antMatchers(HttpMethod.POST, "auth/login");
+		web.ignoring().antMatchers(HttpMethod.POST, "auth/register");
+		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico",
+				"/**/*.html", "/**/*.css", "/**/*.js");
 	}
 
 }

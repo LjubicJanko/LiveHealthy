@@ -2,6 +2,7 @@ package live.healthy.service;
 
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.UserRepository;
+import live.healthy.security.TokenUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Service
@@ -29,6 +32,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private TokenUtils tokenUtils;
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	public User getUserFromRequest(HttpServletRequest request) {
+		String token = tokenUtils.getToken(request);
+		String username = tokenUtils.getUsernameFromToken(token);
+		return (User) this.userDetailsService.loadUserByUsername(username);
+	}
 
 	// Funkcija koja na osnovu username-a iz baze vraca objekat User-a
 	@Override

@@ -2,11 +2,14 @@ package live.healthy.facts.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import live.healthy.facts.BodyType;
+import live.healthy.facts.model.AbstractUser;
 import lombok.Data;
 import org.joda.time.DateTime;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,35 +22,57 @@ import java.util.List;
 @Data
 public class User implements UserDetails {
 
+    @NotNull
+    private int age;
+
+    @NotNull
+    private double height;
+
+    @NotNull
+    private double weight;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String firstName;
-    @NotBlank
-    private String lastName;
     @NotNull
-    private int age;
-    @NotNull
-    private double height;
-    @NotNull
-    private double weight;
-    @NotBlank
     private String username;
-    @NotBlank
-    private String password;
-    @NotBlank
-    private String email;
-    @Nullable
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private BodyType bodyType;
 
+    @NotNull
+    protected String password;
+
+    @NotNull
+    private String firstName;
+
+    @NotNull
+    private String lastName;
+
+
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
+
+
+    private String encodePassword(String password) {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(password);
+    }
+
+
+
+    @NotBlank
+    @Column(name = "email")
+    private String email;
+
+//    @Nullable
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private BodyType bodyType;
 
     @Column(name = "enabled")
     private boolean enabled;
-    @Column(name = "last_password_reset_date")
-    private Timestamp lastPasswordResetDate;
+
+//    @Column(name = "last_password_reset_date")
+//    private Timestamp lastPasswordResetDate;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
@@ -57,35 +82,56 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         Timestamp now = new Timestamp(DateTime.now().getMillis());
-        this.setLastPasswordResetDate( now );
+        this.setLastPasswordResetDate(now);
         this.password = password;
     }
 
-    @Override
+    public User(@NotNull String username, @NotNull String password, @NotNull String firstName, @NotNull String lastName, @NotNull String email) {
+        this.username = username;
+        this.password = this.encodePassword(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+    public User(@NotNull String username, @NotNull String password, @NotNull String firstName, @NotNull String lastName, @NotNull String email,
+                @NotNull int age, @NotNull double height, @NotNull double weight) {
+        this.username = username;
+        this.password = this.encodePassword(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
+    }
+
+//    public void setPassword(String password) {
+//        Timestamp now = new Timestamp(DateTime.now().getMillis());
+//        this.setLastPasswordResetDate( now );
+//        this.password = password;
+//    }
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
     @JsonIgnore
-    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @JsonIgnore
-    @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @JsonIgnore
-    @Override
     public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    public boolean isEnabled() {
         return true;
     }
 }

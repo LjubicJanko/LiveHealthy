@@ -1,0 +1,138 @@
+package live.healthy.service.user;
+
+import live.healthy.exception.user.UsernameAlreadyExist;
+import live.healthy.facts.dto.UserEditDTO;
+import live.healthy.facts.dto.UserRegistrationDTO;
+import live.healthy.facts.model.user.Authority;
+import live.healthy.facts.model.user.User;
+import live.healthy.repository.AuthorityRepository;
+import live.healthy.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import live.healthy.exception.user.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static live.healthy.config.Constants.*;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    private UserRepository userRepository;
+    private AuthorityRepository authorityRepository;
+
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository) {
+        this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
+    }
+
+    @Override
+    public User create(UserRegistrationDTO userRegistrationDTO) throws UsernameAlreadyExist, UsernameNotValid, PasswordNotValid, EmailNotValid, EmailAlreadyExist, AuthorityDoesNotExist, UserAgeNotValid {
+        Optional<User> userFound = userRepository.findOneByUsername(userRegistrationDTO.getUsername());
+
+        if (userFound.isPresent()) {
+            throw new UsernameAlreadyExist();
+        }
+
+        userFound = userRepository.findOneByEmail(userRegistrationDTO.getEmail());
+
+        if (userFound.isPresent()) {
+            throw new EmailAlreadyExist();
+        }
+
+        if (!userRegistrationDTO.getUsername().matches(USERNAME_REGEX)) {
+            throw new UsernameNotValid();
+        }
+
+        if (!userRegistrationDTO.getPassword().matches(PASSWORD_REGEX)) {
+            throw new PasswordNotValid();
+        }
+
+        if (!userRegistrationDTO.getEmail().matches(EMAIL_REGEX)) {
+            throw new EmailNotValid();
+        }
+
+        if (userRegistrationDTO.getAge() <= 0){
+            throw new UserAgeNotValid();
+        }
+
+        User newUser = new User(userRegistrationDTO.getUsername(),
+                userRegistrationDTO.getPassword(),
+                userRegistrationDTO.getFirstName(),
+                userRegistrationDTO.getLastName(),
+                userRegistrationDTO.getEmail(),
+                userRegistrationDTO.getAge(),
+                userRegistrationDTO.getHeight(),
+                userRegistrationDTO.getWeight());
+
+        List<Authority> authorities = new ArrayList<Authority>();
+
+        Optional<Authority> authority = authorityRepository.findOneByName("ROLE_REGISTERED");
+        if (!authority.isPresent()) {
+            throw new AuthorityDoesNotExist("ROLE_REGISTERED");
+        }
+
+        userRepository.save(newUser);
+
+        authorities.add(authority.get());
+        newUser.setAuthorities(authorities);
+
+        return userRepository.save(newUser);
+    }
+
+    @Override
+    public User findByUsername(String username) throws UserNotFound {
+        Optional<User> u = userRepository.findOneByUsername(username);
+        if (u.isPresent()) {
+            return u.get();
+        }else{
+            throw new UserNotFound();
+        }
+//        } else {
+//            Optional<Admin> a = adminRepository.findOneByUsername(username);
+//            if (a.isPresent()) {
+//                return a.get();
+//            }
+//            throw new UserNotFound();
+//        }
+    }
+
+    @Override
+    public User editUser(UserEditDTO userEditDTO, String username) throws UserNotFound, EmailNotValid, FirstNameNotValid, LastNameNotValid {
+
+        Optional<User> userOptional = userRepository.findOneByUsername(username);
+
+        if (!userOptional.isPresent()) {
+            throw new UserNotFound();
+        } else {
+            User user = userOptional.get();
+            if (userEditDTO.getEmail() != null) {
+                if (!userEditDTO.getEmail().matches(EMAIL_REGEX)) {
+                    throw new EmailNotValid();
+                }
+                user.setEmail(userEditDTO.getEmail());
+            }
+
+            if (userEditDTO.getFirstName() != null) {
+                if (userEditDTO.getFirstName().matches(WHITESPACES_REGEX)) {
+                    throw new FirstNameNotValid();
+                }
+                user.setFirstName(userEditDTO.getFirstName());
+            }
+
+            if (userEditDTO.getLastName() != null) {
+                if (userEditDTO.getLastName().matches(WHITESPACES_REGEX)) {
+                    throw new LastNameNotValid();
+                }
+                user.setLastName(userEditDTO.getLastName());
+            }
+
+            userRepository.save(user);
+            return user;
+        }
+
+    }
+
+
+}
