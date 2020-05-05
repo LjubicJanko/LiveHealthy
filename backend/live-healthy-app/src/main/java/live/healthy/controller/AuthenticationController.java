@@ -77,7 +77,7 @@ public class AuthenticationController {
         String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
 
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, ObjectMapperUtils.map(user, UserDTO.class)));
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
@@ -90,7 +90,7 @@ public class AuthenticationController {
             String refreshedToken = tokenUtils.refreshToken(token);
             int expiresIn = tokenUtils.getExpiredIn();
 
-            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn));
+            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn, ObjectMapperUtils.map(user, UserDTO.class)));
         } else {
             UserTokenState userTokenState = new UserTokenState();
             return ResponseEntity.badRequest().body(userTokenState);

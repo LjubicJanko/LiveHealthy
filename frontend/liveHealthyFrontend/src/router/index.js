@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import BodyType from '../views/BodyType.vue'
 import Login from '../views/Login.vue'
+import Logout from '../views/Logout.vue'
 import SignIn from '../views/SignIn.vue'
 
 Vue.use(VueRouter)
@@ -22,6 +23,11 @@ Vue.use(VueRouter)
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout
   },
   {
     path: '/signIn',

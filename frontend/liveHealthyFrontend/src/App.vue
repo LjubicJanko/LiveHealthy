@@ -9,9 +9,9 @@
           <v-icon large>mdi-alpha-l-box-outline</v-icon>
           <v-icon large>mdi-alpha-h-box</v-icon>Live Healthy
         </v-toolbar-title>
-
-        <v-spacer></v-spacer>
-        <v-btn @click="goTo('/login')">Login</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn v-if="isLoggedIn == true" @click="goTo('/login')">Login</v-btn>
+          <v-btn v-if="isLoggedIn == false" @click="goTo('/logout')">Logout</v-btn>
       </v-app-bar>
       <v-content>
         <router-view />
@@ -21,19 +21,27 @@
 </template>
 
 <script>
+import store from '@/store';
+
 export default {
   name: "App",
-
-  components: {
+  data: () => ({
+  }),
+  computed: {
+    isLoggedIn() {
+      if(store.state.userLoggedIn){
+        return false;
+      }else {
+        return true;
+      }
+    }
   },
+  components: {},
+  
   methods: {
     goTo(url) {
       this.$router.push(url);
     }
-  },
-
-  data: () => ({
-    collapseOnScroll: true
-  })
+  }
 };
 </script>

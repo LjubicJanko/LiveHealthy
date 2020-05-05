@@ -22,6 +22,10 @@ import java.util.List;
 @Data
 public class User implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotNull
     private int age;
 
@@ -31,10 +35,6 @@ public class User implements UserDetails {
     @NotNull
     private double weight;
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NotNull
     private String username;
@@ -48,6 +48,8 @@ public class User implements UserDetails {
     @NotNull
     private String lastName;
 
+    @ManyToOne
+    private BodyType bodyType;
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
@@ -57,8 +59,6 @@ public class User implements UserDetails {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
     }
-
-
 
     @NotBlank
     @Column(name = "email")
@@ -105,11 +105,6 @@ public class User implements UserDetails {
         this.weight = weight;
     }
 
-//    public void setPassword(String password) {
-//        Timestamp now = new Timestamp(DateTime.now().getMillis());
-//        this.setLastPasswordResetDate( now );
-//        this.password = password;
-//    }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
