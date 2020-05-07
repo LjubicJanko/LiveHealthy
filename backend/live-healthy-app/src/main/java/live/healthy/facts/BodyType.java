@@ -1,6 +1,7 @@
 package live.healthy.facts;
 
 import live.healthy.facts.model.AbstractUser;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Data
 public class BodyType {
 
     private enum Type {
@@ -25,4 +27,8 @@ public class BodyType {
     private String description;
     @NotNull
     private double bmi;
+
+    public String getType(){
+        return this.type.name();
+    }
 }

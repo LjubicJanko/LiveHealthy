@@ -1,6 +1,7 @@
 package live.healthy.service.user;
 
 import live.healthy.exception.user.*;
+import live.healthy.facts.dto.UserDTO;
 import live.healthy.facts.dto.UserEditDTO;
 import live.healthy.facts.dto.UserRegistrationDTO;
 import live.healthy.facts.model.user.User;
@@ -13,4 +14,6 @@ public interface UserService {
     User findByUsername(String username) throws UserNotFound;
 
     User editUser(UserEditDTO userEditDTO, String username) throws UserNotFound, EmailNotValid, FirstNameNotValid, LastNameNotValid;
+
+    UserDTO get(Long id) throws UserNotFound;
 }

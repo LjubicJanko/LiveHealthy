@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 // import { auth } from './modules';
+import createPersistedState from 'vuex-persistedstate'
+// import * as Cookies from 'js-cookie'
 
 Vue.use(Vuex)
 
@@ -15,8 +17,11 @@ Vue.use(Vuex)
 // });
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
-    userLoggedIn: false 
+    userLoggedIn: false,
+    userId: 0,
+    user: {}
   },
   
   getters: {
@@ -28,15 +33,27 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.userLoggedIn = false;
+    },
+    setUserId(state, id){
+      state.userId = id;
+    },
+    setUser(state, user){
+      state.user = user;
     }
   },
   
   actions: {
     login(context) {
-        context.commit('login')
+      context.commit('login')
     },
     logout(context) {
-        context.commit('logout')
+      context.commit('logout')
+    },
+    setUserId(context, id){
+      context.setUserId(id);
+    },
+    setUser(context, user){
+      context.setUser(user);
     }
   }
 });

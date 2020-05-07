@@ -49,11 +49,9 @@ export default {
             Object.assign(user, response.data);
             this.setLocalStorageAuthData(user);
             this.setAuthHeader();
-
-
             store.commit('login')
-
-            // Vue.prototype.router.push("/");
+            store.commit('setUserId', response.data.userDTO.id);
+            store.commit('setUser', response.data.userDTO);
             return response;
         });
       },

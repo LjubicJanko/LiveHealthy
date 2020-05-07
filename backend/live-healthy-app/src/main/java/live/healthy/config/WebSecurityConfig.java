@@ -71,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 				.authorizeRequests()
 				.antMatchers("/api/auth/**").permitAll()
+				.antMatchers("/api/users/**").permitAll()
 				.antMatchers("/api/basic/**").permitAll()
 				.anyRequest().authenticated().and();
 		http.apply(securityConfigurer);
@@ -86,15 +87,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 //        TODO delete this and uncomment code below
-//        web.ignoring().antMatchers(HttpMethod.POST, "/**");
-//        web.ignoring().antMatchers(HttpMethod.GET, "/**");
-//        web.ignoring().antMatchers(HttpMethod.PUT, "/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/**");
+        web.ignoring().antMatchers(HttpMethod.GET, "/**");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/**");
 
-		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-		web.ignoring().antMatchers(HttpMethod.POST, "auth/login");
-		web.ignoring().antMatchers(HttpMethod.POST, "auth/register");
-		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico",
-				"/**/*.html", "/**/*.css", "/**/*.js");
+//		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+//		web.ignoring().antMatchers(HttpMethod.POST, "auth/login");
+//		web.ignoring().antMatchers(HttpMethod.POST, "auth/register");
+//		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico",
+//				"/**/*.html", "/**/*.css", "/**/*.js");
 	}
 
 }

@@ -1,12 +1,14 @@
 package live.healthy.service.user;
 
 import live.healthy.exception.user.UsernameAlreadyExist;
+import live.healthy.facts.dto.UserDTO;
 import live.healthy.facts.dto.UserEditDTO;
 import live.healthy.facts.dto.UserRegistrationDTO;
 import live.healthy.facts.model.user.Authority;
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.AuthorityRepository;
 import live.healthy.repository.UserRepository;
+import live.healthy.util.ObjectMapperUtils;
 import org.springframework.stereotype.Service;
 import live.healthy.exception.user.*;
 
@@ -89,13 +91,6 @@ public class UserServiceImpl implements UserService {
         }else{
             throw new UserNotFound();
         }
-//        } else {
-//            Optional<Admin> a = adminRepository.findOneByUsername(username);
-//            if (a.isPresent()) {
-//                return a.get();
-//            }
-//            throw new UserNotFound();
-//        }
     }
 
     @Override
@@ -132,6 +127,14 @@ public class UserServiceImpl implements UserService {
             return user;
         }
 
+    }
+
+    @Override
+    public UserDTO get(Long id) throws UserNotFound {
+        User user = userRepository.findById(id).orElseThrow(UserNotFound::new);
+        UserDTO userDTO = ObjectMapperUtils.map(user, UserDTO.class);   // separated from return because of debug
+        userDTO.setBodyType(user.getBodyType().getType());
+        return userDTO;
     }
 
 

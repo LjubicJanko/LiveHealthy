@@ -77,15 +77,11 @@ export default {
         .then(response => {
           console.log(store.state.userLoggedIn);
           console.log(response.data.userDTO.id)
-          // this.$store.commit("setUserId", response.data.userDTO.id);
-
-
           this.showSnackbar("Successful login!", "success");
           this.$router.push("/");
         })
-        .catch(error => {
-          alert("error");
-          this.showSnackbar(error, "error");
+        .catch(() => {
+          this.showSnackbar("Bad credentials", "error");
         });
     },
     showSnackbar(message, color) {

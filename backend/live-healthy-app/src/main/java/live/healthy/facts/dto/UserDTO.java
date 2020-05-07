@@ -1,5 +1,6 @@
 package live.healthy.facts.dto;
 
+import live.healthy.facts.BodyType;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class UserDTO {
     private int age;
     private double height;
     private double weight;
+    private String bodyType;
 
 }

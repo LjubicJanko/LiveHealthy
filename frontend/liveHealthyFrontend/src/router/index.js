@@ -5,6 +5,7 @@ import BodyType from '../views/BodyType.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import SignIn from '../views/SignIn.vue'
+import PlanOverview from '../views/PlanOverview'
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,11 @@ Vue.use(VueRouter)
     path: '/body-type',
     name: 'BodyType',
     component: BodyType
+  },
+  {
+    path: '/myPlan/:userId',
+    name: 'PlanOverview',
+    component: PlanOverview
   },
   {
     path: '/login',
