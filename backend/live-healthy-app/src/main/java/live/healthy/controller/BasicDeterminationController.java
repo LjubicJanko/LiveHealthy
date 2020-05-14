@@ -1,8 +1,7 @@
 package live.healthy.controller;
 
-import live.healthy.facts.dto.BodyTypeDto;
-import live.healthy.service.BasicDeterminationService;
-import live.healthy.service.BasicDeterminationServiceImpl;
+import live.healthy.service.basic.BasicDeterminationService;
+import live.healthy.service.basic.BasicDeterminationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

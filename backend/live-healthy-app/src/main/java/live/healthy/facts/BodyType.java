@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class BodyType {
 
-    private enum Type {
+    public enum Type {
         ECTOMORPH, MESOMORPH, ENDOMORPH
     }
 
@@ -22,7 +22,7 @@ public class BodyType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    private Type type;
+    public Type type;
     @NotBlank
     private String description;
     @NotNull

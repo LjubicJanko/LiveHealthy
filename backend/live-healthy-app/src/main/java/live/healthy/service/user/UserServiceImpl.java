@@ -66,7 +66,8 @@ public class UserServiceImpl implements UserService {
                 userRegistrationDTO.getEmail(),
                 userRegistrationDTO.getAge(),
                 userRegistrationDTO.getHeight(),
-                userRegistrationDTO.getWeight());
+                userRegistrationDTO.getWeight(),
+                userRegistrationDTO.isSex());
 
         List<Authority> authorities = new ArrayList<Authority>();
 

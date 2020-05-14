@@ -19,5 +19,6 @@ public class UserDTO {
     private double height;
     private double weight;
     private String bodyType;
+    private boolean sex;
 
 }

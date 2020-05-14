@@ -43,4 +43,7 @@ public class UserRegistrationDTO {
     @NotNull
     private double height;
 
+    @NotNull
+    private boolean sex;
+
 }

@@ -1,0 +1,76 @@
+package liveHealthy.nutrition;
+
+import live.healthy.facts.model.user.User;
+import live.healthy.facts.dto.CoefficientsDto;
+import live.healthy.facts.BodyType.Type;
+
+global Double idealBodyWeight;
+global Double bodyMassIdx;
+global Double bodyFatPercentage;
+global Double weight;
+global Integer age;
+global String bodyType;
+
+rule "nutrition-plan-rules"
+    when
+        eval(bodyType == "MESOMORPH");
+//        $u: User(age == 22)
+
+    then
+//        bodyMassIndex = Double.valueOf(10);
+        System.out.println(bodyMassIdx);
+        System.out.println(bodyType);
+        System.out.println(idealBodyWeight);
+        System.out.println(bodyFatPercentage);
+end
+
+rule "need to gain weight"
+    activation-group "gain-ecto-fat"
+    when
+        eval(bodyMassIdx < 25.0)
+        and
+        eval(weight < idealBodyWeight)
+    then
+        System.out.println("You should gain weight");
+end
+
+rule "need to gain weight extreeme way" extends "need to gain weight"
+    activation-group "gain-ecto-fat"
+    when
+        eval(bodyType == "ECTOMORPH")
+    then
+        System.out.println("You should gain weight with EXTREME_WEIGHT_GAIN");
+end
+
+rule "need to gain with big fat level" extends "need to gain weight extreeme way"
+    activation-group "gain-ecto-fat"
+    when
+        eval(age < 20) and
+        eval(bodyFatPercentage < 8.5)
+    then
+        System.out.println("You should gain weight with taking more fats");
+end
+
+rule "need to lose weight"
+    when
+        eval(bodyMassIdx > 25.0)
+        and
+        eval(weight > idealBodyWeight)
+    then
+        System.out.println("You should lose some weight");
+end
+
+rule "need to lose weight extreeme way" extends "need to lose weight"
+    when
+        eval(bodyType == "MESOMORPH")
+    then
+        System.out.println("You should lose weight with EXTREME_WEIGHT_LOSS");
+end
+
+rule "need to lose with big fat loss" extends "need to lose weight extreeme way"
+    when
+        eval(age < 30) and
+        eval(bodyFatPercentage > 12.7)
+    then
+        System.out.println("You should lose weight with taking less fats");
+end
