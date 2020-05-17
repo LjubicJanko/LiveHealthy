@@ -1,6 +1,7 @@
-package live.healthy.facts;
+package live.healthy.facts.model;
 
 import live.healthy.facts.model.AbstractUser;
+import live.healthy.facts.model.Type;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -13,10 +14,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 public class BodyType {
-
-    public enum Type {
-        ECTOMORPH, MESOMORPH, ENDOMORPH
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

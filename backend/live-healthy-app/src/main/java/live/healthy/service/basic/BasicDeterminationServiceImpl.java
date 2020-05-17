@@ -28,8 +28,8 @@ public class BasicDeterminationServiceImpl implements BasicDeterminationService 
         BodyTypeDto bodyTypeDto = new BodyTypeDto();
         bodyTypeDto.setType("");
         bodyTypeDto.setDescription("bla bla");
-//        KieSession kieSession = kieContainer.newKieSession();
-        KieSession kieSession = kieContainer.newKieSession("basicDetermination");
+        KieSession kieSession = kieContainer.newKieSession();
+//        KieSession kieSession = kieContainer.newKieSession("basicDetermination");
 
         kieSession.insert(bodyInfoDto);
         kieSession.insert(bodyTypeDto);

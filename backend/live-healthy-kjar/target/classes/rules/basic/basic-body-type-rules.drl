@@ -3,7 +3,7 @@ package rules.basic;
 
 import live.healthy.facts.dto.BodyInfoDto;
 import live.healthy.facts.dto.BodyTypeDto;
-import live.healthy.facts.DailyActivity;
+import live.healthy.facts.model.DailyActivity;
 
 rule "Ectomorph body"
     salience 3

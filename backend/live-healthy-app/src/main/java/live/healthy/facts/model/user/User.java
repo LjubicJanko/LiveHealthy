@@ -1,7 +1,7 @@
 package live.healthy.facts.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import live.healthy.facts.BodyType;
+import live.healthy.facts.model.BodyType;
 import live.healthy.facts.model.plan.NutritionPlan;
 import live.healthy.facts.model.plan.TrainingPlan;
 import lombok.Data;
@@ -27,16 +27,16 @@ public class User implements UserDetails {
     private Long id;
 
     @NotNull
-    private boolean sex;
+    public boolean sex;
 
     @NotNull
-    private int age;
+    public int age;
 
     @NotNull
-    private double height;
+    public double height;
 
     @NotNull
-    private double weight;
+    public double weight;
 
     @NotNull
     private String username;
@@ -51,13 +51,25 @@ public class User implements UserDetails {
     private String lastName;
 
     @ManyToOne
-    private BodyType bodyType;
+    public BodyType bodyType;
+
+    public double startingBmi;
+
+    public double startingBmr;
+
+    public double startingBfp;
+
+    public double startingWeight;
+
+    public double idealBodyWeight;
+
 
     @ManyToOne
     private NutritionPlan nutritionPlan;
 
     @ManyToOne
     private TrainingPlan trainingPlan;
+
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
@@ -96,6 +108,7 @@ public class User implements UserDetails {
         this.email = email;
         this.sex = sex;
     }
+
     public User(@NotNull String username, @NotNull String password, @NotNull String firstName, @NotNull String lastName, @NotNull String email,
                 @NotNull int age, @NotNull double height, @NotNull double weight, @NotNull boolean sex) {
         this.username = username;

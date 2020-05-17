@@ -2,7 +2,6 @@ package live.healthy.facts.dto;
 
 import javax.validation.constraints.NotNull;
 
-import live.healthy.facts.DailyActivity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

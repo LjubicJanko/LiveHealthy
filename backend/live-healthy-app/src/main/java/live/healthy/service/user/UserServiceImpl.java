@@ -1,6 +1,7 @@
 package live.healthy.service.user;
 
-import live.healthy.exception.user.UsernameAlreadyExist;
+import live.healthy.common.util.BodyIndexUtil;
+import live.healthy.exception.user.*;
 import live.healthy.facts.dto.UserDTO;
 import live.healthy.facts.dto.UserEditDTO;
 import live.healthy.facts.dto.UserRegistrationDTO;
@@ -10,7 +11,6 @@ import live.healthy.repository.AuthorityRepository;
 import live.healthy.repository.UserRepository;
 import live.healthy.util.ObjectMapperUtils;
 import org.springframework.stereotype.Service;
-import live.healthy.exception.user.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             throw new EmailNotValid();
         }
 
-        if (userRegistrationDTO.getAge() <= 0){
+        if (userRegistrationDTO.getAge() <= 0) {
             throw new UserAgeNotValid();
         }
 
@@ -76,6 +76,16 @@ public class UserServiceImpl implements UserService {
             throw new AuthorityDoesNotExist("ROLE_REGISTERED");
         }
 
+        double bmi = BodyIndexUtil.bodyMassIndex(newUser.getHeight(), newUser.getWeight());
+        newUser.setStartingBmi(bmi);
+        newUser.setStartingBfp(BodyIndexUtil.bodyFatPercentage(bmi, newUser.getAge(), newUser.isSex()));
+        newUser.setStartingBmr(BodyIndexUtil.basalMetabolicRate(newUser.getHeight(), newUser.getWeight()
+                ,newUser.isSex(), newUser.getAge()));
+        newUser.setIdealBodyWeight(BodyIndexUtil.idealBodyWeight(newUser.getHeight(), newUser.getWeight()
+                ,newUser.isSex()));
+        newUser.setStartingWeight(newUser.getWeight());
+
+
         userRepository.save(newUser);
 
         authorities.add(authority.get());
@@ -89,7 +99,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> u = userRepository.findOneByUsername(username);
         if (u.isPresent()) {
             return u.get();
-        }else{
+        } else {
             throw new UserNotFound();
         }
     }

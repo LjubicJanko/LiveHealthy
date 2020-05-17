@@ -4,11 +4,18 @@ import live.healthy.facts.model.food.Food;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
 @Entity
-public class NutritionPlan extends Plan {
+public class NutritionPlan{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull
+    private Goal goal;
+
     @ManyToMany
     @JoinTable(
             name = "weekly_plan",
