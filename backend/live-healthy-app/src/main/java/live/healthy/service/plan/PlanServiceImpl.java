@@ -50,6 +50,7 @@ public class PlanServiceImpl implements PlanService {
         kieSession.setGlobal("bodyMassIdx", bmi);
         kieSession.setGlobal("bodyFatPercentage", bfp);
         kieSession.setGlobal("bodyType", bodyType);
+        kieSession.setGlobal("sex", user.isSex());
 
         kieSession.insert(user);
         kieSession.insert(coefficientsDto);
@@ -58,13 +59,9 @@ public class PlanServiceImpl implements PlanService {
         kieSession.fireAllRules();
         kieSession.dispose();
 
-//        for (Object obj : kieSession.getObjects()) {
-//            if(obj.getClass().getName().equalsIgnoreCase("live.healthy.facts.model.user.User")) {
-//                User user1 = (User) obj;
-//                System.out.println(user1.getAge());
-//            }
-//            System.out.println(obj.getClass().getName());
-//        }
+        for (Object obj : kieSession.getObjects()) {
+            System.out.println(obj.getClass().getName());
+        }
 
     }
 
