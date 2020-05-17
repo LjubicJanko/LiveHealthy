@@ -2,21 +2,26 @@ package live.healthy.service.plan;
 
 import live.healthy.exception.user.UserNotFound;
 import live.healthy.facts.dto.CoefficientsDto;
+import live.healthy.facts.model.plan.Plan;
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.UserRepository;
+import live.healthy.service.basic.BasicDeterminationService;
 import live.healthy.util.ObjectMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.KieBase;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 
 @Service
-@RequiredArgsConstructor
 public class PlanServiceImpl implements PlanService {
+    private static Logger log = LoggerFactory.getLogger(PlanServiceImpl.class);
 
     private static final double MALE_IBW_COEFFICIENT = 1.41;
     private static final double FEMALE_IBW_COEFFICIENT = 1.36;
@@ -28,9 +33,15 @@ public class PlanServiceImpl implements PlanService {
 
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
-    private final UserRepository userRepository;
-    private final KieContainer kieContainer;
+    private UserRepository userRepository;
+    private KieContainer kieContainer;
 
+    @Autowired
+    public PlanServiceImpl(KieContainer kieContainer, UserRepository userRepository) {
+        log.info("Initialising a new example session.");
+        this.kieContainer = kieContainer;
+        this.userRepository = userRepository;
+    }
     @Override
     public void createPlan(Long userId) throws UserNotFound {
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
@@ -40,9 +51,13 @@ public class PlanServiceImpl implements PlanService {
         String bodyType = user.getBodyType().getType();
         CoefficientsDto coefficientsDto = new CoefficientsDto(bmi, ibw);
 
-        KieBase kieBase = kieContainer.getKieBase();
-//        KieSession kieSession = kieContainer.newKieSession();
-        KieSession kieSession = kieBase.newKieSession();
+
+
+//        KieBase kieBase = kieContainer.getKieBase();
+        KieSession kieSession = kieContainer.newKieSession("creatingPlan");
+//        KieSession kieSession = kieBase.newKieSession();
+
+        kieSession.insert(user);
 
         kieSession.setGlobal("age", user.getAge());
         kieSession.setGlobal("weight", user.getWeight());
@@ -51,6 +66,8 @@ public class PlanServiceImpl implements PlanService {
         kieSession.setGlobal("bodyFatPercentage", bfp);
         kieSession.setGlobal("bodyType", bodyType);
         kieSession.setGlobal("sex", user.isSex());
+
+
 
         kieSession.insert(user);
         kieSession.insert(coefficientsDto);

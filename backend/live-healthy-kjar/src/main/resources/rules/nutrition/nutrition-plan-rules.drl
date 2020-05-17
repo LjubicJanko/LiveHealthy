@@ -1,4 +1,4 @@
-package liveHealthy.nutrition;
+package rules.nutrition;
 
 import live.healthy.facts.model.user.User;
 import live.healthy.facts.dto.CoefficientsDto;
@@ -13,11 +13,6 @@ global Integer age;
 global String bodyType;
 global Boolean sex;
 
-rule "asd"
-when
-then
-    System.out.println(bodyMassIdx);
- end
 /**
 *   ------------------------WEIGHT GAIN-------------------
 */
@@ -110,6 +105,61 @@ rule "need to gain with big fat level - very old male" extends "need to gain wei
     then
         System.out.println("You should gain weight with taking more fats");
 end
+
+
+/***************************Level 3 Female******************************/
+
+rule "need to gain with big fat level - teenager female" extends "need to gain weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age < 20) or eval(age == 20)
+        and
+        eval(bodyFatPercentage < 17.7)
+    then
+        System.out.println("You should gain weight with taking more fats");
+end
+
+rule "need to gain with big fat level - young female" extends "need to gain weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 20) or eval(age < 30) or eval(age == 30)
+        and
+        eval(bodyFatPercentage < 19.3)
+    then
+        System.out.println("You should gain weight with taking more fats");
+end
+rule "need to gain with big fat level - midAge female" extends "need to gain weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 30) or eval(age < 40) or eval(age == 40)
+        and
+        eval(bodyFatPercentage < 22.2)
+    then
+        System.out.println("You should gain weight with taking more fats");
+end
+rule "need to gain with big fat level - old female" extends "need to gain weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 40) or eval(age < 50) or eval(age == 50)
+        and
+        eval(bodyFatPercentage < 25.2)
+    then
+        System.out.println("You should gain weight with taking more fats");
+end
+rule "need to gain with big fat level - very old female" extends "need to gain weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 50)
+        and
+        eval(bodyFatPercentage < 26)
+    then
+        System.out.println("You should gain weight with taking more fats");
+end
 /**
 *   -------------------WEIGHT LOSS-------------------
 */
@@ -120,6 +170,8 @@ rule "need to lose weight"
         eval(bodyMassIdx > 25.0)
         and
         eval(weight > idealBodyWeight)
+        and
+        $user: User(age == 22)
     then
         NutritionPlan $nutritionPlan = new NutritionPlan();
         insert($nutritionPlan);
@@ -158,7 +210,8 @@ rule "need to lose with big fat loss - teenager male" extends "need to lose weig
     when
         eval(sex == true)
         and
-        eval(age <= 20) and
+        eval(age < 20) or eval(age == 20)
+        and
         eval(bodyFatPercentage > 8.5)
     then
         System.out.println("You should lose weight with taking less fats");
@@ -167,7 +220,8 @@ rule "need to lose with big fat loss - young male" extends "need to lose weight 
     when
         eval(sex == true)
         and
-        eval(age <= 30) and
+        eval(age > 20) or eval(age < 30) or eval(age == 30)
+        and
         eval(bodyFatPercentage > 12.7)
     then
         System.out.println("You should lose weight with taking less fats");
@@ -176,7 +230,8 @@ rule "need to lose with big fat loss - midAge male" extends "need to lose weight
     when
         eval(sex == true)
         and
-        eval(age <= 40) and
+        eval(age > 30) or eval(age < 40) or eval(age == 40)
+        and
         eval(bodyFatPercentage > 15.3)
     then
         System.out.println("You should lose weight with taking less fats");
@@ -186,7 +241,8 @@ rule "need to lose with big fat loss - old male" extends "need to lose weight ex
     when
         eval(sex == true)
         and
-        eval(age <= 50) and
+        eval(age > 40) or eval(age < 50) or eval(age == 50)
+        and
         eval(bodyFatPercentage > 18.9)
     then
         System.out.println("You should lose weight with taking less fats");
@@ -197,6 +253,59 @@ rule "need to lose with big fat loss - very old male" extends "need to lose weig
         and
         eval(age > 50) and
         eval(bodyFatPercentage > 21.0)
+    then
+        System.out.println("You should lose weight with taking less fats");
+end
+
+/***************************Level 3 Feale******************************/
+
+rule "need to lose with big fat loss - teenager female" extends "need to lose weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age < 20) or eval(age == 20)
+        and
+        eval(bodyFatPercentage > 17.7)
+    then
+        System.out.println("You should lose weight with taking less fats");
+end
+rule "need to lose with big fat loss - young female" extends "need to lose weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 20) or eval(age < 30) or eval(age == 30)
+        and
+        eval(bodyFatPercentage > 19.3)
+    then
+        System.out.println("You should lose weight with taking less fats");
+end
+rule "need to lose with big fat loss - midAge female" extends "need to lose weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 30) or eval(age < 40) or eval(age == 40)
+        and
+        eval(bodyFatPercentage > 22.2)
+    then
+        System.out.println("You should lose weight with taking less fats");
+end
+
+rule "need to lose with big fat loss - old female" extends "need to lose weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 40) or eval(age < 50) or eval(age == 50)
+        and
+        eval(bodyFatPercentage > 25.2)
+    then
+        System.out.println("You should lose weight with taking less fats");
+end
+rule "need to lose with big fat loss - very old female" extends "need to lose weight extreme way"
+    when
+        eval(sex == false)
+        and
+        eval(age > 50) and
+        eval(bodyFatPercentage > 26)
     then
         System.out.println("You should lose weight with taking less fats");
 end

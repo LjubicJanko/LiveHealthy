@@ -27,12 +27,18 @@ public class BasicDeterminationServiceImpl implements BasicDeterminationService 
     public BodyTypeDto determine(BodyInfoDto bodyInfoDto) {
         BodyTypeDto bodyTypeDto = new BodyTypeDto();
         bodyTypeDto.setType("");
-        KieSession kieSession = kieContainer.newKieSession();
+        bodyTypeDto.setDescription("bla bla");
+//        KieSession kieSession = kieContainer.newKieSession();
+        KieSession kieSession = kieContainer.newKieSession("basicDetermination");
 
         kieSession.insert(bodyInfoDto);
         kieSession.insert(bodyTypeDto);
         kieSession.fireAllRules();
         kieSession.dispose();
+
+        for (Object obj : kieSession.getObjects()) {
+            System.out.println(obj.getClass().getName());
+        }
         return bodyTypeDto;
     }
 

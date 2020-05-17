@@ -1,4 +1,4 @@
-package liveHealthy.basic;
+package rules.basic;
 
 import live.healthy.facts.dto.BodyInfoDto;
 import live.healthy.facts.dto.BodyTypeDto;
