@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "82aba293-8784-498c-b01b-3ebf36fdff1c",
+		"name": "sbz",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "plan",
+			"item": [
+				{
+					"name": "createPlan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8088/api/plan/create/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8088",
+							"path": [
+								"api",
+								"plan",
+								"create",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "determineEctomorph",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sex\": true,\n\t\"shoulders\": \"Narrower than my hips\",\n\t\"forearms\": \"Small\",\n\t\"bodyLook\": \"Long and narrow\",\n\t\"weightTendations\": \"Have trouble gaining weight in the form of muscle or fat\",\n\t\"bodyTendations\": \"Stay skinny\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/basic/determine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"basic",
+						"determine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "determineMesomorph",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sex\": true,\n\t\"shoulders\": \"The same width as my hips\",\n\t\"forearms\": \"Average\",\n\t\"bodyLook\": \"Square and rugged\",\n\t\"weightTendations\": \"I can gain and lose without too much of a struggle\",\n\t\"bodyTendations\": \"Stay lean, yet muscular\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/basic/determine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"basic",
+						"determine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "determineEndomorph",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sex\": true,\n\t\"shoulders\": \"Wider than my hips\",\n\t\"forearms\": \"Big\",\n\t\"bodyLook\": \"Round and soft\",\n\t\"weightTendations\": \"Gain weight easily, but find it hard to lose\",\n\t\"bodyTendations\": \"Carry a bit of extra fat\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/basic/determine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"basic",
+						"determine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"janko1janko01\",\n\t\"password\": \"User123!\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJsaXZlLWhlYWx0aHktYXBwIiwic3ViIjoiamFua28xamFua28wMSIsImF1ZCI6IndlYiIsImlhdCI6MTU4ODYwNDQ1MSwiZXhwIjoxNTg4NjA3NDUxfQ.E1M6Vy0R2ySS4IQTdGvNzjjMP-tMif2GmPQhjCm8ldeMMXZDwoagQHT7XqWyFr7elqIVK7S3bG6LaZhSW2VLMg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8088/api/auth/refresh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "changePassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"oldPassword\" : \"User123!\",\n\t\"newPassword\" : \"nova\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/auth/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"auth",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\" : \"1\",\n\t\"username\" : \"janko1janko01\",\n\t\"password\" : \"User123!\",\n\t\"firstName\" : \"a\",\n\t\"lastName\" : \"a\",\n\t\"email\" : \"ljubicjanko1@gmail.com\",\n\t\"age\": 22,\n\t\"height\": 188,\n\t\"weight\": 113\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8088/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJiYWNrZW5kIiwic3ViIjoidXNlciIsImF1ZCI6IndlYiIsImlhdCI6MTU4MDkxMDIyOSwiZXhwIjoxNTgwOTQwMjI5fQ.LNBGxYRgP_mSRWnA3C9_kb8laEz2qChNVbazo-m_51XUcWFVyRYjQkYTuzXYAm7lYG3-ul5-L61EKEm0fUV7_w",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "80a3fa63-de8b-460e-a1eb-f9bca6c0c2c4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1e59aaf6-f86e-4375-9f6e-2129179c7b0d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
