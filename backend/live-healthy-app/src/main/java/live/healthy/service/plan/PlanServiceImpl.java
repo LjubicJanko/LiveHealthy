@@ -65,9 +65,12 @@ public class PlanServiceImpl implements PlanService {
         kieSession.insert(planDto);
 
         int i = kieSession.fireAllRules();
-        System.out.println(planDto);
         kieSession.dispose();
 
+
+
+        System.out.println(planDto);
+        // Todo: pick food based on planDto and forbidden food
 
 
     }
