@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class PlanDto {
     public String goal;
     public int fatLevelNeeded;  // -1 less fat, 0 normal, 1 more fat
+    public double bmrPercentNeeded;
 }

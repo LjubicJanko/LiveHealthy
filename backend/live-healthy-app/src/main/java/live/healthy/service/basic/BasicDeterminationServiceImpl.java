@@ -19,26 +19,23 @@ public class BasicDeterminationServiceImpl implements BasicDeterminationService 
 
     @Autowired
     public BasicDeterminationServiceImpl(KieContainer kieContainer) {
-        log.info("Initialising a new example session.");
+        log.info("Initialising a new basicDetermination session.");
         this.kieContainer = kieContainer;
     }
 
     @Override
     public BodyTypeDto determine(BodyInfoDto bodyInfoDto) {
-        BodyTypeDto bodyTypeDto = new BodyTypeDto();
-        bodyTypeDto.setType("");
-        bodyTypeDto.setDescription("bla bla");
-        KieSession kieSession = kieContainer.newKieSession();
-//        KieSession kieSession = kieContainer.newKieSession("basicDetermination");
+        BodyTypeDto bodyTypeDto = new BodyTypeDto("", "");
+
+
+//        KieSession kieSession = kieContainer.newKieSession();
+        KieSession kieSession = kieContainer.newKieSession("basicDetermination");
 
         kieSession.insert(bodyInfoDto);
         kieSession.insert(bodyTypeDto);
         kieSession.fireAllRules();
         kieSession.dispose();
 
-        for (Object obj : kieSession.getObjects()) {
-            System.out.println(obj.getClass().getName());
-        }
         return bodyTypeDto;
     }
 

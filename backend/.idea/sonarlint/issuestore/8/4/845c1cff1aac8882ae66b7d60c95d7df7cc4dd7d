@@ -1,0 +1,31 @@
+
+`
+java:S2259´"DA "NullPointerException" could be thrown; "claims" is nullable here.(óúÊöøÿÿÿÿ
+`
+java:S2259©"DA "NullPointerException" could be thrown; "claims" is nullable here.(Á”–¬ùÿÿÿÿ
+Z
+java:S2259h"DA "NullPointerException" could be thrown; "claims" is nullable here.(·Œµ“
+`
+java:S2259Ê"DA "NullPointerException" could be thrown; "claims" is nullable here.(êë…âüÿÿÿÿ
+Z
+java:S2259¿"DA "NullPointerException" could be thrown; "claims" is nullable here.(¨£¿
+m	java:S116"SRename this field "APP_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚÓ‰şÿÿÿÿ
+f	java:S116"QRename this field "SECRET" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñíà
+o	java:S116"URename this field "EXPIRES_IN" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Èúçúÿÿÿÿ
+p	java:S116!"VRename this field "AUTH_HEADER" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™ş¼®üÿÿÿÿ
+x	java:S116+"^Rename this field "SIGNATURE_ALGORITHM" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯‹’³ıÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(çÎêúÿÿÿÿ
+Q	java:S125#"<This block of commented-out lines of code should be removed.(±œŒŠ
+V	java:S125%"<This block of commented-out lines of code should be removed.(Ô”Õúÿÿÿÿ
+Q	java:S125/"<This block of commented-out lines of code should be removed.(ÂÄÎÈ
+Q	java:S1257"<This block of commented-out lines of code should be removed.(ìßÜ
+Q	java:S125A"<This block of commented-out lines of code should be removed.(µ‘ú‚
+V	java:S125M"<This block of commented-out lines of code should be removed.(˜üéşÿÿÿÿ
+V	java:S125W"<This block of commented-out lines of code should be removed.(–Ş°Ñşÿÿÿÿ
+Q	java:S125Y"<This block of commented-out lines of code should be removed.(¦Ã¯Í
+Q	java:S125`"<This block of commented-out lines of code should be removed.(ìßÜ
+V	java:S125t"<This block of commented-out lines of code should be removed.(ˆÉ÷ùÿÿÿÿ
+Q	java:S125v"<This block of commented-out lines of code should be removed.(®šò
+R	java:S125‘"<This block of commented-out lines of code should be removed.(ŸèƒÄ
+R	java:S125Ñ"<This block of commented-out lines of code should be removed.(Ï¶’ñ
+W	java:S125Ó"<This block of commented-out lines of code should be removed.(ô§áıÿÿÿÿ

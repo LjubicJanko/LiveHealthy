@@ -1,0 +1,7 @@
+
+V
+java:S3416"@Update this logger to use "BasicDeterminationServiceImpl.class".(Å‰Å¯
+J
+java:S1128"4Remove this unused import 'java.text.DecimalFormat'.(§∞”ò
+N	java:S106("9Replace this use of System.out or System.err by a logger.(Ñ‡ÔŸ
+]	java:S125 "<This block of commented-out lines of code should be removed.(Ë®»Å˝ˇˇˇˇ8Ü‚€ü¢.

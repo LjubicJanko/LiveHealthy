@@ -1,0 +1,24 @@
+
+E
+java:S37402"/Provide the parametrized type for this generic.(Ç’Ó€
+9
+java:S11487"#Use a logger to log this exception.(Ç’Çê
+@
+java:S5411Y"*Use the primitive boolean expression here.(÷¨Ãÿ
+I
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
+E
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ
+A
+java:S1452@"&Remove usage of generic wildcard type.(ß´¿¹ûÿÿÿÿ
+ 
+java:S1130A"„Remove the declaration of thrown exception 'org.springframework.security.core.AuthenticationException' which is a runtime exception.(İ¤ßÊúÿÿÿÿ
+‡
+java:S1130A"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(İ¤ßÊúÿÿÿÿ
+e
+java:S4488?"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(Ãèïûÿÿÿÿ
+A
+java:S1452T"&Remove usage of generic wildcard type.(…éçÏüÿÿÿÿ
+e
+java:S4488S"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(ãã·ıÿÿÿÿ
+V	java:S125K"<This block of commented-out lines of code should be removed.(¶ì‚Ğüÿÿÿÿ

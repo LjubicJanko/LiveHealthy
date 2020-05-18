@@ -1,0 +1,15 @@
+
+`
+java:S1128"CRemove this unused import 'live.healthy.facts.dto.CoefficientsDto'.(«÷¢©8¸³‰£¢.
+e
+java:S1128"HRemove this unused import 'live.healthy.facts.model.plan.NutritionPlan'.(ôÙÕ¸8“–”Ÿ¢.
+Q
+java:S1128"4Remove this unused import 'java.text.DecimalFormat'.(¤°Ó˜8èÛ†¢¢.
+Z	java:S1066"9Replace this use of System.out or System.err by a logger.(©©ßîıÿÿÿÿ8´Ç¤¢.
+U
+java:S1128":Remove this unused import 'live.healthy.facts.model.Type'.(‘õû°ÿÿÿÿÿ
+C
+java:S14813"&Remove this unused "i" local variable.(ÂÅ®º8´Ç¤¢.
+R
+java:S18543"5Remove this useless assignment to local variable "i".(ÂÅ®º8´Ç¤¢.
+U	java:S1067"9Replace this use of System.out or System.err by a logger.(Ğëù8Á¯É¤¢.

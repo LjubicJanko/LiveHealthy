@@ -1,0 +1,11 @@
+
+…
+java:S1128"jRemove this unused import 'org.springframework.security.web.authentication.www.BasicAuthenticationFilter'.(çìóÕûÿÿÿÿ
+M
+java:S1135B"2Complete the task associated to this TODO comment.(¯Šùùøÿÿÿÿ
+M
+java:S1135Y"2Complete the task associated to this TODO comment.(¯Šùùøÿÿÿÿ
+V	java:S125C"<This block of commented-out lines of code should be removed.(ÆøÑøÿÿÿÿ
+Q	java:S125U"<This block of commented-out lines of code should be removed.(¢Á §
+Q	java:S125^"<This block of commented-out lines of code should be removed.(ÿ¨ŞÉ
+P	java:S125b"<This block of commented-out lines of code should be removed.(†³U
