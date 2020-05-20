@@ -1,7 +1,5 @@
 package live.healthy;
 
-import java.util.Arrays;
-
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
@@ -15,27 +13,21 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SampleApp {
 
-	private static Logger log = LoggerFactory.getLogger(SampleApp.class);
+    private static Logger log = LoggerFactory.getLogger(SampleApp.class);
 
-	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(SampleApp.class, args);
+    public static void main(String[] args) {
+        ApplicationContext ctx = SpringApplication.run(SampleApp.class, args);
 
-	}
+    }
 
-	@Bean
-	public KieContainer kieContainer() {
-		KieServices ks = KieServices.Factory.get();
-		KieContainer kContainer = ks
-				.newKieContainer(ks.newReleaseId("live.healthy.kjar", "live-healthy-kjar", "0.0.1-SNAPSHOT"));
-		KieScanner kScanner = ks.newKieScanner(kContainer);
-		kScanner.start(10_000);
-		return kContainer;
-	}
-	/*
-	 * KieServices ks = KieServices.Factory.get(); KieContainer kContainer =
-	 * ks.newKieContainer(ks.newReleaseId("drools-spring-v2",
-	 * "drools-spring-v2-kjar", "0.0.1-SNAPSHOT")); KieScanner kScanner =
-	 * ks.newKieScanner(kContainer); kScanner.start(10_000); KieSession kSession =
-	 * kContainer.newKieSession();
-	 */
+    @Bean
+    public KieContainer kieContainer() {
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks
+                .newKieContainer(ks.newReleaseId("live.healthy.kjar", "live-healthy-kjar", "0.0.1-SNAPSHOT"));
+        KieScanner kScanner = ks.newKieScanner(kContainer);
+        kScanner.start(10_000);
+        return kContainer;
+    }
+
 }

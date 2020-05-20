@@ -11,7 +11,7 @@ global String bodyType;
 
 rule "maintain weight"
     when
-        # TODO: change it for weight to not be equal, but fit in tolerance range
+        /* TODO: change it for weight to not be equal, but fit in tolerance range */
         $user: User(weight == idealBodyWeight)
         and
         $planDto: PlanDto()
