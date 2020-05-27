@@ -1,7 +1,8 @@
 package rules.nutrition;
 
 import live.healthy.facts.model.user.User;
-import live.healthy.facts.dto.PlanDto;
+import live.healthy.facts.dto.PlanDto
+import java.lang.Double;
 
 
 rule "amount of calories needed for MAINTAIN_WEIGHT"
@@ -34,6 +35,7 @@ rule "amount of calories needed for MILD_WEIGHT_LOSS - male"
         $planDto : PlanDto(goal == "MILD_WEIGHT_LOSS")
         $user : User(sex == true)
     then
+        System.out.println(0.79 * $user.getStartingBmr());
         $planDto.setBmrPercentNeeded(0.79);
         update($planDto);
         System.out.println("You should be taking 79% of amount of calories that your body metabolism rate is.");

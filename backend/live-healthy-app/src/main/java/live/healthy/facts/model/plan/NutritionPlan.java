@@ -29,4 +29,14 @@ public class NutritionPlan{
             inverseJoinColumns = @JoinColumn(name = "forbidden_food_id"))
     private Set<Food> forbiddenFood;
 
+    /*
+    * -1 less fat
+    * 0 normal amount fat
+    * 1 more fat
+    * */
+    private int fatBased;
+
+    @NotNull
+    private double caloriesGoal;
+
 }

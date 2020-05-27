@@ -151,3 +151,5 @@ z
 Jlive-healthy-app/src/main/java/live/healthy/common/util/BodyIndexUtil.java,2\1\21ab281db9fed54a46b4848f85f8a9e85e9f4419
 }
 Mlive-healthy-app/src/main/java/live/healthy/service/plan/PlanServiceImpl.java,2\2\227e3cbc493ea36a3ced8e98288581031c7cd825
+ˆ
+Xlive-healthy-app/src/main/java/live/healthy/repository/plan/NutritionPlanRepository.java,d\4\d430229da782c118e1d59a036e9146f689d3ed73

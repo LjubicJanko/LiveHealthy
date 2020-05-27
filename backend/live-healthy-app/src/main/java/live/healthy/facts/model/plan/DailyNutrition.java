@@ -1,13 +1,17 @@
 package live.healthy.facts.model.plan;
 
 import live.healthy.facts.model.food.Food;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class DailyNutrition {
 
@@ -16,33 +20,17 @@ public class DailyNutrition {
     private Long id;
     @ManyToMany
     @JoinTable(
-            name = "breakfast_food",
+            name = "daily_food",
             joinColumns = @JoinColumn(name = "daily_nutrition_id"),
             inverseJoinColumns = @JoinColumn(name = "food_id"))
-    private Set<Food> breakfast;
+    private Set<Food> dailyFood;
     @ManyToMany
     @JoinTable(
-            name = "lunch_food",
+            name = "daily_snacks",
             joinColumns = @JoinColumn(name = "daily_nutrition_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id"))
-    private Set<Food> lunch;
-    @ManyToMany
-    @JoinTable(
-            name = "dinner_food",
-            joinColumns = @JoinColumn(name = "daily_nutrition_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id"))
-    private Set<Food> dinner;
-    @ManyToMany
-    @JoinTable(
-            name = "snacks_food",
-            joinColumns = @JoinColumn(name = "snacks_nutrition_id"),
             inverseJoinColumns = @JoinColumn(name = "food_id"))
     private Set<Food> snacks;
 
-    @NotNull
-    private double caloriesGoal;
 
-    @ManyToMany
-    private Set<NutritionPlan> nutritionPlans;
 
 }

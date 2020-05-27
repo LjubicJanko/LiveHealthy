@@ -1,15 +1,60 @@
 
-`
-java:S1128"CRemove this unused import 'live.healthy.facts.dto.CoefficientsDto'.(«÷¢©8¸³‰£¢.
-e
-java:S1128"HRemove this unused import 'live.healthy.facts.model.plan.NutritionPlan'.(ôÙÕ¸8“–”Ÿ¢.
-Q
-java:S1128"4Remove this unused import 'java.text.DecimalFormat'.(¤°Ó˜8èÛ†¢¢.
-Z	java:S1066"9Replace this use of System.out or System.err by a logger.(©©ßîıÿÿÿÿ8´Ç¤¢.
+M
+java:S1481V"+Remove this unused "fruits" local variable.(»§şãûÿÿÿÿ8’¶À³¤.
+@
+java:S1659]"#Declare "lunch" on a separate line.(Ö’Ş½8ŒŸª¸¤.
+L
+java:S1481X"*Remove this unused "pasta" local variable.(ñÆ›‰ıÿÿÿÿ8ßÈÃ³¤.
+G
+java:S1481["+Remove this unused "cereal" local variable.(ÌˆÇ	8şİ¸¤.
+j
+java:S1871x"MThis branch's code block is the same as the block for the branch on line 118.(»Ó©¢8Ş™¯¸¤.
+O
+java:S1135H"2Complete the task associated to this TODO comment.(ÓÂäğ8‰‰éÁ£.
+P
+java:S11729"4Remove this unused method parameter "forbiddenFood".(›˜ø08ö´¹œ¤.
+\
+java:S1854V":Remove this useless assignment to local variable "fruits".(»§şãûÿÿÿÿ8’¶À³¤.
+[
+java:S1854T"9Remove this useless assignment to local variable "soups".(æÁœ“üÿÿÿÿ8İÿ½³¤.
+A
+java:S1659]"$Declare "dinner" on a separate line.(Ö’Ş½8ŒŸª¸¤.
+W
+java:S1854]":Remove this useless assignment to local variable "dinner".(Ö’Ş½8ŒŸª¸¤.
 U
-java:S1128":Remove this unused import 'live.healthy.facts.model.Type'.(‘õû°ÿÿÿÿÿ
+java:S1854W"8Remove this useless assignment to local variable "pork".(òæ¢Ä8¬ÖÂ³¤.
 C
-java:S14813"&Remove this unused "i" local variable.(ÂÅ®º8´Ç¤¢.
+java:S14814"&Remove this unused "i" local variable.(ÂÅ®º8´Ç¤¢.
+G
+java:S1481]"*Remove this unused "lunch" local variable.(Ö’Ş½8ŒŸª¸¤.
+K
+java:S1481]".Remove this unused "breakfast" local variable.(Ö’Ş½8ŒŸª¸¤.
+[
+java:S1854X"9Remove this useless assignment to local variable "pasta".(ñÆ›‰ıÿÿÿÿ8›±Ã³¤.
+]	java:S125!"<This block of commented-out lines of code should be removed.(¼œ¸™üÿÿÿÿ8¼¡¡³¤.
 R
-java:S18543"5Remove this useless assignment to local variable "i".(ÂÅ®º8´Ç¤¢.
-U	java:S1067"9Replace this use of System.out or System.err by a logger.(Ğëù8Á¯É¤¢.
+java:S18544"5Remove this useless assignment to local variable "i".(ÂÅ®º8´Ç¤¢.
+R
+java:S1854A"5Remove this useless assignment to local variable "i".(ÂÅ®º8‰‰éÁ£.
+E	java:S108x")Either remove or fill this block of code.(»Ó©¢8Ş™¯¸¤.
+}
+java:S3923`"[Remove this conditional structure or edit its code blocks so that they're not all the same.(·Š‹Ìùÿÿÿÿ8ö³¸¤.
+N
+java:S1481U",Remove this unused "chicken" local variable.(Á ¦¹şÿÿÿÿ8åï»³¤.
+F
+java:S1481W")Remove this unused "pork" local variable.(òæ¢Ä8¬ÖÂ³¤.
+Z	java:S106E"9Replace this use of System.out or System.err by a logger.(ññ«Œøÿÿÿÿ8‰‰éÁ£.
+C
+java:S1481A"&Remove this unused "i" local variable.(ÂÅ®º8‰‰éÁ£.
+v	java:S135‚"YReduce the total number of break and continue statements in this loop to use at most one.(Ÿ¹¹€8şİ¸¤.
+]
+java:S1854U";Remove this useless assignment to local variable "chicken".(Á ¦¹şÿÿÿÿ8“¡»³¤.
+H
+java:S1481]"+Remove this unused "dinner" local variable.(Ö’Ş½8ŒŸª¸¤.
+H
+java:S1168|"+Return an empty collection instead of null.(¥¹ï8şİ¸¤.
+L
+java:S1481T"*Remove this unused "soups" local variable.(æÁœ“üÿÿÿÿ8İÿ½³¤.
+J	java:S108v")Either remove or fill this block of code.(—çşÿÿÿÿ8ßœ¬¸¤.
+V
+java:S1854[":Remove this useless assignment to local variable "cereal".(ÌˆÇ	8şİ¸¤.
