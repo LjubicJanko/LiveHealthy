@@ -2,35 +2,17 @@
   <div>
     <div v-if="planExistis">
       <food-plan :nutritionPlan="nutritionPlan"></food-plan>
-      <training-plan></training-plan>
     </div>
+
     <div v-else class="wrapper">
-      <v-dialog v-model="dialog" persistent max-width="290">
-        <template v-slot:activator="{ on }">
-          <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
-          <v-btn id="createPlanBtn" x-large v-on="on">
-            <v-icon>mdi-food-fork-drink</v-icon>
-            <v-divider class="mx-4" vertical></v-divider>
-            <h2>Create nutrition and training plan</h2>
-            <v-divider class="mx-4" vertical></v-divider>
-            <v-icon>mdi-weight-lifter</v-icon>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title class="headline">Any decease we need to know about?</v-card-title>
-          <v-card-text>
-            <v-checkbox v-model="illnesses" label="HEADACHES" value="HEADACHES"></v-checkbox>
-            <v-checkbox v-model="illnesses" label="HEART DISEASE" value="HEART_DISEASE"></v-checkbox>
-            <v-checkbox v-model="illnesses" label="ARM INJURY" value="ARM_INJURY"></v-checkbox>
-            <v-checkbox v-model="illnesses" label="LEG INJURY" value="LEG_INJURY"></v-checkbox>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
-            <v-btn color="green darken-1" text @click="createPlan()">Create</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <v-btn id="createPlanBtn" x-large @click="createPlan()">
+        <v-icon>mdi-food-fork-drink</v-icon>
+        <v-divider class="mx-4" vertical></v-divider>
+        <h2>Create nutrition plan</h2>
+        <v-divider class="mx-4" vertical></v-divider>
+        <v-icon>mdi-food-fork-drink</v-icon>
+      </v-btn>
+
       <v-dialog v-model="loading" fullscreen full-width>
         <v-container fluid fill-height style="background-color: rgba(255, 255, 255, 0.5);">
           <v-layout justify-center align-center>
@@ -52,14 +34,12 @@ import UserService from "../api-services/user.service";
 import PlanService from "../api-services/plan.service";
 
 import FoodPlan from "../components/FoodPlan.vue";
-import TrainingPlan from "../components/TrainingPlan.vue";
 import store from "@/store";
 
 export default {
   name: "PlanOverview",
   components: {
-    FoodPlan: FoodPlan,
-    TrainingPlan: TrainingPlan
+    FoodPlan: FoodPlan
   },
   data: () => ({
     id: 0,
@@ -81,34 +61,21 @@ export default {
   methods: {
     createPlan() {
       if (store.state.userLoggedIn) {
-        this.dialog = false;
         this.loading = true;
-        let createPlanInfoDto = {
-          forbiddenFoodDto: {
-            forbiddenFood: ["Cheese- brie"]
-          },
-          illnessesDto: {
-            illnesses: this.illnesses
-            // illnesses: ["HEART_DISEASE"]
-          }
-        };
-
         if (this.user.bodyType != null) {
-          PlanService.create(store.state.userId, createPlanInfoDto).then(
-            response => {
-              console.log(response.data);
-              this.planExistis = true;
-              this.loading = false;
-              window.location.reload();
-            }
-          );
+          PlanService.create(store.state.userId).then(response => {
+            this.nutritionPlan = response.data;
+            console.log(this.nutritionPlan);
+            this.planExistis = true;
+            this.loading = false;
+          });
         } else {
           this.loading = false;
+          this.$router.push("/body-type");
           this.showSnackbar(
             "You can not create plan before determinating body type!",
             "error"
           );
-          this.$router.push("/body-type");
         }
       }
     },

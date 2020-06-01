@@ -19,8 +19,6 @@ public class NutritionPlanDto {
     @NotNull
     private Set<DailyNutritionDto> weeklyPlan;
     @NotNull
-    private Set<FoodDto> forbiddenFood;
-    @NotNull
     private int fatBased;
     @NotNull
     private double caloriesGoal;

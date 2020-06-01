@@ -50,10 +50,10 @@ export default {
 </script>
 <style>
 #app {
-  /* background-image: url("https://www.infinityfitness.com/wp-content/uploads/2017/05/Muscle-Growth-Pre-Training-Nutrition-Tactics-2.jpeg"); */
-  background-image: url("https://wallpapercave.com/wp/wp2639543.jpg");
+  background-image: url("resources/LiveHealthy.png");
+  /* background-image: url("https://wallpapercave.com/wp/wp2639543.jpg"); */
   background-attachment: fixed;
-  background-position: center;
+  background-position: top;
   background-size: 100% ;
   /* background-color: lavender; */
 }

@@ -3,7 +3,6 @@ package live.healthy.facts.model.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import live.healthy.facts.model.BodyType;
 import live.healthy.facts.model.plan.NutritionPlan;
-import live.healthy.facts.model.plan.TrainingPlan;
 import lombok.Data;
 import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
@@ -66,10 +65,6 @@ public class User implements UserDetails {
 
     @ManyToOne
     private NutritionPlan nutritionPlan;
-
-    @ManyToOne
-    private TrainingPlan trainingPlan;
-
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;

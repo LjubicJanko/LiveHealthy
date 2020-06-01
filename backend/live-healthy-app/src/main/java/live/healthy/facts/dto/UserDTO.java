@@ -1,11 +1,7 @@
 package live.healthy.facts.dto;
 
-import live.healthy.facts.model.plan.NutritionPlan;
-import live.healthy.facts.model.plan.TrainingPlan;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.ManyToOne;
 
 @NoArgsConstructor
 @Data
@@ -24,6 +20,5 @@ public class UserDTO {
 
 
     private NutritionPlanDto nutritionPlan;
-    private TrainingPlanDto trainingPlan;
 
 }

@@ -17,15 +17,8 @@ rule "Ectomorph - mesomorph"
                         bodyTendations in ("Stay skinny", "Stay lean, yet muscular")) and
         $bodyTypeDto: BodyTypeDto(type == "")
     then
-        $bodyTypeDto.setType("ectomorph-mesomorph");
-        $bodyTypeDto.setDescription("YOUR BODY IS BETWEEN AN ECTOMORPH AND A MESOMORPH.\n" +
-                    "Ectomorph: You are good at processing carbohydrates into energy and" +
-                        " your fast metabolism means that you burn off fat easily." +
-                        " The downside is that you struggle to bulk up because your fast-twitch fibres are underdeveloped.\n" +
-            	    "Mesomorph: You have the body type that finds it easiest to add new muscle and you don’t" +
-                        " tend to store much body fat. Mesomorphs tend to take their naturally athletic builds for granted," +
-                        " which can result in diluted workouts and poor diets. Keeping in peak physical condition is often" +
-                        " tempered by a scattered approach to eating and training.");
+        $bodyTypeDto.setType("ECTOMORPH_MESOMORPH");
+        $bodyTypeDto.setDescription("YOUR BODY IS BETWEEN AN ECTOMORPH AND A MESOMORPH.");
         update($bodyTypeDto);
 end
 
@@ -41,15 +34,8 @@ rule "Mesomorph - Endomorph"
                         bodyTendations in ("Carry a bit of extra fat", "Stay lean, yet muscular")) and
         $bodyTypeDto: BodyTypeDto(type == "")
     then
-        $bodyTypeDto.setType("mesomorph-endomorph");
-        $bodyTypeDto.setDescription("YOUR BODY IS BETWEEN AN MESOMORPH AND A ENDOMORPH.\n\n" +
-                    "\tEndomorphs: Endomorphs are adept at storing fuel, with muscle and fat" +
-                        "concentrated in the lower body. The endomorph is the hardest body type to have in terms" +
-                        "of managing your weight and overall fitness.\n\n" +
-            	    "\tMesomorph: You have the body type that finds it easiest to add new muscle and you don’t" +
-                        " tend to store much body fat. Mesomorphs tend to take their naturally athletic builds for granted," +
-                        " which can result in diluted workouts and poor diets. Keeping in peak physical condition is often" +
-                        " tempered by a scattered approach to eating and training.");
+        $bodyTypeDto.setType("ENDOMORPH_MESOMORPH");
+        $bodyTypeDto.setDescription("YOUR BODY IS BETWEEN AN MESOMORPH AND A ENDOMORPH.");
         update($bodyTypeDto);
 end
 
@@ -60,7 +46,7 @@ rule "Nonexistent bodyTypeEnum"
     when
         $bodyTypeDto: BodyTypeDto(type == "")
     then
-        $bodyTypeDto.setType("nonexistent");
+        $bodyTypeDto.setType("NONEXISTENT");
         $bodyTypeDto.setDescription("Information about your body is contradictory. We cannot determine your type.");
         update($bodyTypeDto);
 end

@@ -1,9 +1,9 @@
 <template>
   <v-card class="mx-10 px-5 py-5 mt-12 text-center">
-    <v-card-title>Nutrition plan for {{nutritionPlan.goal}}</v-card-title>
+    <v-card-title class="justify-center">Nutrition plan for {{nutritionPlan.goal}}</v-card-title>
     <v-expansion-panels popout hover>
       <v-expansion-panel v-for="(day,i) in nutritionPlan.weeklyPlan" :key="i">
-        <v-expansion-panel-header>Day {{i+1}}</v-expansion-panel-header>
+        <v-expansion-panel-header >Day {{i+1}}</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-card-title>Calories goal for the day: {{nutritionPlan.caloriesGoal}}</v-card-title>
           <v-card-title>Meals</v-card-title>

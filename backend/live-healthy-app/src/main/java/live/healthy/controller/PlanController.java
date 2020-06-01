@@ -19,9 +19,9 @@ public class PlanController {
     private final PlanService planService;
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity createPlan(@PathVariable Long userId, @RequestBody CreatePlanInfoDto createPlanInfoDto) {
+    public ResponseEntity createPlan(@PathVariable Long userId) {
         try {
-            return new ResponseEntity<>(planService.createPlan(userId, createPlanInfoDto), HttpStatus.OK);
+            return new ResponseEntity<>(planService.createPlan(userId), HttpStatus.OK);
         } catch (UserNotFound | NutritionPlanAlreadyExists e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

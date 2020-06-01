@@ -2,6 +2,11 @@ package live.healthy.common.constants;
 
 public class Constants {
 
+    /**
+     * Private constructor, no instantiation
+     */
+    private Constants(){}
+
     public static final double MALE_IBW_COEFFICIENT = 1.41;
     public static final double FEMALE_IBW_COEFFICIENT = 1.36;
     public static final double FEET_COEFFICIENT = 30.48;

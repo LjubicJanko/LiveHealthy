@@ -3,16 +3,18 @@ package live.healthy.service.plan;
 import live.healthy.exception.plan.NutritionPlanAlreadyExists;
 import live.healthy.exception.plan.NutritionPlanNotFound;
 import live.healthy.exception.user.UserNotFound;
-import live.healthy.facts.dto.*;
+import live.healthy.facts.dto.NutritionPlanDto;
+import live.healthy.facts.dto.NutritionWrapperDto;
+import live.healthy.facts.dto.PlanDto;
 import live.healthy.facts.model.food.Food;
 import live.healthy.facts.model.plan.DailyNutrition;
 import live.healthy.facts.model.plan.Goal;
 import live.healthy.facts.model.plan.NutritionPlan;
 import live.healthy.facts.model.user.User;
-import live.healthy.repository.user.UserRepository;
 import live.healthy.repository.nutrition.DailyNutritionRepository;
 import live.healthy.repository.nutrition.FoodRepository;
 import live.healthy.repository.plan.NutritionPlanRepository;
+import live.healthy.repository.user.UserRepository;
 import live.healthy.util.ObjectMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieContainer;
@@ -21,12 +23,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class PlanServiceImpl implements PlanService {
     private static Logger log = LoggerFactory.getLogger(PlanServiceImpl.class);
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
 
     private final UserRepository userRepository;
@@ -49,11 +53,11 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public NutritionAndTrainingDto createPlan(Long userId, CreatePlanInfoDto createPlanInfoDto) throws UserNotFound, NutritionPlanAlreadyExists {
+    public NutritionPlanDto createPlan(Long userId) throws UserNotFound, NutritionPlanAlreadyExists {
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
         /*Todo: change this condition when new plan is being created after one week*/
-        if(user.getNutritionPlan() != null) {
+        if (user.getNutritionPlan() != null) {
             throw new NutritionPlanAlreadyExists(userId);
         }
 
@@ -68,38 +72,38 @@ public class PlanServiceImpl implements PlanService {
 
         int i = kieSession.fireAllRules();
         kieSession.dispose();
-        // TODO: create weekly training plan
-        NutritionAndTrainingDto nutritionAndTrainingDto = new NutritionAndTrainingDto();
-        nutritionAndTrainingDto.setNutritionPlanDto(createWeeklyNutrition(planDto,
-                createPlanInfoDto.getForbiddenFoodDto().getForbiddenFood(), user));
+        NutritionPlanDto nutritionPlanDto = createWeeklyNutrition(planDto, user);
 
-        return nutritionAndTrainingDto;
+        return nutritionPlanDto;
 
     }
 
-
-
-    private NutritionPlanDto createWeeklyNutrition(PlanDto planDto, Set<String> forbiddenFood, User user) {
-
-
+    /**
+     * Method fires rules for creating nutrition plan and calls appropriate methods for arranging meals for 7 days in the
+     * week, based on information that rules provided.
+     *
+     * @param planDto
+     * @param user
+     * @return
+     */
+    private NutritionPlanDto createWeeklyNutrition(PlanDto planDto, User user) {
         KieSession kieSession = kieContainer.newKieSession("creatingNutritionPlan");
 
         kieSession.insert(user);
         kieSession.insert(planDto);
 
-        int i = kieSession.fireAllRules();
+        kieSession.fireAllRules();
         kieSession.dispose();
 
 
-        double calorieLimit = user.getStartingBmr() * planDto.getBmrPercentNeeded();
+        double calorieLimit = Double.parseDouble(df2.format(user.getStartingBmr() * planDto.getBmrPercentNeeded()));
 
         NutritionPlan nutritionPlan = new NutritionPlan();
         nutritionPlan.setGoal(Goal.valueOf(planDto.getGoal()));
         nutritionPlan.setWeeklyPlan(findWeeklyFoodPlan(nutritionPlan.getGoal(), calorieLimit,
-                planDto.getFatLevelNeeded(), forbiddenFood));
+                planDto.getFatLevelNeeded()));
         nutritionPlan.setCaloriesGoal(calorieLimit);
         nutritionPlan.setFatBased(planDto.fatLevelNeeded);
-        nutritionPlan.setForbiddenFood(getForbiddenFood(forbiddenFood));
 
         user.setNutritionPlan(nutritionPlanRepository.save(nutritionPlan));
         userRepository.save(user);
@@ -107,12 +111,15 @@ public class PlanServiceImpl implements PlanService {
         return ObjectMapperUtils.map(nutritionPlan, NutritionPlanDto.class);
     }
 
-    private Set<Food> getForbiddenFood(Set<String> forbiddenFood) {
-        Set<Food> forbidden = foodRepository.findAllByDescription(forbiddenFood);
-        return forbidden;
-    }
-
-    private Set<DailyNutrition> findWeeklyFoodPlan(Goal goal, double calorieLimit, int fatLevel, Set<String> forbiddenFood) {
+    /**
+     * Mid-method that collects food for several food groups and calls method for creating week plan
+     *
+     * @param goal
+     * @param calorieLimit
+     * @param fatLevel
+     * @return
+     */
+    private Set<DailyNutrition> findWeeklyFoodPlan(Goal goal, double calorieLimit, int fatLevel) {
         Set<Food> cereals = foodRepository.findAllByFoodGroup("Breakfast Cereals");
         Set<Food> soups = foodRepository.findAllByFoodGroup("Soups- Sauces- and Gravies");
         Set<Food> chicken = foodRepository.findAllByFoodGroup("Poultry Products");
@@ -125,14 +132,22 @@ public class PlanServiceImpl implements PlanService {
         NutritionWrapperDto nutritionWrapperDto = new NutritionWrapperDto(cereals, soups, chicken, fruits, pork,
                 pasta, eggs, snacks);
 
-        Set<DailyNutrition> weeklyNutrition = getWeeklyNutrition(goal, nutritionWrapperDto, fatLevel, calorieLimit,
-                forbiddenFood);
+        Set<DailyNutrition> weeklyNutrition = getWeeklyNutrition(goal, nutritionWrapperDto, fatLevel, calorieLimit);
 
         return weeklyNutrition;
     }
 
+    /**
+     * Provides collection of meals for every day in the week
+     *
+     * @param goal
+     * @param nutritionWrapperDto
+     * @param fatLevel
+     * @param calorieLimit
+     * @return
+     */
     private Set<DailyNutrition> getWeeklyNutrition(Goal goal, NutritionWrapperDto nutritionWrapperDto,
-                                                   int fatLevel, double calorieLimit, Set<String> forbiddenFood) {
+                                                   int fatLevel, double calorieLimit) {
         Food breakfast, lunch, dinner, snack, snacks_fruit = new Food();
 
         double breakfastCalories = calorieLimit / 3;
@@ -157,9 +172,9 @@ public class PlanServiceImpl implements PlanService {
 
             switch (goal) {
                 case WEIGHT_LOSS:
-                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getCereals(), forbiddenFood);
-                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken(), forbiddenFood);
-                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getFruits(), forbiddenFood);
+                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getCereals());
+                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken());
+                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getFruits());
                     choosenFood = Arrays.asList(breakfast, lunch, dinner);
 
                     if (i > 0) {
@@ -170,9 +185,9 @@ public class PlanServiceImpl implements PlanService {
                     break;
 
                 case MILD_WEIGHT_LOSS:
-                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs(), forbiddenFood);
-                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken(), forbiddenFood);
-                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getFruits(), forbiddenFood);
+                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs());
+                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken());
+                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getFruits());
                     choosenFood = Arrays.asList(breakfast, lunch, dinner);
 
                     if (i > 0) {
@@ -183,8 +198,8 @@ public class PlanServiceImpl implements PlanService {
                     break;
 
                 case EXTREME_WEIGHT_LOSS:
-                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs(), forbiddenFood);
-                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken(), forbiddenFood);
+                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs());
+                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken());
                     choosenFood = Arrays.asList(breakfast, lunch);
 
                     if (i > 0) {
@@ -195,9 +210,9 @@ public class PlanServiceImpl implements PlanService {
                     break;
 
                 case MAINTAIN_WEIGHT:
-                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs(), forbiddenFood);
-                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken(), forbiddenFood);
-                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta(), forbiddenFood);
+                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs());
+                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken());
+                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta());
                     choosenFood = Arrays.asList(breakfast, lunch, dinner);
 
                     if (i > 0) {
@@ -208,12 +223,12 @@ public class PlanServiceImpl implements PlanService {
                     break;
 
                 case WEIGHT_GAIN:
-                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs(), forbiddenFood);
-                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken(), forbiddenFood);
-                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta(), forbiddenFood);
+                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getEggs());
+                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken());
+                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta());
                     snackCalories = calorieLimit - breakfast.getEnergy_kcal() -
                             lunch.getEnergy_kcal() - dinner.getEnergy_kcal();
-                    snack = findSingleFood(snackCalories, fatLevel, nutritionWrapperDto.getSnacks(), forbiddenFood);
+                    snack = findSingleFood(snackCalories, fatLevel, nutritionWrapperDto.getSnacks());
 
                     choosenFood = Arrays.asList(breakfast, lunch, dinner);
                     dailySnacks.add(snack);
@@ -226,12 +241,12 @@ public class PlanServiceImpl implements PlanService {
                     break;
 
                 case MILD_WEIGHT_GAIN:
-                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getCereals(), forbiddenFood);
-                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken(), forbiddenFood);
-                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta(), forbiddenFood);
+                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getCereals());
+                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken());
+                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta());
                     snackCalories = calorieLimit - breakfast.getEnergy_kcal() -
                             lunch.getEnergy_kcal() - dinner.getEnergy_kcal();
-                    snack = findSingleFood(snackCalories, fatLevel, nutritionWrapperDto.getSnacks(), forbiddenFood);
+                    snack = findSingleFood(snackCalories, fatLevel, nutritionWrapperDto.getSnacks());
                     dailySnacks.add(snack);
 
                     choosenFood = Arrays.asList(breakfast, lunch, dinner);
@@ -244,13 +259,13 @@ public class PlanServiceImpl implements PlanService {
                     break;
 
                 case EXTREME_WEIGHT_GAIN:
-                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getCereals(), forbiddenFood);
-                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken(), forbiddenFood);
-                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta(), forbiddenFood);
+                    breakfast = findSingleFood(breakfastCalories, fatLevel, nutritionWrapperDto.getCereals());
+                    lunch = findSingleFood(lunchCalories, fatLevel, nutritionWrapperDto.getChicken());
+                    dinner = findSingleFood(dinnerCalories, fatLevel, nutritionWrapperDto.getPasta());
                     snackCalories = calorieLimit - breakfast.getEnergy_kcal() -
                             lunch.getEnergy_kcal() - dinner.getEnergy_kcal();
-                    snack = findSingleFood(snackCalories / 2, fatLevel, nutritionWrapperDto.getSnacks(), forbiddenFood);
-                    snacks_fruit = findSingleFood(snackCalories / 2, fatLevel, nutritionWrapperDto.getFruits(), forbiddenFood);
+                    snack = findSingleFood(snackCalories / 2, fatLevel, nutritionWrapperDto.getSnacks());
+                    snacks_fruit = findSingleFood(snackCalories / 2, fatLevel, nutritionWrapperDto.getFruits());
                     dailySnacks.addAll(Arrays.asList(snack, snacks_fruit));
 
                     choosenFood = Arrays.asList(breakfast, lunch, dinner);
@@ -278,7 +293,7 @@ public class PlanServiceImpl implements PlanService {
 
 
         Set<DailyNutrition> weeklyNutrition = new HashSet<>();
-        for(int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             DailyNutrition day = (DailyNutrition) week.get(i);
             weeklyNutrition.add(day);
         }
@@ -286,19 +301,26 @@ public class PlanServiceImpl implements PlanService {
         return weeklyNutrition;
     }
 
+    /**
+     * Method checks (and replaces) if some meal from today choice is already chosen since start of the week.
+     *
+     * @param week  -   collection of nutrition since start of the week
+     * @param today -   number in the week that today is
+     * @param todaysChoice  -   collection of food picked for today
+     *
+     * @return  Set<Food> that will be used as today choice
+     */
     private Set<Food> checkForRepetition(Dictionary week, int today, List<Food> todaysChoice) {
 
         Set<Food> finalChoice = new HashSet<>();
         Set<Food> allFoodTillToday = new HashSet<>();
-        for(int i = 0; i < today; i++){
+        for (int i = 0; i < today; i++) {
             DailyNutrition day = (DailyNutrition) week.get(i);
             allFoodTillToday.addAll(day.getDailyFood());
         }
         for (Food food : todaysChoice) {
-            if (allFoodTillToday.contains(food)
-                    || allFoodTillToday.contains(food)) {
-                // replace
-                finalChoice.add(replaceFood(allFoodTillToday, food));
+            if (allFoodTillToday.contains(food)) {
+                finalChoice.add(replaceFood(allFoodTillToday, food)); // replace
             } else {
                 finalChoice.add(food);
             }
@@ -307,33 +329,52 @@ public class PlanServiceImpl implements PlanService {
         return finalChoice;
     }
 
+    /**
+     * Method used to find replacement for food that is already picked for some day of the week,
+     * in order not to pick it twice
+     *
+     * @param allFoodTillToday - set of all food picked for meals for days since week start
+     * @param food             -   food to be replaced
+     * @return -   Food object
+     */
     private Food replaceFood(Set<Food> allFoodTillToday, Food food) {
         for (Food foundFood : foodRepository.findAllByFoodGroup(food.getFoodGroup())) {
-            if (foundFood.getDescription() != food.getDescription()
-                    && foundFood.getEnergy_kcal() > food.getEnergy_kcal() - 50 &&
-                    foundFood.getEnergy_kcal() < food.getEnergy_kcal() + 50) {
-                if(!allFoodTillToday.contains(foundFood)) {
-                    return foundFood;
-                }
+            if (!foundFood.getDescription().equals(food.getDescription()) &&
+                    foundFood.getEnergy_kcal() > food.getEnergy_kcal() - 50 &&
+                    foundFood.getEnergy_kcal() < food.getEnergy_kcal() + 50 &&
+                    !allFoodTillToday.contains(foundFood)) {
+                return foundFood;
             }
         }
-        return food;
+        return food;    // no good replacement can be found
     }
 
-    private Food findSingleFood(double calorieLimit, int fatLevel, Set<Food> foodList, Set<String> forbiddenFood) {
+    /**
+     * Method used to find appropriate food from given food list but with condition of not exceeding calorieLimit
+     * and having appropriate amount of fat, determinated by fatLevel property
+     *
+     * @param calorieLimit -   limit of kcal that found food can have
+     * @param fatLevel     -   0 (normal level of fat), -1 (absolutely non fat), 1 (fat over 50)
+     * @param foodList     -   list of food from same food group from which we extract single food
+     * @return Food object
+     */
+    private Food findSingleFood(double calorieLimit, int fatLevel, Set<Food> foodList) {
         Food foundFood = new Food();
         for (Food food : foodList) {
-            if (!forbiddenFood.contains(food.getDescription())) {
-                if (food.getEnergy_kcal() <= calorieLimit) {
-                    if (fatLevel > 0) {
-                        if (food.getFats() > 50) {
-                            foundFood = food;
-                            break;
-                        }
-                    } else {
+            if (food.getEnergy_kcal() <= calorieLimit) {
+                if (fatLevel > 0) {
+                    if (food.getFats() > 50) {
                         foundFood = food;
                         break;
                     }
+                } else if (fatLevel == 0) {
+                    if (food.getFats() < 3) {
+                        foundFood = food;
+                        break;
+                    }
+                } else {
+                    foundFood = food;
+                    break;
                 }
             }
         }

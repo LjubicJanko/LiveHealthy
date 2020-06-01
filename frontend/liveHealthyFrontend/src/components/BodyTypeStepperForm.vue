@@ -203,13 +203,13 @@
                 contain
               ></v-img>
               <v-img
-                v-if="bodyType.type == 'ectomorph-mesomorph'"
+                v-if="bodyType.type == 'ECTOMORPH_MESOMORPH'"
                 src="../resources/male_ectomorph-mesomorph.jpg"
                 aspect-ratio="1.7"
                 contain
               ></v-img>
               <v-img
-                v-if="bodyType.type == 'mesomorph-endomorph'"
+                v-if="bodyType.type == 'ENDOMORPH_MESOMORPH'"
                 src="../resources/male_mesomorph-endomorph.jpg"
                 aspect-ratio="1.7"
                 contain
@@ -241,13 +241,13 @@
                 contain
               ></v-img>
               <v-img
-                v-if="bodyType.type == 'ectomorph-mesomorph'"
+                v-if="bodyType.type == 'ECTOMORPH_MESOMORPH'"
                 src="../resources/male_ectomorph-mesomorph.jpg"
                 aspect-ratio="1.7"
                 contain
               ></v-img>
               <v-img
-                v-if="bodyType.type == 'mesomorph-endomorph'"
+                v-if="bodyType.type == 'ENDOMORPH_MESOMORPH'"
                 src="../resources/male_mesomorph-endomorph.jpg"
                 aspect-ratio="1.7"
                 contain

@@ -1,6 +1,7 @@
 package live.healthy.common.util;
 
 import org.springframework.stereotype.Component;
+
 import java.text.DecimalFormat;
 
 import static live.healthy.common.constants.Constants.*;
@@ -8,7 +9,14 @@ import static live.healthy.common.constants.Constants.*;
 @Component
 public class BodyIndexUtil {
 
+    /**
+     * private constructor, no instantiation
+     */
+    private BodyIndexUtil() {
+    }
+
     private static DecimalFormat df2 = new DecimalFormat("#.##");
+
     /**
      * How is it calculated? Square your height in meters. Divide your weight in kilograms by the number you obtained.
      * For example: your height is 170cm; your weight is 65kg. Therefore, 65 : (1.7 * 1.7) = 22.5
@@ -50,6 +58,14 @@ public class BodyIndexUtil {
         return Double.parseDouble(df2.format(ibw));
     }
 
+    /**
+     * Calculates percentage of fat in body based on bmi, age and sex
+     *
+     * @param bmi
+     * @param age
+     * @param sex
+     * @return
+     */
     public static double bodyFatPercentage(double bmi, double age, boolean sex) {
         double bfp = 0;
         if (sex) {
@@ -60,7 +76,15 @@ public class BodyIndexUtil {
         return Double.parseDouble(df2.format(bfp));
     }
 
-
+    /**
+     * Calculates amount of calories burned by body in inactive state during one day.
+     *
+     * @param height
+     * @param weight
+     * @param sex
+     * @param age
+     * @return
+     */
     public static double basalMetabolicRate(double height, double weight, boolean sex, int age) {
         double bmr = 0.0;
         if (sex) {

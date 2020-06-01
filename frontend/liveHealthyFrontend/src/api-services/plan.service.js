@@ -5,7 +5,7 @@ const ENDPOINTS = {
 }
 
 export default {
-    create(userId, createPlanInfoDto) {
-        return Axios.post(ENDPOINTS.CREATE + userId, createPlanInfoDto);
+    create(userId) {
+        return Axios.post(ENDPOINTS.CREATE + userId);
     }
 }

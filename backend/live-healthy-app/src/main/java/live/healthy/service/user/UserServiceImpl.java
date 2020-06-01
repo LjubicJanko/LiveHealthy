@@ -144,7 +144,9 @@ public class UserServiceImpl implements UserService {
     public UserDTO get(Long id) throws UserNotFound {
         User user = userRepository.findById(id).orElseThrow(UserNotFound::new);
         UserDTO userDTO = ObjectMapperUtils.map(user, UserDTO.class);   // separated from return because of debug
-        userDTO.setBodyType(user.getBodyType().getBodyTypeEnum());
+        if(user.getBodyType() != null) {
+            userDTO.setBodyType(user.getBodyType().getBodyTypeEnum());
+        }
         return userDTO;
     }
 
