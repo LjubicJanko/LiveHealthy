@@ -1,17 +1,19 @@
 package live.healthy.service.plan;
 
+import live.healthy.exception.plan.NutritionPlanAlreadyExists;
+import live.healthy.exception.plan.NutritionPlanNotFound;
 import live.healthy.exception.user.UserNotFound;
-import live.healthy.facts.dto.NutritionWrapperDto;
-import live.healthy.facts.dto.PlanDto;
+import live.healthy.facts.dto.*;
 import live.healthy.facts.model.food.Food;
 import live.healthy.facts.model.plan.DailyNutrition;
 import live.healthy.facts.model.plan.Goal;
 import live.healthy.facts.model.plan.NutritionPlan;
 import live.healthy.facts.model.user.User;
-import live.healthy.repository.UserRepository;
+import live.healthy.repository.user.UserRepository;
 import live.healthy.repository.nutrition.DailyNutritionRepository;
 import live.healthy.repository.nutrition.FoodRepository;
 import live.healthy.repository.plan.NutritionPlanRepository;
+import live.healthy.util.ObjectMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -40,13 +42,24 @@ public class PlanServiceImpl implements PlanService {
 //        this.userRepository = userRepository;
 //    }
 
+    @Override
+    public NutritionPlanDto getNutritionPlan(Long id) throws NutritionPlanNotFound {
+        NutritionPlan nutritionPlan = nutritionPlanRepository.findById(id).orElseThrow(() -> new NutritionPlanNotFound(id));
+        return ObjectMapperUtils.map(nutritionPlan, NutritionPlanDto.class);
+    }
 
     @Override
-    public void createPlan(Long userId, List<String> forbiddenFood) throws UserNotFound {
+    public NutritionAndTrainingDto createPlan(Long userId, CreatePlanInfoDto createPlanInfoDto) throws UserNotFound, NutritionPlanAlreadyExists {
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+
+        /*Todo: change this condition when new plan is being created after one week*/
+        if(user.getNutritionPlan() != null) {
+            throw new NutritionPlanAlreadyExists(userId);
+        }
+
         KieSession kieSession = kieContainer.newKieSession("creatingPlan");
 
-        kieSession.setGlobal("bodyType", user.getBodyType().getType());
+        kieSession.setGlobal("bodyType", user.getBodyType().getBodyTypeEnum());
         PlanDto planDto = new PlanDto("", 0, 0.0);
 
         kieSession.insert(planDto);
@@ -55,10 +68,18 @@ public class PlanServiceImpl implements PlanService {
 
         int i = kieSession.fireAllRules();
         kieSession.dispose();
-        createWeeklyNutrition(planDto, forbiddenFood, user);
+        // TODO: create weekly training plan
+        NutritionAndTrainingDto nutritionAndTrainingDto = new NutritionAndTrainingDto();
+        nutritionAndTrainingDto.setNutritionPlanDto(createWeeklyNutrition(planDto,
+                createPlanInfoDto.getForbiddenFoodDto().getForbiddenFood(), user));
+
+        return nutritionAndTrainingDto;
+
     }
 
-    private void createWeeklyNutrition(PlanDto planDto, List<String> forbiddenFood, User user) {
+
+
+    private NutritionPlanDto createWeeklyNutrition(PlanDto planDto, Set<String> forbiddenFood, User user) {
 
 
         KieSession kieSession = kieContainer.newKieSession("creatingNutritionPlan");
@@ -82,14 +103,16 @@ public class PlanServiceImpl implements PlanService {
 
         user.setNutritionPlan(nutritionPlanRepository.save(nutritionPlan));
         userRepository.save(user);
+
+        return ObjectMapperUtils.map(nutritionPlan, NutritionPlanDto.class);
     }
 
-    private Set<Food> getForbiddenFood(List<String> forbiddenFood) {
+    private Set<Food> getForbiddenFood(Set<String> forbiddenFood) {
         Set<Food> forbidden = foodRepository.findAllByDescription(forbiddenFood);
         return forbidden;
     }
 
-    private Set<DailyNutrition> findWeeklyFoodPlan(Goal goal, double calorieLimit, int fatLevel, List<String> forbiddenFood) {
+    private Set<DailyNutrition> findWeeklyFoodPlan(Goal goal, double calorieLimit, int fatLevel, Set<String> forbiddenFood) {
         Set<Food> cereals = foodRepository.findAllByFoodGroup("Breakfast Cereals");
         Set<Food> soups = foodRepository.findAllByFoodGroup("Soups- Sauces- and Gravies");
         Set<Food> chicken = foodRepository.findAllByFoodGroup("Poultry Products");
@@ -109,7 +132,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     private Set<DailyNutrition> getWeeklyNutrition(Goal goal, NutritionWrapperDto nutritionWrapperDto,
-                                                   int fatLevel, double calorieLimit, List<String> forbiddenFood) {
+                                                   int fatLevel, double calorieLimit, Set<String> forbiddenFood) {
         Food breakfast, lunch, dinner, snack, snacks_fruit = new Food();
 
         double breakfastCalories = calorieLimit / 3;
@@ -294,10 +317,10 @@ public class PlanServiceImpl implements PlanService {
                 }
             }
         }
-        return new Food();
+        return food;
     }
 
-    private Food findSingleFood(double calorieLimit, int fatLevel, Set<Food> foodList, List<String> forbiddenFood) {
+    private Food findSingleFood(double calorieLimit, int fatLevel, Set<Food> foodList, Set<String> forbiddenFood) {
         Food foundFood = new Food();
         for (Food food : foodList) {
             if (!forbiddenFood.contains(food.getDescription())) {

@@ -8,7 +8,7 @@ import live.healthy.facts.dto.UserRegistrationDTO;
 import live.healthy.facts.model.user.Authority;
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.AuthorityRepository;
-import live.healthy.repository.UserRepository;
+import live.healthy.repository.user.UserRepository;
 import live.healthy.util.ObjectMapperUtils;
 import org.springframework.stereotype.Service;
 
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO get(Long id) throws UserNotFound {
         User user = userRepository.findById(id).orElseThrow(UserNotFound::new);
         UserDTO userDTO = ObjectMapperUtils.map(user, UserDTO.class);   // separated from return because of debug
-        userDTO.setBodyType(user.getBodyType().getType());
+        userDTO.setBodyType(user.getBodyType().getBodyTypeEnum());
         return userDTO;
     }
 

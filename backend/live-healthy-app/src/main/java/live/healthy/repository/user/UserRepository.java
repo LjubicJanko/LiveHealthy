@@ -1,4 +1,4 @@
-package live.healthy.repository;
+package live.healthy.repository.user;
 
 import live.healthy.facts.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,20 +1,20 @@
 
-E
-java:S1948D"/Make "nutritionPlan" transient or serializable.(Ü‰Ùë
-@
-java:S19486"*Make "bodyType" transient or serializable.(£¶Ãî
-y
-java:S1104:"WMake startingBmr a static final constant or non-public and provide accessors if needed.(ÇÝÖ´ÿÿÿÿÿ8Žâ’£¢.
-V	java:S107p"AConstructor has 9 parameters, which is greater than 7 authorized.(Î¸¥™
-D
-java:S1948G".Make "trainingPlan" transient or serializable.(Á‚ŒÞ
-}
-java:S2637g"b"age" is marked "javax.validation.constraints.NotNull" but is not initialized in this constructor.(¢ö±³ûÿÿÿÿ
-}
-java:S1104@"[Make idealBodyWeight a static final constant or non-public and provide accessors if needed.(Í­Ûðúÿÿÿÿ8Žâ’£¢.
-y
-java:S11048"WMake startingBmi a static final constant or non-public and provide accessors if needed.(Õªü¸ùÿÿÿÿ8Žâ’£¢.
-t
-java:S1104<"WMake startingBfp a static final constant or non-public and provide accessors if needed.(ˆª‘µ8Žâ’£¢.
 w
 java:S1104>"ZMake startingWeight a static final constant or non-public and provide accessors if needed.(š†®¦8Žâ’£¢.
+E
+java:S1948D"/Make "nutritionPlan" transient or serializable.(Ü‰Ùë
+t
+java:S1104<"WMake startingBfp a static final constant or non-public and provide accessors if needed.(ˆª‘µ8Žâ’£¢.
+y
+java:S1104:"WMake startingBmr a static final constant or non-public and provide accessors if needed.(ÇÝÖ´ÿÿÿÿÿ8Žâ’£¢.
+}
+java:S1104@"[Make idealBodyWeight a static final constant or non-public and provide accessors if needed.(Í­Ûðúÿÿÿÿ8Žâ’£¢.
+@
+java:S19486"*Make "bodyType" transient or serializable.(£¶Ãî
+}
+java:S2637g"b"age" is marked "javax.validation.constraints.NotNull" but is not initialized in this constructor.(¢ö±³ûÿÿÿÿ
+y
+java:S11048"WMake startingBmi a static final constant or non-public and provide accessors if needed.(Õªü¸ùÿÿÿÿ8Žâ’£¢.
+D
+java:S1948G".Make "trainingPlan" transient or serializable.(Á‚ŒÞ
+V	java:S107p"AConstructor has 9 parameters, which is greater than 7 authorized.(Î¸¥™

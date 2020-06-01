@@ -33,6 +33,6 @@ public class Food {
     @NotNull
     private double carbs;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<NutritionPlan> nutritionPlans;
 }

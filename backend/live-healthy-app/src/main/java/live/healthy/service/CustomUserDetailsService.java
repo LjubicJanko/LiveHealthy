@@ -1,7 +1,7 @@
 package live.healthy.service;
 
 import live.healthy.facts.model.user.User;
-import live.healthy.repository.UserRepository;
+import live.healthy.repository.user.UserRepository;
 import live.healthy.security.TokenUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

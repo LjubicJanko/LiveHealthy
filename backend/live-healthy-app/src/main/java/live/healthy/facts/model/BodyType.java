@@ -1,7 +1,5 @@
 package live.healthy.facts.model;
 
-import live.healthy.facts.model.AbstractUser;
-import live.healthy.facts.model.Type;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -19,13 +17,11 @@ public class BodyType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    public Type type;
+    public BodyTypeEnum bodyTypeEnum;
     @NotBlank
     private String description;
-    @NotNull
-    private double bmi;
 
-    public String getType(){
-        return this.type.name();
+    public String getBodyTypeEnum(){
+        return this.bodyTypeEnum.name();
     }
 }

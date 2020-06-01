@@ -6,7 +6,7 @@ import live.healthy.facts.model.DailyActivity;
 
 
 rule "Ectomorph - mesomorph"
-    activation-group "body-type"
+    activation-group "body-bodyTypeEnum"
     salience 1
     when
         $bi: BodyInfoDto(shoulders in ("Narrower than my hips", "The same width as my hips"),
@@ -30,7 +30,7 @@ rule "Ectomorph - mesomorph"
 end
 
 rule "Mesomorph - Endomorph"
-    activation-group "body-type"
+    activation-group "body-bodyTypeEnum"
     salience 2
     when
         $bi: BodyInfoDto(shoulders in ("Wider than my hips", "The same width as my hips"),
@@ -54,8 +54,8 @@ rule "Mesomorph - Endomorph"
 end
 
 
-rule "Nonexistent type"
-    activation-group "body-type"
+rule "Nonexistent bodyTypeEnum"
+    activation-group "body-bodyTypeEnum"
     salience 1
     when
         $bodyTypeDto: BodyTypeDto(type == "")

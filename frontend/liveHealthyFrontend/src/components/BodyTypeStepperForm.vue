@@ -272,6 +272,7 @@
 </template>
 <script>
 import BasicDeterminationService from "../api-services/basic.determination.service";
+import store from '@/store';
 
 export default {
   data() {
@@ -299,8 +300,10 @@ export default {
         bodyLook: this.bodyLook,
         weightTendations: this.weightTendations
       };
+      let userId = store.state.userId;
+      console.log(store.state.userId);
       console.log(bodyInfo);
-      BasicDeterminationService.determine(bodyInfo)
+      BasicDeterminationService.determine(bodyInfo, userId)
         .then(response => {
           this.bodyType = response.data;
           this.popupInfo = true;

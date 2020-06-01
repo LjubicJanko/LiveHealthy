@@ -1,60 +1,50 @@
 
-M
-java:S1481V"+Remove this unused "fruits" local variable.(»§şãûÿÿÿÿ8’¶À³¤.
 @
-java:S1659]"#Declare "lunch" on a separate line.(Ö’Ş½8ŒŸª¸¤.
-L
-java:S1481X"*Remove this unused "pasta" local variable.(ñÆ›‰ıÿÿÿÿ8ßÈÃ³¤.
-G
-java:S1481["+Remove this unused "cereal" local variable.(ÌˆÇ	8şİ¸¤.
-j
-java:S1871x"MThis branch's code block is the same as the block for the branch on line 118.(»Ó©¢8Ş™¯¸¤.
-O
-java:S1135H"2Complete the task associated to this TODO comment.(ÓÂäğ8‰‰éÁ£.
-P
-java:S11729"4Remove this unused method parameter "forbiddenFood".(›˜ø08ö´¹œ¤.
-\
-java:S1854V":Remove this useless assignment to local variable "fruits".(»§şãûÿÿÿÿ8’¶À³¤.
-[
-java:S1854T"9Remove this useless assignment to local variable "soups".(æÁœ“üÿÿÿÿ8İÿ½³¤.
+java:S1659~"#Declare "lunch" on a separate line.(—ÁÁ¥8ô½©à¥.
+R
+java:S3740†"/Provide the parametrized type for this generic.(¨¡æÇúÿÿÿÿ8ô½©à¥.
+y
+java:S1149†"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(¨¡æÇúÿÿÿÿ8ô½©à¥.
 A
-java:S1659]"$Declare "dinner" on a separate line.(Ö’Ş½8ŒŸª¸¤.
-W
-java:S1854]":Remove this useless assignment to local variable "dinner".(Ö’Ş½8ŒŸª¸¤.
-U
-java:S1854W"8Remove this useless assignment to local variable "pork".(òæ¢Ä8¬ÖÂ³¤.
-C
-java:S14814"&Remove this unused "i" local variable.(ÂÅ®º8´Ç¤¢.
+java:S1659~"$Declare "dinner" on a separate line.(—ÁÁ¥8ô½©à¥.
 G
-java:S1481]"*Remove this unused "lunch" local variable.(Ö’Ş½8ŒŸª¸¤.
-K
-java:S1481]".Remove this unused "breakfast" local variable.(Ö’Ş½8ŒŸª¸¤.
-[
-java:S1854X"9Remove this useless assignment to local variable "pasta".(ñÆ›‰ıÿÿÿÿ8›±Ã³¤.
-]	java:S125!"<This block of commented-out lines of code should be removed.(¼œ¸™üÿÿÿÿ8¼¡¡³¤.
+java:S1659~"*Declare "snacks_fruit" on a separate line.(—ÁÁ¥8ô½©à¥.
+n
+java:S1764¡"KCorrect one of the identical sub-expressions on both sides of operator "||"(¯¹ºäÿÿÿÿÿ8ô½©à¥.
 R
-java:S18544"5Remove this useless assignment to local variable "i".(ÂÅ®º8´Ç¤¢.
-R
-java:S1854A"5Remove this useless assignment to local variable "i".(ÂÅ®º8‰‰éÁ£.
-E	java:S108x")Either remove or fill this block of code.(»Ó©¢8Ş™¯¸¤.
-}
-java:S3923`"[Remove this conditional structure or edit its code blocks so that they're not all the same.(·Š‹Ìùÿÿÿÿ8ö³¸¤.
-N
-java:S1481U",Remove this unused "chicken" local variable.(Á ¦¹şÿÿÿÿ8åï»³¤.
-F
-java:S1481W")Remove this unused "pork" local variable.(òæ¢Ä8¬ÖÂ³¤.
-Z	java:S106E"9Replace this use of System.out or System.err by a logger.(ññ«Œøÿÿÿÿ8‰‰éÁ£.
+java:S1854R"5Remove this useless assignment to local variable "i".(ÂÅ®º8ô½©à¥.
+m	java:S117~"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ÁÁ¥8ô½©à¥.
+p
+java:S3776¹"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ï£¢¹8ô½©à¥.
+]	java:S125)"<This block of commented-out lines of code should be removed.(¼œ¸™üÿÿÿÿ8¼¡¡³¤.
+M
+java:S3740—"/Provide the parametrized type for this generic.(ì÷«Ä8ô½©à¥.
+‰
+java:S1488v"gImmediately return this expression instead of assigning it to the temporary variable "weeklyNutrition".(¾µ¡‡ùÿÿÿÿ8ô½©à¥.
 C
-java:S1481A"&Remove this unused "i" local variable.(ÂÅ®º8‰‰éÁ£.
-v	java:S135‚"YReduce the total number of break and continue statements in this loop to use at most one.(Ÿ¹¹€8şİ¸¤.
+java:S1481R"&Remove this unused "i" local variable.(ÂÅ®º8ô½©à¥.
+\
+java:S4973®"9Use the "equals" method if value comparison was intended.(ú‰Üóıÿÿÿÿ8ô½©à¥.
 ]
-java:S1854U";Remove this useless assignment to local variable "chicken".(Á ¦¹şÿÿÿÿ8“¡»³¤.
-H
-java:S1481]"+Remove this unused "dinner" local variable.(Ö’Ş½8ŒŸª¸¤.
-H
-java:S1168|"+Return an empty collection instead of null.(¥¹ï8şİ¸¤.
-L
-java:S1481T"*Remove this unused "soups" local variable.(æÁœ“üÿÿÿÿ8İÿ½³¤.
-J	java:S108v")Either remove or fill this block of code.(—çşÿÿÿÿ8ßœ¬¸¤.
-V
-java:S1854[":Remove this useless assignment to local variable "cereal".(ÌˆÇ	8şİ¸¤.
+java:S1854~"@Remove this useless assignment to local variable "snacks_fruit".(—ÁÁ¥8ô½©à¥.
+b
+java:S1854…"?Remove this useless assignment to local variable "choosenFood".(±ı³ôşÿÿÿÿ8ô½©à¥.
+o
+java:S3776|"RRefactor this method to reduce its Cognitive Complexity from 32 to the 15 allowed.(¯´ñ‰8ô½©à¥.
+M
+java:S1066±"/Merge this if statement with the enclosing one.(ëßÁ·8ô½©à¥.
+R
+java:S1066½"/Merge this if statement with the enclosing one.(úÓ ‰üÿÿÿÿ8ô½©à¥.
+R
+java:S3740†"/Provide the parametrized type for this generic.(¨¡æÇúÿÿÿÿ8ô½©à¥.
+O
+java:S1135D"2Complete the task associated to this TODO comment.(ÆÏÙ8ú¹ùà¥.
+C
+java:S1481A"&Remove this unused "i" local variable.(ÂÅ®º8ô½©à¥.
+v	java:S135»"YReduce the total number of break and continue statements in this loop to use at most one.(Ÿ¹¹€8ô½©à¥.
+ƒ
+java:S1488e"aImmediately return this expression instead of assigning it to the temporary variable "forbidden".(Ô¬ÌÚùÿÿÿÿ8ô½©à¥.
+@
+java:S1659~"#Declare "snack" on a separate line.(—ÁÁ¥8ô½©à¥.
+R
+java:S1854A"5Remove this useless assignment to local variable "i".(ÂÅ®º8ô½©à¥.

@@ -18,13 +18,13 @@ public class DailyNutrition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "daily_food",
             joinColumns = @JoinColumn(name = "daily_nutrition_id"),
             inverseJoinColumns = @JoinColumn(name = "food_id"))
     private Set<Food> dailyFood;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "daily_snacks",
             joinColumns = @JoinColumn(name = "daily_nutrition_id"),

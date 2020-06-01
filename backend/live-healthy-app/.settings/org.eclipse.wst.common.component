@@ -3,7 +3,7 @@
         <wb-resource deploy-path="/" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/resources"/>
         <dependent-module deploy-path="/" handle="module:/resource/live-healthy-kjar/live-healthy-kjar">
-            <dependency-type>uses</dependency-type>
+            <dependency-bodyTypeEnum>uses</dependency-bodyTypeEnum>
         </dependent-module>
     </wb-module>
 </project-modules>

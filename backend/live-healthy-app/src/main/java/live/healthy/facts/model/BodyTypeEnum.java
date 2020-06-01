@@ -1,11 +1,11 @@
 package live.healthy.facts.model;
 
-public enum Type {
+public enum BodyTypeEnum {
     ECTOMORPH("ECTOMORPH"), MESOMORPH("MESOMORPH"), ENDOMORPH("ENDOMORPH");
 
     private String value;
 
-    Type(String value) {
+    BodyTypeEnum(String value) {
         this.value = value;
     }
 
