@@ -1,5 +1,6 @@
 package live.healthy.facts.dto;
 
+import live.healthy.events.IntakeSubmitEvent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,8 @@ public class DailyNutritionDto {
     private Set<FoodDto> dailyFood;
     @Nullable
     private Set<FoodDto> snacks;
+    @NotNull
+    private int dayOfTheWeek;
+
+    private IntakeSubmitEvent intakeSubmitEvent;
 }

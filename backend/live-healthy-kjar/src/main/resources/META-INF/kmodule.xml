@@ -10,4 +10,8 @@
     <kbase name="NutritionPlan" packages="rules.nutrition">
         <ksession name="creatingNutritionPlan" type="stateful"/>
     </kbase>
+
+    <kbase name="intakeSubmitKBase" eventProcessingMode="stream" packages="cep">
+        <ksession name="intakeSubmitSession"/>
+    </kbase>
 </kmodule>

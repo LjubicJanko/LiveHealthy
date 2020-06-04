@@ -1,5 +1,7 @@
 package live.healthy.facts.model.plan;
 
+import live.healthy.events.IntakeSubmitEvent;
+import live.healthy.events.IntakeSubmitType;
 import live.healthy.facts.model.food.Food;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +33,11 @@ public class DailyNutrition {
             inverseJoinColumns = @JoinColumn(name = "food_id"))
     private Set<Food> snacks;
 
+    @NotNull
+    private int dayOfTheWeek;
+
+//    @Column(columnDefinition = "LONGBLOB")
+    private IntakeSubmitType intakeSubmitType;
 
 
 }

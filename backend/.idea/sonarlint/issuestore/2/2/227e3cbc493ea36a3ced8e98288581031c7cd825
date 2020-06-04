@@ -1,50 +1,38 @@
 
-@
-java:S1659~"#Declare "lunch" on a separate line.(—ÁÁ¥8ô½©à¥.
 R
-java:S3740†"/Provide the parametrized type for this generic.(¨¡æÇúÿÿÿÿ8ô½©à¥.
-y
-java:S1149†"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(¨¡æÇúÿÿÿÿ8ô½©à¥.
-A
-java:S1659~"$Declare "dinner" on a separate line.(—ÁÁ¥8ô½©à¥.
-G
-java:S1659~"*Declare "snacks_fruit" on a separate line.(—ÁÁ¥8ô½©à¥.
-n
-java:S1764¡"KCorrect one of the identical sub-expressions on both sides of operator "||"(¯¹ºäÿÿÿÿÿ8ô½©à¥.
-R
-java:S1854R"5Remove this useless assignment to local variable "i".(ÂÅ®º8ô½©à¥.
-m	java:S117~"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ÁÁ¥8ô½©à¥.
-p
-java:S3776¹"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ï£¢¹8ô½©à¥.
-]	java:S125)"<This block of commented-out lines of code should be removed.(¼œ¸™üÿÿÿÿ8¼¡¡³¤.
-M
-java:S3740—"/Provide the parametrized type for this generic.(ì÷«Ä8ô½©à¥.
-‰
-java:S1488v"gImmediately return this expression instead of assigning it to the temporary variable "weeklyNutrition".(¾µ¡‡ùÿÿÿÿ8ô½©à¥.
-C
-java:S1481R"&Remove this unused "i" local variable.(ÂÅ®º8ô½©à¥.
-\
-java:S4973®"9Use the "equals" method if value comparison was intended.(ú‰Üóýÿÿÿÿ8ô½©à¥.
-]
-java:S1854~"@Remove this useless assignment to local variable "snacks_fruit".(—ÁÁ¥8ô½©à¥.
+java:S3740Ÿ"/Provide the parametrized type for this generic.(¨¡æÇúÿÿÿÿ8ô½©à¥.
+N
+java:S1135;"2Complete the task associated to this TODO comment.(ˆúº8×¾š¤§.
+H
+java:S1659—"*Declare "snacks_fruit" on a separate line.(—ÁÁ¥8ô½©à¥.
 b
-java:S1854…"?Remove this useless assignment to local variable "choosenFood".(±ý³ôþÿÿÿÿ8ô½©à¥.
-o
-java:S3776|"RRefactor this method to reduce its Cognitive Complexity from 32 to the 15 allowed.(¯´ñ‰8ô½©à¥.
-M
-java:S1066±"/Merge this if statement with the enclosing one.(ëßÁ·8ô½©à¥.
-R
-java:S1066½"/Merge this if statement with the enclosing one.(úÓ ‰üÿÿÿÿ8ô½©à¥.
-R
-java:S3740†"/Provide the parametrized type for this generic.(¨¡æÇúÿÿÿÿ8ô½©à¥.
-O
-java:S1135D"2Complete the task associated to this TODO comment.(ÆÏÙ8ú¹ùà¥.
+java:S1854ž"?Remove this useless assignment to local variable "choosenFood".(±ý³ôþÿÿÿÿ8ô½©à¥.
 C
-java:S1481A"&Remove this unused "i" local variable.(ÂÅ®º8ô½©à¥.
-v	java:S135»"YReduce the total number of break and continue statements in this loop to use at most one.(Ÿ¹¹€8ô½©à¥.
-ƒ
-java:S1488e"aImmediately return this expression instead of assigning it to the temporary variable "forbidden".(Ô¬ÌÚùÿÿÿÿ8ô½©à¥.
-@
-java:S1659~"#Declare "snack" on a separate line.(—ÁÁ¥8ô½©à¥.
+java:S1481I"&Remove this unused "i" local variable.(ÂÅ®º8ô½©à¥.
+]	java:S125+"<This block of commented-out lines of code should be removed.(¼œ¸™üÿÿÿÿ8¼¡¡³¤.
+v	java:S135ë"YReduce the total number of break and continue statements in this loop to use at most one.(Ÿ¹¹€8ô½©à¥.
+^
+java:S1854—"@Remove this useless assignment to local variable "snacks_fruit".(—ÁÁ¥8ô½©à¥.
+y
+java:S1149Ÿ"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(¨¡æÇúÿÿÿÿ8ô½©à¥.
+n	java:S117—"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ÁÁ¥8ô½©à¥.
 R
-java:S1854A"5Remove this useless assignment to local variable "i".(ÂÅ®º8ô½©à¥.
+java:S1854I"5Remove this useless assignment to local variable "i".(ÂÅ®º8ô½©à¥.
+R
+java:S3740Ÿ"/Provide the parametrized type for this generic.(¨¡æÇúÿÿÿÿ8ô½©à¥.
+M
+java:S3740¹"/Provide the parametrized type for this generic.(ì÷«Ä8ô½©à¥.
+A
+java:S1659—"#Declare "lunch" on a separate line.(—ÁÁ¥8ô½©à¥.
+…
+java:S1488K"hImmediately return this expression instead of assigning it to the temporary variable "nutritionPlanDto".(»“ÜÉ8×¾š¤§.
+p
+java:S3776•"RRefactor this method to reduce its Cognitive Complexity from 32 to the 15 allowed.(¯´ñ‰8ô½©à¥.
+A
+java:S1659—"#Declare "snack" on a separate line.(—ÁÁ¥8ô½©à¥.
+p
+java:S3776é"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ª¯Ñ•8×¾š¤§.
+…
+java:S1488‡"gImmediately return this expression instead of assigning it to the temporary variable "weeklyNutrition".(ªÕ·8×¾š¤§.
+B
+java:S1659—"$Declare "dinner" on a separate line.(—ÁÁ¥8ô½©à¥.

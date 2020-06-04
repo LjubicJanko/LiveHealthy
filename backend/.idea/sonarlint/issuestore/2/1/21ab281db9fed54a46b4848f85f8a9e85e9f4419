@@ -1,7 +1,5 @@
 
-W
-java:S1118	":Add a private constructor to hide the implicit public one.(ù‘”¨8”’Š¢¢.
-O
-java:S1172!"-Remove this unused method parameter "weight".(ŒÃœÑùÿÿÿÿ8’ş¡¢.
 T
-java:S1854A"7Remove this useless assignment to local variable "bmr".(­Õ»8Šî´¢¢.
+java:S1854Y"7Remove this useless assignment to local variable "bmr".(­Õ»8Šî´¢¢.
+O
+java:S1172)"-Remove this unused method parameter "weight".(ŒÃœÑùÿÿÿÿ8’ş¡¢.

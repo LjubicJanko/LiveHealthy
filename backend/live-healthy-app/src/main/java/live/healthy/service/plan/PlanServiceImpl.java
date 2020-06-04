@@ -1,5 +1,7 @@
 package live.healthy.service.plan;
 
+import live.healthy.events.IntakeSubmitEvent;
+import live.healthy.events.IntakeSubmitType;
 import live.healthy.exception.plan.NutritionPlanAlreadyExists;
 import live.healthy.exception.plan.NutritionPlanNotFound;
 import live.healthy.exception.user.UserNotFound;
@@ -10,6 +12,7 @@ import live.healthy.facts.model.food.Food;
 import live.healthy.facts.model.plan.DailyNutrition;
 import live.healthy.facts.model.plan.Goal;
 import live.healthy.facts.model.plan.NutritionPlan;
+import live.healthy.facts.model.plan.PlanFollowingEnum;
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.nutrition.DailyNutritionRepository;
 import live.healthy.repository.nutrition.FoodRepository;
@@ -101,9 +104,10 @@ public class PlanServiceImpl implements PlanService {
         NutritionPlan nutritionPlan = new NutritionPlan();
         nutritionPlan.setGoal(Goal.valueOf(planDto.getGoal()));
         nutritionPlan.setWeeklyPlan(findWeeklyFoodPlan(nutritionPlan.getGoal(), calorieLimit,
-                planDto.getFatLevelNeeded()));
+                planDto.getFatLevelNeeded(), user.getId()));
         nutritionPlan.setCaloriesGoal(calorieLimit);
         nutritionPlan.setFatBased(planDto.fatLevelNeeded);
+        nutritionPlan.setPlanFollowingEnum(PlanFollowingEnum.REGULAR);
 
         user.setNutritionPlan(nutritionPlanRepository.save(nutritionPlan));
         userRepository.save(user);
@@ -119,7 +123,7 @@ public class PlanServiceImpl implements PlanService {
      * @param fatLevel
      * @return
      */
-    private Set<DailyNutrition> findWeeklyFoodPlan(Goal goal, double calorieLimit, int fatLevel) {
+    private Set<DailyNutrition> findWeeklyFoodPlan(Goal goal, double calorieLimit, int fatLevel, Long userId) {
         Set<Food> cereals = foodRepository.findAllByFoodGroup("Breakfast Cereals");
         Set<Food> soups = foodRepository.findAllByFoodGroup("Soups- Sauces- and Gravies");
         Set<Food> chicken = foodRepository.findAllByFoodGroup("Poultry Products");
@@ -132,7 +136,7 @@ public class PlanServiceImpl implements PlanService {
         NutritionWrapperDto nutritionWrapperDto = new NutritionWrapperDto(cereals, soups, chicken, fruits, pork,
                 pasta, eggs, snacks);
 
-        Set<DailyNutrition> weeklyNutrition = getWeeklyNutrition(goal, nutritionWrapperDto, fatLevel, calorieLimit);
+        Set<DailyNutrition> weeklyNutrition = getWeeklyNutrition(goal, nutritionWrapperDto, fatLevel, calorieLimit, userId);
 
         return weeklyNutrition;
     }
@@ -147,7 +151,7 @@ public class PlanServiceImpl implements PlanService {
      * @return
      */
     private Set<DailyNutrition> getWeeklyNutrition(Goal goal, NutritionWrapperDto nutritionWrapperDto,
-                                                   int fatLevel, double calorieLimit) {
+                                                   int fatLevel, double calorieLimit, Long userId) {
         Food breakfast, lunch, dinner, snack, snacks_fruit = new Food();
 
         double breakfastCalories = calorieLimit / 3;
@@ -284,6 +288,8 @@ public class PlanServiceImpl implements PlanService {
             DailyNutrition dailyNutrition = new DailyNutrition();
             dailyNutrition.setDailyFood(dailyFood);
             dailyNutrition.setSnacks(dailySnacks);
+            dailyNutrition.setIntakeSubmitType(IntakeSubmitType.NONE);
+            dailyNutrition.setDayOfTheWeek(i);
 
             dailyNutritionRepository.save(dailyNutrition);
 

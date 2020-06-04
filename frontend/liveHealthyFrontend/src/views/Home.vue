@@ -3,7 +3,7 @@
     <v-container>
       <v-row v-if="isLoggedIn">
         <v-col cols="12">
-          <v-card  class="ma-3 pa-6" @click="goTo('/body-type')">
+          <v-card v-if="!bodyTypeDetermined" class="ma-3 pa-6" @click="goTo('/body-type')">
             <v-card-text class="text-center">
               <h1>Find your body type</h1>
             </v-card-text>

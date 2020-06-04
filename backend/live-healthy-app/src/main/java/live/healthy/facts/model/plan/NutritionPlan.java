@@ -22,12 +22,14 @@ public class NutritionPlan{
             joinColumns = @JoinColumn(name = "nutrition_plan_id"),
             inverseJoinColumns = @JoinColumn(name = "daily_nutrition_id"))
     private Set<DailyNutrition> weeklyPlan;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "weekly_forbidden_food",
-            joinColumns = @JoinColumn(name = "nutrition_plan_id"),
-            inverseJoinColumns = @JoinColumn(name = "forbidden_food_id"))
-    private Set<Food> forbiddenFood;
+
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "weekly_forbidden_food",
+//            joinColumns = @JoinColumn(name = "nutrition_plan_id"),
+//            inverseJoinColumns = @JoinColumn(name = "forbidden_food_id"))
+//    private Set<Food> forbiddenFood;
 
     /*
     * -1 less fat
@@ -39,4 +41,6 @@ public class NutritionPlan{
     @NotNull
     private double caloriesGoal;
 
+    @NotNull
+    private PlanFollowingEnum planFollowingEnum;
 }

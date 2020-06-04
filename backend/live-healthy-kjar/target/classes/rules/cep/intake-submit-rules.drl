@@ -1,0 +1,47 @@
+package rules.cep;
+dialect  "mvel"
+
+import live.healthy.events.IntakeSubmitEvent
+import live.healthy.events.IntakeSubmitType;
+import live.healthy.events.CreateRewardEvent;
+
+import live.healthy.facts.model.plan.NutritionPlan;
+import live.healthy.facts.model.plan.PlanFollowingEnum;
+import live.healthy.facts.model.user.User;
+
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+
+rule "More than 5 regular submits"
+    salience 2
+    no-loop
+    when
+        $i1: IntakeSubmitEvent($intakeUserId: userId, submitType == IntakeSubmitType.REGULAR)
+        $number: Number(intValue > 3) from accumulate(
+            $i2: IntakeSubmitEvent(
+                this != $i1,
+                submitType == IntakeSubmitType.REGULAR,
+                userId == $intakeUserId
+            ),
+            count($i2)
+        )
+        not (IntakeSubmitEvent(userId == $intakeUserId, submitType == IntakeSubmitType.IRREGULAR))
+        $nutritionPlan: NutritionPlan(planFollowingEnum == PlanFollowingEnum.REGULAR)
+        $user: User(id == $intakeUserId, nutritionPlan.id == $nutritionPlan.id)
+//        not (CreateRewardEvent(userId == $intakeUserId, nutritionPlanId == $nutritionPlan.id))
+    then
+        insert(new CreateRewardEvent($intakeUserId, $nutritionPlan.id));
+        System.out.println("Nasao sam ih preko 3 koji su regularni " + $number);
+end
+
+
+
+rule "Ready for reward"
+    salience 2
+    no-loop
+    when
+        $nutritionPlan: NutritionPlan(planFollowingEnum == PlanFollowingEnum.REGULAR)
+        $user: User()
+        CreateRewardEvent(userId == $user.id, nutritionPlanId == $nutritionPlan.id);
+    then
+        System.out.println("Nagrada za korisnika sa id: " + $user.id + " za plan " + $nutritionPlan.id);
+end

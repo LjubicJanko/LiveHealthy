@@ -1,5 +1,6 @@
 package live.healthy.facts.dto;
 
+import live.healthy.facts.model.plan.PlanFollowingEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,6 @@ public class NutritionPlanDto {
     private int fatBased;
     @NotNull
     private double caloriesGoal;
+    @NotNull
+    private PlanFollowingEnum planFollowingEnum;
 }
