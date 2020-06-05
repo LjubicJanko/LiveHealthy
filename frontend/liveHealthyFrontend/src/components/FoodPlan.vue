@@ -25,21 +25,27 @@
           <v-card-title>Submit information about your daily intake</v-card-title>
           <v-speed-dial
             v-model="fab"
-            bottom="true"
-            right="true"
+            bottom
+            right
             direction="left"
             transition="slide-y-reverse-transition"
             style="position: absolute;"
           >
             <template v-slot:activator>
               <v-btn v-model="fab" color="blue darken-2" dark fab>
-                <v-icon v-if="fab">mdi-arrow-collapse-down</v-icon>
+                <v-icon v-if="fab">mdi-arrow-collapse-right</v-icon>
                 <v-icon v-else>mdi-nutrition</v-icon>
               </v-btn>
             </template>
-            <v-btn fab dark small color="indigo" @click="intakeByPlan(i)">
-              <v-icon>mdi-checkbox-marked-circle</v-icon>
-            </v-btn>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-btn fab dark small color="indigo" v-on="on" @click="intakeByPlan(i)">
+                  <v-icon>mdi-checkbox-marked-circle</v-icon>
+                </v-btn>
+              </template>
+              <span>I followed the plan.</span>
+            </v-tooltip>
+
             <v-dialog v-model="dialog" persistent max-width="600px">
               <template v-slot:activator="{ on }">
                 <v-btn fab dark small color="red" v-on="on">
@@ -48,13 +54,9 @@
               </template>
               <v-card>
                 <v-card-title>
-                  <span
-                    class="headline"
-                  >Number of calories by which you missed limit</span>
+                  <span class="headline">Number of calories by which you missed limit</span>
                 </v-card-title>
-                <v-card-subtitle>
-                  +-50 calorie difference
-                </v-card-subtitle>
+                <v-card-subtitle>+-50 calorie difference</v-card-subtitle>
                 <v-card-text>
                   <v-row cols="12" sm="6" md="4">
                     <v-text-field
@@ -83,9 +85,8 @@
 </template>
 
 <script>
-
 import IntakeService from "../api-services/intake.service";
-import store from '@/store';
+import store from "@/store";
 
 export default {
   name: "FoodPlan",
@@ -103,19 +104,27 @@ export default {
       console.log(this.nutritionPlan.weeklyPlan);
     },
     intakeByPlan(i) {
-      console.log(i);
-      IntakeService.submit(store.state.userId, i, 0);
+      let userId = store.state.userId;
+      let submitDto = {
+        dayIndex: i,
+        caloriesDifference: 0
+      };
+
+      IntakeService.submit(userId, submitDto);
     },
     intakeNotByPlan(i) {
       this.dialog = false;
-      console.log(i);
-      IntakeService.submit(store.state.userId, i, this.caloriesDifference);
+      let submitDto = {
+        dayIndex: i,
+        caloriesDifference: this.caloriesDifference
+      };
+      IntakeService.submit(store.state.userId, submitDto);
     },
-    increment () {
-      this.caloriesDifference = parseInt(this.caloriesDifference,10) + 50
+    increment() {
+      this.caloriesDifference = parseInt(this.caloriesDifference, 10) + 50;
     },
-    decrement () {
-      this.caloriesDifference = parseInt(this.caloriesDifference,10) - 50
+    decrement() {
+      this.caloriesDifference = parseInt(this.caloriesDifference, 10) - 50;
     }
   }
 };

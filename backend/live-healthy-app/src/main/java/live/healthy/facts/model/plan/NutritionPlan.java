@@ -24,13 +24,6 @@ public class NutritionPlan{
     private Set<DailyNutrition> weeklyPlan;
 
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name = "weekly_forbidden_food",
-//            joinColumns = @JoinColumn(name = "nutrition_plan_id"),
-//            inverseJoinColumns = @JoinColumn(name = "forbidden_food_id"))
-//    private Set<Food> forbiddenFood;
-
     /*
     * -1 less fat
     * 0 normal amount fat

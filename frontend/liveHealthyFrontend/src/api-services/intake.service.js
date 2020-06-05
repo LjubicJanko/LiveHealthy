@@ -5,7 +5,7 @@ const ENDPOINTS = {
 }
 
 export default {
-    submit(userId, dayIndex, caloriesDifference) {
-        return Axios.post(ENDPOINTS.SUBMIT + userId + "/" + dayIndex, caloriesDifference);
+    submit(userId, submitDto) {
+        return Axios.post(ENDPOINTS.SUBMIT + userId, submitDto);
     }
 }

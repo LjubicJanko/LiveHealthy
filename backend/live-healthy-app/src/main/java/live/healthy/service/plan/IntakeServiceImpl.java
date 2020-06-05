@@ -5,6 +5,7 @@ import live.healthy.events.IntakeSubmitType;
 import live.healthy.exception.user.UserNotFound;
 import live.healthy.facts.model.plan.DailyNutrition;
 import live.healthy.facts.model.plan.NutritionPlan;
+import live.healthy.facts.model.plan.PlanFollowingEnum;
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.nutrition.DailyNutritionRepository;
 import live.healthy.repository.plan.NutritionPlanRepository;
@@ -52,34 +53,33 @@ public class IntakeServiceImpl implements IntakeService {
         }
         nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
 
-
-
         kieSession.insert(nutritionPlan);
         kieSession.insert(user);
 
         // ispaljujem dogadjaje za svaki dan submita, moze biti reguar ili iregular, fora je sto pravila treba da skontaju
         // kolko ih ima i kakvi su i da reaguje
-//        i = 0;
         for (DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
-//            if(dayIndex != i) {
             kieSession.insert(new IntakeSubmitEvent(user.getId(), dailyNutrition.getIntakeSubmitType()));
-//            } else {
-//                IntakeSubmitEvent intakeSubmitEvent = new IntakeSubmitEvent(userId, IntakeSubmitType.REGULAR);
-//                if(regular) {
-//                    kieSession.insert(intakeSubmitEvent);
-//                } else {
-//                    intakeSubmitEvent.setSubmitType(IntakeSubmitType.IRREGULAR);
-//                    kieSession.insert(intakeSubmitEvent);
-//                }
-//                dailyNutrition.setIntakeSubmitEvent(intakeSubmitEvent);
-//                dailyNutritionRepository.save(dailyNutrition);
-//            }
-//            i++;
         }
 
 
         long ruleFireCount = kieSession.fireAllRules();
         System.out.println(ruleFireCount + " rules fired");
+        nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
+
+        // If user deserved reward and there is still days in this week
+        if(nutritionPlan.getPlanFollowingEnum() == PlanFollowingEnum.REWARDED && dayIndex != 6) {
+            for(DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
+                if(dailyNutrition.getDayOfTheWeek() == dayIndex+1) {
+                    // user is rewarded with not needing to follow tomorrows plan
+                    dailyNutrition.setIntakeSubmitType(IntakeSubmitType.REWARDED_NOT_NEEDED);
+                } else {
+                    dailyNutrition.setIntakeSubmitType(IntakeSubmitType.NONE);
+                }
+                dailyNutritionRepository.save(dailyNutrition);
+            }
+        }
+        System.out.println(nutritionPlan.getPlanFollowingEnum());
 
     }
 }

@@ -2,6 +2,7 @@ package live.healthy.controller;
 
 
 import live.healthy.exception.user.UserNotFound;
+import live.healthy.facts.dto.SubmitDto;
 import live.healthy.service.plan.IntakeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,11 @@ public class IntakeController {
 
     private final IntakeService intakeService;
 
-    @PostMapping("/submit/{userId}/{dayIndex}")
-    public ResponseEntity submit(@PathVariable Long userId, @PathVariable int dayIndex, @RequestBody double caloriesDifference) {
+    @PostMapping("/submit/{userId}")
+    public ResponseEntity submit(@PathVariable Long userId, @RequestBody SubmitDto submitDto) {
 
         try {
-            intakeService.submit(userId, dayIndex, caloriesDifference);
+            intakeService.submit(userId, submitDto.getDayIndex(), submitDto.getCaloriesDifference());
         } catch (UserNotFound userNotFound) {
             return new ResponseEntity<>(userNotFound.getMessage(), HttpStatus.BAD_REQUEST);
         }
