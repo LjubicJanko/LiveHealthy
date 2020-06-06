@@ -3,6 +3,7 @@ package live.healthy.service.plan;
 import live.healthy.events.IntakeSubmitEvent;
 import live.healthy.events.IntakeSubmitType;
 import live.healthy.exception.user.UserNotFound;
+import live.healthy.facts.dto.NutritionPlanDto;
 import live.healthy.facts.model.plan.DailyNutrition;
 import live.healthy.facts.model.plan.NutritionPlan;
 import live.healthy.facts.model.plan.PlanFollowingEnum;
@@ -10,6 +11,7 @@ import live.healthy.facts.model.user.User;
 import live.healthy.repository.nutrition.DailyNutritionRepository;
 import live.healthy.repository.plan.NutritionPlanRepository;
 import live.healthy.repository.user.UserRepository;
+import live.healthy.util.ObjectMapperUtils;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -26,7 +28,7 @@ public class IntakeServiceImpl implements IntakeService {
     private final NutritionPlanRepository nutritionPlanRepository;
 
     @Override
-    public void submit(Long userId, int dayIndex, double caloriesDifference) throws UserNotFound {
+    public NutritionPlanDto submit(Long userId, int dayIndex, double caloriesDifference) throws UserNotFound {
 
         KieSession kieSession = kieContainer.newKieSession("intakeSubmitSession");
 
@@ -40,6 +42,7 @@ public class IntakeServiceImpl implements IntakeService {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
         NutritionPlan nutritionPlan = user.getNutritionPlan();
 
+        // Remembering new submit in database
         for (DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
             if (dailyNutrition.getDayOfTheWeek() == dayIndex) {
                 IntakeSubmitType intakeSubmitType = IntakeSubmitType.REGULAR;
@@ -65,7 +68,6 @@ public class IntakeServiceImpl implements IntakeService {
 
         long ruleFireCount = kieSession.fireAllRules();
         System.out.println(ruleFireCount + " rules fired");
-        nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
 
         // If user deserved reward and there is still days in this week
         if(nutritionPlan.getPlanFollowingEnum() == PlanFollowingEnum.REWARDED && dayIndex != 6) {
@@ -73,13 +75,32 @@ public class IntakeServiceImpl implements IntakeService {
                 if(dailyNutrition.getDayOfTheWeek() == dayIndex+1) {
                     // user is rewarded with not needing to follow tomorrows plan
                     dailyNutrition.setIntakeSubmitType(IntakeSubmitType.REWARDED_NOT_NEEDED);
-                } else {
+                } else if (dailyNutrition.getDayOfTheWeek() > dayIndex) {
                     dailyNutrition.setIntakeSubmitType(IntakeSubmitType.NONE);
+                }
+                else {
+                    dailyNutrition.setIntakeSubmitType(IntakeSubmitType.REGISTERED_NOT_NEEDED);
                 }
                 dailyNutritionRepository.save(dailyNutrition);
             }
         }
-        System.out.println(nutritionPlan.getPlanFollowingEnum());
 
+        // If user deserved punishment and there is still days in this week
+        if(nutritionPlan.getPlanFollowingEnum() == PlanFollowingEnum.PUNISHED && dayIndex != 6) {
+            int daysRemaining = 6 - dayIndex;
+            double caloriesDifferenceByDay = caloriesDifference / daysRemaining;
+            nutritionPlan.setCaloriesGoal(nutritionPlan.getCaloriesGoal() + caloriesDifferenceByDay);
+//            for(DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
+//                if(dailyNutrition.getDayOfTheWeek() > dayIndex){
+//
+//                }
+//            }
+        }
+
+
+        System.out.println(nutritionPlan.getPlanFollowingEnum());
+        nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
+
+        return ObjectMapperUtils.map(nutritionPlan, NutritionPlanDto.class);
     }
 }

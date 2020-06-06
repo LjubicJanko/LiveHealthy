@@ -2,6 +2,7 @@ package live.healthy.controller;
 
 
 import live.healthy.exception.user.UserNotFound;
+import live.healthy.facts.dto.NutritionPlanDto;
 import live.healthy.facts.dto.SubmitDto;
 import live.healthy.service.plan.IntakeService;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,10 @@ public class IntakeController {
     public ResponseEntity submit(@PathVariable Long userId, @RequestBody SubmitDto submitDto) {
 
         try {
-            intakeService.submit(userId, submitDto.getDayIndex(), submitDto.getCaloriesDifference());
+            return new ResponseEntity<>(intakeService.submit(userId, submitDto.getDayIndex(),
+                    submitDto.getCaloriesDifference()), HttpStatus.OK);
         } catch (UserNotFound userNotFound) {
             return new ResponseEntity<>(userNotFound.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("", HttpStatus.OK);
     }
 }

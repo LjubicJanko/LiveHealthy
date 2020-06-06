@@ -3,8 +3,9 @@ package live.healthy.events;
 public enum IntakeSubmitType {
     REGULAR("REGULAR"),
     IRREGULAR("IRREGULAR"),
-    NONE("NONE"),
-    REWARDED_NOT_NEEDED("REWARDED_NOT_NEEDED");
+    REWARDED_NOT_NEEDED("REWARDED_NOT_NEEDED"),
+    REGISTERED_NOT_NEEDED("REGISTERED_NOT_NEEDED"),
+    NONE("NONE");
 
     private String value;
 

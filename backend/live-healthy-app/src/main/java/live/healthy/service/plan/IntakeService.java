@@ -1,6 +1,7 @@
 package live.healthy.service.plan;
 
 import live.healthy.exception.user.UserNotFound;
+import live.healthy.facts.dto.NutritionPlanDto;
 
 public interface IntakeService {
 
@@ -11,5 +12,5 @@ public interface IntakeService {
      * @param dayIndex
      * @param caloriesDifference
      */
-    void submit(Long userId, int dayIndex, double caloriesDifference) throws UserNotFound;
+    NutritionPlanDto submit(Long userId, int dayIndex, double caloriesDifference) throws UserNotFound;
 }

@@ -81,12 +81,20 @@ export default {
     },
     getUserPlan() {
       UserService.getUser(this.$route.params.userId).then(response => {
+        console.log(this.user);
         this.user = response.data;
         if (this.user.nutritionPlan == null) {
           this.planExistis = false;
         } else {
           this.planExistis = true;
+          
+          var weeklyPlan = this.user.nutritionPlan.weeklyPlan.slice(0);
+          weeklyPlan.sort(function(a, b) {
+            return a.dayOfTheWeek - b.dayOfTheWeek;
+          });
+
           this.nutritionPlan = this.user.nutritionPlan;
+          this.nutritionPlan.weeklyPlan = weeklyPlan;
         }
         console.log(this.user);
       });
