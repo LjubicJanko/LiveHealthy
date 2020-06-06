@@ -2,15 +2,18 @@
   <v-card class="mx-10 px-5 py-5 mt-12 text-center">
     <v-card-title class="justify-center">Nutrition plan for {{nutritionPlan.goal}}</v-card-title>
     <v-expansion-panels popout hover v-if="typeof planLocal != undefined">
-      <v-expansion-panel v-for="(day,i) in planLocal.weeklyPlan" :key="day.dayOfTheWeek" :style="[checkIfSubmitIsAvailable(day) ? {'background': 'blue'} : {'background': '#FFF'}]">
-        <v-expansion-panel-header>Day {{i+1}}</v-expansion-panel-header>
+      <v-expansion-panel
+        v-for="(day,i) in planLocal.weeklyPlan"
+        :key="day.dayOfTheWeek"
+        :style="[checkIfSubmitIsAvailable(day) ? {'background': 'blue'} : {'background': '#FFF'}]"
+      >
+        <v-expansion-panel-header>Day {{day.dayOfTheWeek+1}}</v-expansion-panel-header>
         <v-expansion-panel-content>
           <div v-if="day.intakeSubmitType == 'REWARDED_NOT_NEEDED'">
             <h1
               style="color: green;"
             >THIS DAY IS YOUR REWARD DAY, YOU DO NOT HAVE TO FOLLOW THE PLAN TODAY.</h1>
           </div>
-          <v-card-title>{{day.dayOfTheWeek}}</v-card-title>
           <v-card-title>Calories goal for the day: {{nutritionPlan.caloriesGoal}}</v-card-title>
           <v-card-title>Meals</v-card-title>
           <v-card v-for="(meal, j) in day.dailyFood" :key="j">
@@ -28,9 +31,7 @@
           <v-card-title v-if="day.snacks.length > 0">Snacks</v-card-title>
           <v-card v-for="(snack, j) in day.snacks" :key="j">{{snack}}</v-card>
 
-
           <div v-if="checkIfSubmitIsAvailable(day)">
-
             <v-card-title>Submit information about your daily intake</v-card-title>
             <v-speed-dial
               v-model="fab"
@@ -82,7 +83,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="intakeNotByPlan(i)">Submit</v-btn>
+                    <v-btn color="blue darken-1" text @click="intakeByPlan(i)">Submit</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -96,6 +97,14 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+
+    <v-dialog v-model="loading" fullscreen full-width>
+      <v-container fluid fill-height style="background-color: rgba(255, 255, 255, 0.5);">
+        <v-layout justify-center align-center>
+          <v-progress-circular size="100" width="15" indeterminate color="primary"></v-progress-circular>
+        </v-layout>
+      </v-container>
+    </v-dialog>
 
     <v-snackbar v-model="snackbar.show" :timeout="5000" :color="snackbar.color" :top="true">
       {{snackbar.msg}}
@@ -119,6 +128,7 @@ export default {
       fab: false,
       dialog: false,
       caloriesDifference: 0,
+      loading: false,
       snackbar: {
         show: false,
         color: "",
@@ -137,37 +147,38 @@ export default {
     }
   },
   created() {
-    if(this.planLocal != undefined) {
-        var nutritionCopy = JSON.parse(JSON.stringify(this.nutritionPlan));
-        nutritionCopy.weeklyPlan.sort(function(a, b) {
-          return a.dayOfTheWeek - b.dayOfTheWeek;
-        });
-        this.planLocal = nutritionCopy;
+    if (this.planLocal != undefined) {
+      var nutritionCopy = JSON.parse(JSON.stringify(this.nutritionPlan));
+      nutritionCopy.weeklyPlan.sort(function(a, b) {
+        return a.dayOfTheWeek - b.dayOfTheWeek;
+      });
+      this.planLocal = nutritionCopy;
     }
   },
   methods: {
     checkIfSubmitIsAvailable(day) {
       let available = true;
       this.planLocal.weeklyPlan.forEach(d => {
-        if (d.dayOfTheWeek < day.dayOfTheWeek && d.intakeSubmitType == 'NONE') { 
-          available = false;  // submit is disabled for this day
-        } 
+        if (d.dayOfTheWeek < day.dayOfTheWeek && d.intakeSubmitType == "NONE") {
+          available = false; // submit is disabled for this day
+        }
       });
-      if(day.intakeSubmitType != 'NONE') {
+      if (day.intakeSubmitType != "NONE") {
         available = false;
       }
       return available;
-      
     },
     check() {
       console.log(this.nutritionPlan);
       console.log(this.nutritionPlan.weeklyPlan);
     },
     intakeByPlan(i) {
+      this.dialog = false;
+      this.loading = true;
       let userId = store.state.userId;
       let submitDto = {
         dayIndex: i,
-        caloriesDifference: 0
+        caloriesDifference: this.caloriesDifference
       };
 
       IntakeService.submit(userId, submitDto).then(response => {
@@ -180,16 +191,17 @@ export default {
           "Successfully submited intake for day with index " + i,
           "success"
         );
+        this.caloriesDifference = 0;
       });
     },
-    intakeNotByPlan(i) {
-      this.dialog = false;
-      let submitDto = {
-        dayIndex: i,
-        caloriesDifference: this.caloriesDifference
-      };
-      IntakeService.submit(store.state.userId, submitDto);
-    },
+    // intakeNotByPlan(i) {
+    //   this.dialog = false;
+    //   let submitDto = {
+    //     dayIndex: i,
+    //     caloriesDifference: this.caloriesDifference
+    //   };
+    //   IntakeService.submit(store.state.userId, submitDto);
+    // },
     increment() {
       this.caloriesDifference = parseInt(this.caloriesDifference, 10) + 50;
     },
