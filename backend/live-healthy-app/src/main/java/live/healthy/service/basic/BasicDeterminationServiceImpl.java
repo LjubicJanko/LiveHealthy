@@ -5,7 +5,9 @@ import live.healthy.exception.user.UserNotFound;
 import live.healthy.facts.dto.BodyInfoDto;
 import live.healthy.facts.dto.BodyTypeDto;
 import live.healthy.facts.model.BodyType;
+import live.healthy.facts.model.user.BodyDescription;
 import live.healthy.facts.model.user.User;
+import live.healthy.repository.user.BodyDescriptionRepository;
 import live.healthy.repository.user.BodyTypeRepository;
 import live.healthy.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class BasicDeterminationServiceImpl implements BasicDeterminationService 
     private final KieContainer kieContainer;
     private final BodyTypeRepository bodyTypeRepository;
     private final UserRepository userRepository;
+    private final BodyDescriptionRepository bodyDescriptionRepository;
 
 //    @Autowired
 //    public BasicDeterminationServiceImpl(KieContainer kieContainer) {
@@ -50,11 +53,16 @@ public class BasicDeterminationServiceImpl implements BasicDeterminationService 
                 .orElseThrow(() -> new BodyTypeNotFound());
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
         user.setBodyType(bodyType);
-        user.getBodyDescription().setShoulders(bodyInfoDto.getShoulders());
-        user.getBodyDescription().setForearms(bodyInfoDto.getForearms());
-        user.getBodyDescription().setBodyTendations(bodyInfoDto.getBodyTendations());
-        user.getBodyDescription().setBodyLook(bodyInfoDto.getBodyLook());
-        user.getBodyDescription().setWeightTendations(bodyInfoDto.getWeightTendations());
+
+        BodyDescription bodyDescription = new BodyDescription();
+
+        bodyDescription.setShoulders(bodyInfoDto.getShoulders());
+        bodyDescription.setForearms(bodyInfoDto.getForearms());
+        bodyDescription.setBodyTendations(bodyInfoDto.getBodyTendations());
+        bodyDescription.setBodyLook(bodyInfoDto.getBodyLook());
+        bodyDescription.setWeightTendations(bodyInfoDto.getWeightTendations());
+
+        user.setBodyDescription(bodyDescriptionRepository.save(bodyDescription));
 
         userRepository.save(user);
 
