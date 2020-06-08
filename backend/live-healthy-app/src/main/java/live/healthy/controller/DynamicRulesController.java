@@ -1,6 +1,7 @@
 package live.healthy.controller;
 
 
+import live.healthy.facts.dto.CreateBodyTypeRuleDto;
 import live.healthy.facts.dto.CreateRuleDto;
 import live.healthy.service.dynamic.DynamicService;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,12 @@ public class DynamicRulesController {
 
     private final DynamicService dynamicService;
 
-    @PostMapping
-    public ResponseEntity create(@RequestBody CreateRuleDto createRuleDto) {
+
+    @PostMapping("/bodyType")
+    public ResponseEntity createBodyTypeRule(@RequestBody CreateBodyTypeRuleDto createBodyTypeRuleDto) {
         try {
-            dynamicService.createRule(createRuleDto);
-            return new ResponseEntity<>("", HttpStatus.OK);
+
+            return new ResponseEntity<>(dynamicService.createBodyTypeRule(createBodyTypeRuleDto), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

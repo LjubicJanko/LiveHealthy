@@ -42,10 +42,18 @@ INSERT INTO body_type
 VALUES
     ('Information about your body is contradictory. We cannot determine your type.', 5);
 
+
+insert into body_description
+    (id, body_look, body_tendations, forearms, shoulders, weight_tendations)
+VALUES
+    (1, "Long and narrow", "Carry a bit of extra fat", "Small", "Wider than my hips",
+     "Gain weight easily, but find it hard to lose");
+
+
 INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
- body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp)
+ body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp, body_description_id, determinated_body_type)
     VALUES (1, 22, 'ljubicjanko1@gmail.com', true, 'Janko', 188, 'Ljubic', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'janko1janko01', 113, 1, null,
-    31.97, 2377.06, 113, 75.96, 27.22);
+    31.97, 2377.06, 113, 75.96, 27.22, 1, "");
     -- password User123!
 --
 -- INSERT INTO user(age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,

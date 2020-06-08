@@ -53,6 +53,11 @@ public class User extends AbstractUser implements UserDetails {
     public double idealBodyWeight;
 
 
+    private String determinatedBodyType;
+
+    @ManyToOne
+    public BodyDescription bodyDescription;
+
     @ManyToOne
     private NutritionPlan nutritionPlan;
 

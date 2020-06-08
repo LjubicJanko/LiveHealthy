@@ -1,0 +1,27 @@
+template header
+shoulders
+forearms
+bodyTendations
+bodyLook
+weightTendations
+bodyType
+
+package rules.dynamic;
+
+import live.healthy.facts.model.user.User;
+
+template "body-type-rules"
+
+rule "Body type_@{row.rowNumber}"
+no-loop true
+when
+    $u: User(bodyDescription.shoulders == "@{shoulders}",
+         bodyDescription.forearms == "@{forearms}",
+         bodyDescription.bodyTendations == "@{bodyTendations}",
+         bodyDescription.bodyLook == "@{bodyLook}",
+         bodyDescription.weightTendations == "@{weightTendations}")
+then
+    modify ($u){ setDeterminatedBodyType("@{bodyType}") };
+end
+
+end template

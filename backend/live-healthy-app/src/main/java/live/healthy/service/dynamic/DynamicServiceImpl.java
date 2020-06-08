@@ -1,91 +1,92 @@
 package live.healthy.service.dynamic;
 
-import live.healthy.events.dynamic.ChangeUserLimitEvent;
-import live.healthy.events.dynamic.Event;
+import live.healthy.facts.dto.CreateBodyTypeRuleDto;
 import live.healthy.facts.dto.CreateRuleDto;
-import live.healthy.facts.model.dynamic.AlertDecision;
-import live.healthy.facts.model.dynamic.Condition;
-import live.healthy.facts.model.dynamic.Rule;
+import live.healthy.facts.model.BodyType;
+import live.healthy.facts.model.BodyTypeEnum;
+import live.healthy.facts.model.user.BodyDescription;
+import live.healthy.facts.model.user.User;
+import live.healthy.repository.user.BodyTypeRepository;
+import live.healthy.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.drools.template.ObjectDataCompiler;
-import org.kie.api.KieServices;
-import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.Message;
+import org.kie.api.builder.Results;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.StatelessKieSession;
+import org.kie.internal.utils.KieHelper;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DynamicServiceImpl implements  DynamicService {
+public class DynamicServiceImpl implements DynamicService {
 
     private final KieContainer kieContainer;
+    private final UserRepository userRepository;
+    private final BodyTypeRepository bodyTypeRepository;
 
     @Override
-    public void createRule(CreateRuleDto createRuleDto) throws Exception {
-        ChangeUserLimitEvent changeUserLimitEvent = new ChangeUserLimitEvent();
-        changeUserLimitEvent.setAge(55);
+    public String createBodyTypeRule(CreateBodyTypeRuleDto createBodyTypeRuleDto) {
+        InputStream template = DynamicServiceImpl.class.
+                getResourceAsStream("/rules/dynamic/body-type-dynamic-rule.drt");
 
-        Rule ageLimitRule = new Rule();
+        List<CreateBodyTypeRuleDto> data = new ArrayList<>();
 
-        Condition ageOverLimit = new Condition();
-        ageOverLimit.setField("age");
-        ageOverLimit.setOperator(Condition.Operator.GREATER_THAN);
-        ageOverLimit.setValue(createRuleDto.getAgeLowLimit());
+        data.add(createBodyTypeRuleDto);
 
-        Condition ageUnderLimit = new Condition();
-        ageUnderLimit.setField("age");
-        ageUnderLimit.setOperator(Condition.Operator.LESS_THAN);
-        ageUnderLimit.setValue(createRuleDto.getAgeHighLimit());
+        ObjectDataCompiler converter = new ObjectDataCompiler();
+        String drl = converter.compile(data, template);
+        System.out.println(drl);
 
-        // In reality, you would have multiple rules for different types of events.
-        // The eventType property would be used to find rules relevant to the event
-        ageLimitRule.setEventType(Rule.eventType.ORDER);
+        KieSession ksession = createKieSessionFromDRL(drl);
 
-        ageLimitRule.setConditions(Arrays.asList(ageOverLimit, ageUnderLimit));
-
-        String drl = applyRuleTemplate(changeUserLimitEvent, ageLimitRule);
-        AlertDecision alertDecision = evaluate(drl, changeUserLimitEvent, kieContainer);
-
-        System.out.println(alertDecision.getDoAlert());
-
-        // doAlert is false by default
-        if (alertDecision.getDoAlert()) {
-            System.out.println("Izvrsilo se");
-            // do notification
+        List<User> allUsers = userRepository.findAll();
+        for (User user : allUsers) {
+            ksession.insert(user);
         }
 
+        ksession.fireAllRules();
+
+        for (User user : allUsers) {
+            if(!user.getDeterminatedBodyType().equals("")) {
+                user.setBodyType(extractBodyType(BodyTypeEnum.valueOf(user.getDeterminatedBodyType())));
+                userRepository.save(user);
+            }
+        }
+
+        return drl;
     }
 
-    static private AlertDecision evaluate(String drl, Event event, KieContainer kieContainer) throws Exception {
-
-        KieServices kieServices = KieServices.Factory.get();
-        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write("src/main/resources/dynamic/rule.drl", drl);
-        kieServices.newKieBuilder(kieFileSystem).buildAll();
-
-//        KieContainer kieContainer = kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
-        StatelessKieSession statelessKieSession = kieContainer.newStatelessKieSession("dynamicRuleKSession");
-
-        AlertDecision alertDecision = new AlertDecision();
-        statelessKieSession.getGlobals().set("alertDecision", alertDecision);
-        statelessKieSession.execute(event);
-
-        return alertDecision;
+    private BodyType extractBodyType(BodyTypeEnum bodyTypeEnum) {
+        List<BodyType> bodyTypes = bodyTypeRepository.findAll();
+        for (BodyType bodyType: bodyTypes) {
+            if (bodyType.getBodyTypeEnum().equals(bodyTypeEnum.getValue())) {
+                return bodyType;
+            }
+        }
+        return null;
     }
 
-    static private String applyRuleTemplate(ChangeUserLimitEvent event, Rule myRule) throws Exception {
-        Map<String, Object> data = new HashMap<String, Object>();
-        ObjectDataCompiler objectDataCompiler = new ObjectDataCompiler();
+    private KieSession createKieSessionFromDRL(String drl) {
+        KieHelper kieHelper = new KieHelper();
+        kieHelper.addContent(drl, ResourceType.DRL);
 
-        data.put("myRule", myRule);
-        data.put("eventType", event.getClass().getName());
+        Results results = kieHelper.verify();
 
-        return objectDataCompiler.compile(Arrays.asList(data),
-                Thread.currentThread().getContextClassLoader().getResourceAsStream("rules/dynamic/dynamic-rules.drl"));
+        if (results.hasMessages(Message.Level.WARNING, Message.Level.ERROR)) {
+            List<Message> messages = results.getMessages(Message.Level.WARNING, Message.Level.ERROR);
+            for (Message message : messages) {
+                System.out.println("Error: " + message.getText());
+            }
+
+            throw new IllegalStateException("Compilation errors were found. Check the logs.");
+        }
+
+        return kieHelper.build().newKieSession();
     }
 }

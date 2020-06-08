@@ -1,8 +1,15 @@
 package live.healthy.service.dynamic;
 
-import live.healthy.facts.dto.CreateRuleDto;
+import live.healthy.facts.dto.CreateBodyTypeRuleDto;
 
 public interface DynamicService {
 
-    void createRule(CreateRuleDto createRuleDto) throws Exception;
+    /**
+     * Method used to create rule for body type determination.
+     * <p>
+     * After rule is created all users are being processed and their body types are changed accordingly.
+     *
+     * @param createBodyTypeRuleDto
+     */
+    String createBodyTypeRule(CreateBodyTypeRuleDto createBodyTypeRuleDto);
 }

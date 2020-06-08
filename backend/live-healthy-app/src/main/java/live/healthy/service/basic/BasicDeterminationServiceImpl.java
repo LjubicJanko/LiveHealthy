@@ -50,7 +50,15 @@ public class BasicDeterminationServiceImpl implements BasicDeterminationService 
                 .orElseThrow(() -> new BodyTypeNotFound());
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
         user.setBodyType(bodyType);
+        user.getBodyDescription().setShoulders(bodyInfoDto.getShoulders());
+        user.getBodyDescription().setForearms(bodyInfoDto.getForearms());
+        user.getBodyDescription().setBodyTendations(bodyInfoDto.getBodyTendations());
+        user.getBodyDescription().setBodyLook(bodyInfoDto.getBodyLook());
+        user.getBodyDescription().setWeightTendations(bodyInfoDto.getWeightTendations());
+
         userRepository.save(user);
+
+
 
         return bodyTypeDto;
     }

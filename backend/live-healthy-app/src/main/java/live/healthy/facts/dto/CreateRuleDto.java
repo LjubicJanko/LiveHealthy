@@ -1,13 +1,14 @@
 package live.healthy.facts.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateRuleDto {
 
-    private boolean ageFieldIncluded;
-//    private boolean weightFieldIncluded;
-
-    private int ageLowLimit;
-    private int ageHighLimit;
+    private int minAge;
+    private int maxAge;
 }
