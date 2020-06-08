@@ -8,7 +8,7 @@ const AUTH_HEADER = 'Authorization';
 
 const ENDPOINTS = {
     LOGIN: 'auth/login',
-    SIGNIN: 'basic/signIn'
+    REGISTER: 'auth/register'
 }
 
 export default {
@@ -50,14 +50,14 @@ export default {
             this.setLocalStorageAuthData(user);
             this.setAuthHeader();
             store.commit('login')
-            store.commit('setUserId', response.data.userDTO.id);
-            store.commit('setUser', response.data.userDTO);
+            store.commit('setUserId', response.data.userWithAuthoritiesDTO.id);
+            store.commit('setUser', response.data.userWithAuthoritiesDTO);
             return response;
         });
       },
 
-    signIn(registration){
-        return Axios.post(ENDPOINTS.SIGNIN, registration)
+    register(registration){
+        return Axios.post(ENDPOINTS.REGISTER, registration)
     },
 
     logout() {

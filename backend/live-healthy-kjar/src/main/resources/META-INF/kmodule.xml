@@ -14,4 +14,9 @@
     <kbase name="intakeSubmitKBase" eventProcessingMode="stream" packages="cep">
         <ksession name="intakeSubmitSession"/>
     </kbase>
+
+
+    <kbase name="dynamicRuleKBase" packages="rules.dynamic">
+        <ksession name="dynamicRuleKSession" type="stateless"/>
+    </kbase>
 </kmodule>

@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import SignIn from '../views/SignIn.vue'
 import PlanOverview from '../views/PlanOverview'
+import AdminPage from '../views/AdminPage'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/adminPage',
+    name: 'AdminPage',
+    component: AdminPage
   },
   {
     path: '/body-type',

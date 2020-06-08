@@ -5,9 +5,13 @@ import live.healthy.exception.user.*;
 import live.healthy.facts.dto.UserDTO;
 import live.healthy.facts.dto.UserEditDTO;
 import live.healthy.facts.dto.UserRegistrationDTO;
+import live.healthy.facts.dto.UserWithAuthoritiesDTO;
+import live.healthy.facts.model.user.AbstractUser;
+import live.healthy.facts.model.user.Admin;
 import live.healthy.facts.model.user.Authority;
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.AuthorityRepository;
+import live.healthy.repository.user.AdminRepository;
 import live.healthy.repository.user.UserRepository;
 import live.healthy.util.ObjectMapperUtils;
 import org.springframework.stereotype.Service;
@@ -22,18 +26,21 @@ import static live.healthy.config.Constants.*;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private AdminRepository adminRepository;
     private AuthorityRepository authorityRepository;
 
-    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository) {
+    public UserServiceImpl(UserRepository userRepository, AdminRepository adminRepository, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
+        this.adminRepository = adminRepository;
         this.authorityRepository = authorityRepository;
     }
 
     @Override
     public User create(UserRegistrationDTO userRegistrationDTO) throws UsernameAlreadyExist, UsernameNotValid, PasswordNotValid, EmailNotValid, EmailAlreadyExist, AuthorityDoesNotExist, UserAgeNotValid {
         Optional<User> userFound = userRepository.findOneByUsername(userRegistrationDTO.getUsername());
+        Optional<Admin> adminFound = adminRepository.findOneByUsername(userRegistrationDTO.getUsername());
 
-        if (userFound.isPresent()) {
+        if (userFound.isPresent() || adminFound.isPresent()) {
             throw new UsernameAlreadyExist();
         }
 
@@ -91,15 +98,19 @@ public class UserServiceImpl implements UserService {
         authorities.add(authority.get());
         newUser.setAuthorities(authorities);
 
-        return userRepository.save(newUser);
+        return userRepository.save((User) newUser);
     }
 
     @Override
-    public User findByUsername(String username) throws UserNotFound {
+    public AbstractUser findByUsername(String username) throws UserNotFound{
         Optional<User> u = userRepository.findOneByUsername(username);
         if (u.isPresent()) {
             return u.get();
         } else {
+            Optional<Admin> a = adminRepository.findOneByUsername(username);
+            if (a.isPresent()) {
+                return a.get();
+            }
             throw new UserNotFound();
         }
     }
@@ -141,13 +152,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO get(Long id) throws UserNotFound {
+    public UserWithAuthoritiesDTO get(Long id) throws UserNotFound {
         User user = userRepository.findById(id).orElseThrow(UserNotFound::new);
-        UserDTO userDTO = ObjectMapperUtils.map(user, UserDTO.class);   // separated from return because of debug
+        UserWithAuthoritiesDTO userWithAuthoritiesDTO = ObjectMapperUtils.map(user, UserWithAuthoritiesDTO.class);   // separated from return because of debug
         if(user.getBodyType() != null) {
-            userDTO.setBodyType(user.getBodyType().getBodyTypeEnum());
+            userWithAuthoritiesDTO.setBodyType(user.getBodyType().getBodyTypeEnum());
         }
-        return userDTO;
+        return userWithAuthoritiesDTO;
     }
 
 

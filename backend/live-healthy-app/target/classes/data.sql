@@ -1,4 +1,13 @@
 insert into authority (id, name) values (1, "ROLE_REGISTERED");
+insert into authority (id, name) values (2, "ROLE_ADMIN");
+
+
+insert into admin (id, first_name, last_name, password, username) values
+(1, "Admin", "Admin", "$2a$10$p0TadO9gMiLO3clPZnhKEudu.ceqlJU8uA2kH3sPkVD9DoC2WdEyi", "admin" );
+-- password Admin021!
+
+insert into admin_authority(authority_id, admin_id) values(2,1);
+
 
 INSERT INTO body_type
     (description, body_type_enum)
@@ -38,8 +47,15 @@ INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_pa
     VALUES (1, 22, 'ljubicjanko1@gmail.com', true, 'Janko', 188, 'Ljubic', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'janko1janko01', 113, 1, null,
     31.97, 2377.06, 113, 75.96, 27.22);
     -- password User123!
+--
+-- INSERT INTO user(age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
+--  body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp)
+--     VALUES (23, 'nikolina1@gmail.com', true, 'Nikolina', 165, 'Laganin', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'nikolina01', 50, null, null,
+--     18.4, 1255.00, 50, 56.4, 16);
+--     -- password User123!
 
 INSERT INTO user_authority(user_id, authority_id) VALUES (1, 1);
+-- INSERT INTO user_authority(user_id, authority_id) VALUES (2, 1);
 
 
 INSERT INTO food(food_group, description, energy_kcal,  proteins, fats, carbs) VALUES

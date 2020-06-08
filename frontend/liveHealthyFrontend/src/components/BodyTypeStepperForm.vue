@@ -242,13 +242,13 @@
               ></v-img>
               <v-img
                 v-if="bodyType.type == 'ECTOMORPH_MESOMORPH'"
-                src="../resources/male_ectomorph-mesomorph.jpg"
+                src="../resources/female_ectomorph-mesomorph.jpg"
                 aspect-ratio="1.7"
                 contain
               ></v-img>
               <v-img
                 v-if="bodyType.type == 'ENDOMORPH_MESOMORPH'"
-                src="../resources/male_mesomorph-endomorph.jpg"
+                src="../resources/female_mesomorph-endomorph.jpg"
                 aspect-ratio="1.7"
                 contain
               ></v-img>

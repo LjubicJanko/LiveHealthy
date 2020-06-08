@@ -11,9 +11,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class UserRegistrationDTO {
-
-    private Long id;
-
     @NotNull
     @NotBlank
     private String username;

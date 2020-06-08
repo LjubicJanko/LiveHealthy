@@ -3,16 +3,26 @@
     <span class="bg"></span>
     <v-app>
       <v-app-bar color="black" dense dark short app fixed>
-        <v-btn @click="goTo('/')">
+        <v-btn @click="goTo('/')" v-if="isUser == true">
           <v-icon>mdi-home</v-icon>
+        </v-btn>
+        <v-btn @click="goTo('/adminPage')" v-else>
+          <v-icon>mdi-shield-home-outline</v-icon>
         </v-btn>
         <v-divider class="mx-4" vertical ></v-divider>
         <v-toolbar-title>
-          <v-icon large>mdi-alpha-l-box-outline</v-icon>
-          <v-icon large>mdi-alpha-h-box</v-icon>
+            <v-icon large v-if="isUser == true">mdi-alpha-a-box-outline</v-icon>
+            <v-icon large v-if="isUser == true">mdi-alpha-h-box</v-icon>
+            <v-icon large v-if="isUser == false">mdi-alpha-a-box</v-icon>
+            <v-icon large v-if="isUser == false">mdi-alpha-d-box-outline</v-icon>
+            <v-icon large v-if="isUser == false">mdi-alpha-m-box-outline</v-icon>
+            <v-icon large v-if="isUser == false">mdi-alpha-i-box-outline</v-icon>
+            <v-icon large v-if="isUser == false">mdi-alpha-n-box-outline</v-icon>
           <v-divider class="mx-4" vertical ></v-divider>
         </v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-btn v-if="isUser == true" @click="goTo('/profile')"><v-icon>mdi-account</v-icon></v-btn>
+          <v-divider class="mx-4" vertical ></v-divider>
           <v-btn v-if="isLoggedIn == true" @click="goTo('/login')">Login</v-btn>
           <v-btn v-if="isLoggedIn == false" @click="goTo('/logout')">Logout</v-btn>
       </v-app-bar>
@@ -32,11 +42,10 @@ export default {
   }),
   computed: {
     isLoggedIn() {
-      if(store.state.userLoggedIn){
-        return false;
-      }else {
-        return true;
-      }
+      return store.state.userLoggedIn;
+    },
+    isUser() {
+      return store.state.user.authorities[0].authority == "ROLE_REGISTERED";
     }
   },
   components: {},

@@ -16,8 +16,13 @@ public class UserWithAuthoritiesDTO {
     private String lastName;
     private String email;
     private int age;
-    private double weight;
     private double height;
+    private double weight;
+    private String bodyType;
+    private boolean sex;
+
+
+    private NutritionPlanDto nutritionPlan;
     private List<Authority> authorities;
 
 

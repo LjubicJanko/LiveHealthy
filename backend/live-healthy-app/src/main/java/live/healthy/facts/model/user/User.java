@@ -3,7 +3,7 @@ package live.healthy.facts.model.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import live.healthy.facts.model.BodyType;
 import live.healthy.facts.model.plan.NutritionPlan;
-import lombok.Data;
+import lombok.*;
 import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +18,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Data
-public class User implements UserDetails {
+@Getter
+@Setter
+@Table(name="user")
+public class User extends AbstractUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,18 +38,6 @@ public class User implements UserDetails {
 
     @NotNull
     public double weight;
-
-    @NotNull
-    private String username;
-
-    @NotNull
-    protected String password;
-
-    @NotNull
-    private String firstName;
-
-    @NotNull
-    private String lastName;
 
     @ManyToOne
     public BodyType bodyType;
@@ -69,12 +59,6 @@ public class User implements UserDetails {
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
 
-
-    private String encodePassword(String password) {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode(password);
-    }
-
     @NotBlank
     @Column(name = "email")
     private String email;
@@ -89,27 +73,19 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
-    public void setPassword(String password) {
-        Timestamp now = new Timestamp(DateTime.now().getMillis());
-        this.setLastPasswordResetDate(now);
-        this.password = password;
+    public User(){
+        super();
     }
 
     public User(@NotNull String username, @NotNull String password, @NotNull String firstName, @NotNull String lastName, @NotNull String email, @NotNull boolean sex) {
-        this.username = username;
-        this.password = this.encodePassword(password);
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super(username, password, firstName, lastName);
         this.email = email;
         this.sex = sex;
     }
 
     public User(@NotNull String username, @NotNull String password, @NotNull String firstName, @NotNull String lastName, @NotNull String email,
                 @NotNull int age, @NotNull double height, @NotNull double weight, @NotNull boolean sex) {
-        this.username = username;
-        this.password = this.encodePassword(password);
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super(username, password, firstName, lastName);
         this.email = email;
         this.age = age;
         this.height = height;
@@ -118,26 +94,31 @@ public class User implements UserDetails {
     }
 
 
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
 
     @JsonIgnore
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @JsonIgnore
+    @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @JsonIgnore
+    @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @JsonIgnore
+    @Override
     public boolean isEnabled() {
         return true;
     }

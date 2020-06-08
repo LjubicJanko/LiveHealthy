@@ -50,7 +50,7 @@
 <script>
 import LoginData from "@/model/LoginData.js";
 import LoginService from "@/api-services/auth.service.js";
-import store from '@/store';
+import store from "@/store";
 
 export default {
   name: "Login",
@@ -76,9 +76,14 @@ export default {
       LoginService.login(this.loginData)
         .then(response => {
           console.log(store.state.userLoggedIn);
-          console.log(response.data.userDTO.id)
+          console.log(response.data.userWithAuthoritiesDTO.id);
+          console.log(response.data);
           this.showSnackbar("Successful login!", "success");
-          this.$router.push("/");
+          if(response.data.userWithAuthoritiesDTO.authorities[0].authority == "ROLE_ADMIN") {
+            this.$router.push("/adminPage")
+          } else {
+            this.$router.push("/");
+          }
         })
         .catch(() => {
           this.showSnackbar("Bad credentials", "error");

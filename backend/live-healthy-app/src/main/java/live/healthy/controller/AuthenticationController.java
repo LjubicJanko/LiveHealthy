@@ -3,6 +3,8 @@ package live.healthy.controller;
 import live.healthy.exception.user.*;
 import live.healthy.facts.dto.UserDTO;
 import live.healthy.facts.dto.UserRegistrationDTO;
+import live.healthy.facts.dto.UserWithAuthoritiesDTO;
+import live.healthy.facts.model.user.AbstractUser;
 import live.healthy.facts.model.user.User;
 import live.healthy.facts.model.user.UserTokenState;
 import live.healthy.security.TokenUtils;
@@ -69,13 +71,14 @@ public class AuthenticationController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-//		AbstractUser user = (AbstractUser) authentication.getPrincipal();
-        User user = (User) authentication.getPrincipal();
+        AbstractUser user = (AbstractUser) authentication.getPrincipal();
+//        User user = (User) authentication.getPrincipal();
         String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
 
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, ObjectMapperUtils.map(user, UserDTO.class)));
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, ObjectMapperUtils.map(user, UserWithAuthoritiesDTO.class)));
     }
+
 
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     public ResponseEntity<?> refreshAuthenticationToken(HttpServletRequest request) {
@@ -87,7 +90,7 @@ public class AuthenticationController {
             String refreshedToken = tokenUtils.refreshToken(token);
             int expiresIn = tokenUtils.getExpiredIn();
 
-            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn, ObjectMapperUtils.map(user, UserDTO.class)));
+            return ResponseEntity.ok(new UserTokenState(refreshedToken, expiresIn, ObjectMapperUtils.map(user, UserWithAuthoritiesDTO.class)));
         } else {
             UserTokenState userTokenState = new UserTokenState();
             return ResponseEntity.badRequest().body(userTokenState);

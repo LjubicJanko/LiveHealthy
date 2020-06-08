@@ -1,6 +1,8 @@
 package live.healthy.service;
 
+import live.healthy.facts.model.user.Admin;
 import live.healthy.facts.model.user.User;
+import live.healthy.repository.user.AdminRepository;
 import live.healthy.repository.user.UserRepository;
 import live.healthy.security.TokenUtils;
 import org.apache.commons.logging.Log;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 
 @Service
@@ -26,6 +29,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private AdminRepository adminRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -48,13 +54,20 @@ public class CustomUserDetailsService implements UserDetailsService {
 	// Funkcija koja na osnovu username-a iz baze vraca objekat User-a
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
-		if (user == null) {
-			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+		Optional<User> user = userRepository.findOneByUsername(username);
+		if (user.isPresent()) {
+			return user.get();
 		} else {
-			return user;
+
+			Optional<Admin> admin = adminRepository.findOneByUsername(username);
+			if (admin.isPresent()) {
+				return admin.get();
+			}
+			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
 		}
 	}
+
+
 
 	// Funkcija pomocu koje korisnik menja svoju lozinku
 	public void changePassword(String oldPassword, String newPassword) {

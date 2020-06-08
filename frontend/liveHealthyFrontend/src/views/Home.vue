@@ -27,7 +27,7 @@ export default {
   name: "Home",
   data: () => ({
     user: {},
-    bodyTypeDetermined: false,
+    bodyTypeDetermined: false
   }),
   computed: {
     isLoggedIn() {
