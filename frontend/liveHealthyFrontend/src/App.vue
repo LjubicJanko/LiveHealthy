@@ -23,8 +23,8 @@
           <v-spacer></v-spacer>
           <v-btn v-if="isUser == true" @click="goTo('/profile')"><v-icon>mdi-account</v-icon></v-btn>
           <v-divider class="mx-4" vertical ></v-divider>
-          <v-btn v-if="isLoggedIn == true" @click="goTo('/login')">Login</v-btn>
-          <v-btn v-if="isLoggedIn == false" @click="goTo('/logout')">Logout</v-btn>
+          <v-btn v-if="isLoggedIn == false" @click="goTo('/login')">Login</v-btn>
+          <v-btn v-if="isLoggedIn == true" @click="goTo('/logout')">Logout</v-btn>
       </v-app-bar>
       <v-content>
         <router-view />
@@ -42,6 +42,8 @@ export default {
   }),
   computed: {
     isLoggedIn() {
+      console.log("logged in")
+      console.log(store.state.userLoggedIn)
       return store.state.userLoggedIn;
     },
     isUser() {

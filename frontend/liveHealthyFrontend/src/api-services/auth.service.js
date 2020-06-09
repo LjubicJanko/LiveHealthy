@@ -49,6 +49,7 @@ export default {
             Object.assign(user, response.data);
             this.setLocalStorageAuthData(user);
             this.setAuthHeader();
+            store.commit('userLoggedIn', true)
             store.commit('login')
             store.commit('setUserId', response.data.userWithAuthoritiesDTO.id);
             store.commit('setUser', response.data.userWithAuthoritiesDTO);
