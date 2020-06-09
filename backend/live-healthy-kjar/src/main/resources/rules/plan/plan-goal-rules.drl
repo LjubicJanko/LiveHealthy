@@ -10,8 +10,8 @@ global String bodyType;
 
 
 rule "maintain weight"
+    salience 1
     when
-        /* TODO: change it for weight to not be equal, but fit in tolerance range */
         $user: User(weight < idealBodyWeight + 3, weight > idealBodyWeight - 3)
         and
         $planDto: PlanDto()
@@ -26,6 +26,7 @@ end
 */
 /***************************Level 1******************************/
 rule "need to gain weight"
+    salience 2
     when
         $user: User(weight < idealBodyWeight, startingBmi < 25.0)
         and
@@ -226,6 +227,8 @@ end
 /***************************Level 1******************************/
 
 rule "need to lose weight"
+    salience 2
+
     when
         $user: User(weight > idealBodyWeight, startingBmi > 25.0)
         and

@@ -73,7 +73,7 @@ public class PlanServiceImpl implements PlanService {
         kieSession.insert(user);
 
 
-        int i = kieSession.fireAllRules();
+        kieSession.fireAllRules();
         kieSession.dispose();
         NutritionPlanDto nutritionPlanDto = createWeeklyNutrition(planDto, user);
 
