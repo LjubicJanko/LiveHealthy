@@ -47,7 +47,11 @@ export default {
       return store.state.userLoggedIn;
     },
     isUser() {
-      return store.state.user.authorities[0].authority == "ROLE_REGISTERED";
+      if(store.state.user.authorities != undefined) {
+        return store.state.user.authorities[0].authority == "ROLE_REGISTERED";
+      } else {
+        return false;
+      }
     }
   },
   components: {},

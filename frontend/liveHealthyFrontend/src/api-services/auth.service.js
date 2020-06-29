@@ -71,3 +71,19 @@ export default {
     },
   
 }
+
+Axios.interceptors.request.use(
+  (config) => {
+    let token = localStorage.getItem('accessToken');
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${ token }`;
+    }
+
+    return config;
+  }, 
+
+  (error) => {
+    return Promise.reject(error);
+  }
+);
