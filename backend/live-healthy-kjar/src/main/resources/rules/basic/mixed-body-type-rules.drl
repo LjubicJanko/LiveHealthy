@@ -4,17 +4,22 @@ import live.healthy.facts.dto.BodyInfoDto;
 import live.healthy.facts.dto.BodyTypeDto;
 import live.healthy.facts.model.DailyActivity;
 
+import live.healthy.facts.model.body_desc_enums.Shoulders;
+import live.healthy.facts.model.body_desc_enums.BodyLook;
+import live.healthy.facts.model.body_desc_enums.BodyTendations;
+import live.healthy.facts.model.body_desc_enums.Forearms;
+import live.healthy.facts.model.body_desc_enums.WeightTendations;
 
 rule "Ectomorph - mesomorph"
     activation-group "body-bodyTypeEnum"
     salience 1
     when
-        $bi: BodyInfoDto(shoulders in ("Narrower than my hips", "The same width as my hips"),
-                        forearms in ("Small", "Average"),
-                        bodyLook in ("Long and narrow", "Square and rugged"),
-                        weightTendations in ("Have trouble gaining weight in the form of muscle or fat",
-                         "I can gain and lose without too much of a struggle"),
-                        bodyTendations in ("Stay skinny", "Stay lean, yet muscular")) and
+        $bi: BodyInfoDto(shoulders in (Shoulders.NARROWER_THAN_HIPS.value, Shoulders.SAME_AS_HIPS.value),
+                        forearms in (Forearms.SMALL.value, Forearms.AVERAGE.value),
+                        bodyLook in (BodyLook.LONG_AND_NARROW.value, BodyLook.SQUARE_AND_RUGGED.value),
+                        weightTendations in (WeightTendations.CAN_NOT_GAIN.value,
+                        WeightTendations.CAN_GAIN_AND_LOSE.value),
+                        bodyTendations in (BodyTendations.SKINNY.value, BodyTendations.LEAN_YET_MUSCULAR.value)) and
         $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("ECTOMORPH_MESOMORPH");
@@ -26,12 +31,12 @@ rule "Mesomorph - Endomorph"
     activation-group "body-bodyTypeEnum"
     salience 2
     when
-        $bi: BodyInfoDto(shoulders in ("Wider than my hips", "The same width as my hips"),
-                        forearms in ("Big", "Average"),
-                        bodyLook in ("Round and soft", "Square and rugged"),
-                        weightTendations in ("Gain weight easily, but find it hard to lose",
-                         "I can gain and lose without too much of a struggle"),
-                        bodyTendations in ("Carry a bit of extra fat", "Stay lean, yet muscular")) and
+        $bi: BodyInfoDto(shoulders in (Shoulders.WIDER_THAN_HIPS.value, Shoulders.SAME_AS_HIPS.value),
+                        forearms in (Forearms.BIG.value, Forearms.AVERAGE.value),
+                        bodyLook in (BodyLook.ROUND_AND_SOFT.value, BodyLook.SQUARE_AND_RUGGED.value),
+                        weightTendations in (WeightTendations.CAN_GAIN_CAN_NOT_LOSE.value,
+                        WeightTendations.CAN_GAIN_AND_LOSE.value),
+                        bodyTendations in (BodyTendations.CARRY_EXTRA_FAT.value, BodyTendations.LEAN_YET_MUSCULAR.value)) and
         $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("ENDOMORPH_MESOMORPH");

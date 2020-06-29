@@ -138,7 +138,7 @@
           </v-layout>
 
           <v-btn color="primary" @click="e1 = 6">Continue</v-btn>
-          <v-btn @click="e1 = 2">Back</v-btn>
+          <v-btn @click="e1 = 4">Back</v-btn>
         </v-stepper-content>
         <v-stepper-content step="6">
           <v-layout row wrap>
@@ -183,7 +183,7 @@
         </v-card-title>
         <v-card-text>
           <v-row justify="space-around">
-            <v-col cols="5" v-if="sex">
+            <v-col cols="5" v-if="sex === 'true'">
               <v-img
                 v-if="bodyType.type == 'endomorph'"
                 src="../resources/male_endomorph.jpg"

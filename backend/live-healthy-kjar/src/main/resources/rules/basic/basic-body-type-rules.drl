@@ -5,14 +5,20 @@ import live.healthy.facts.dto.BodyInfoDto;
 import live.healthy.facts.dto.BodyTypeDto;
 import live.healthy.facts.model.DailyActivity;
 
+import live.healthy.facts.model.body_desc_enums.Shoulders;
+import live.healthy.facts.model.body_desc_enums.BodyLook;
+import live.healthy.facts.model.body_desc_enums.BodyTendations;
+import live.healthy.facts.model.body_desc_enums.Forearms;
+import live.healthy.facts.model.body_desc_enums.WeightTendations;
+
 rule "Ectomorph body"
     salience 3
     activation-group "body-bodyTypeEnum"
     when
-        $bi: BodyInfoDto(shoulders == "Narrower than my hips",
-                        forearms == "Small", bodyLook == "Long and narrow",
-                        weightTendations == "Have trouble gaining weight in the form of muscle or fat",
-                        bodyTendations == "Stay skinny") and
+        $bi: BodyInfoDto(shoulders == Shoulders.NARROWER_THAN_HIPS.value,
+                        forearms == Forearms.SMALL.value, bodyLook == BodyLook.LONG_AND_NARROW.value,
+                        weightTendations == WeightTendations.CAN_NOT_GAIN.value,
+                        bodyTendations == BodyTendations.SKINNY.value) and
         $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("ectomorph");
@@ -25,10 +31,10 @@ rule "Mesomorph body"
     salience 4
     activation-group "body-bodyTypeEnum"
     when
-        $bi: BodyInfoDto(shoulders == "The same width as my hips",
-                                forearms == "Average", bodyLook == "Square and rugged",
-                                weightTendations == "I can gain and lose without too much of a struggle",
-                                bodyTendations == "Stay lean, yet muscular") and
+        $bi: BodyInfoDto(shoulders == Shoulders.SAME_AS_HIPS.value,
+                                forearms == Forearms.AVERAGE.value, bodyLook == BodyLook.SQUARE_AND_RUGGED.value,
+                                weightTendations == WeightTendations.CAN_GAIN_AND_LOSE.value,
+                                bodyTendations == BodyTendations.LEAN_YET_MUSCULAR.value) and
         $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("mesomorph");
@@ -41,10 +47,10 @@ rule "Endomorph body"
     salience 5
     activation-group "body-bodyTypeEnum"
     when
-        $bi: BodyInfoDto(shoulders == "Wider than my hips",
-                                        forearms == "Big", bodyLook == "Round and soft",
-                                        weightTendations == "Gain weight easily, but find it hard to lose",
-                                        bodyTendations == "Carry a bit of extra fat") and
+        $bi: BodyInfoDto(shoulders == Shoulders.WIDER_THAN_HIPS.value,
+                                        forearms == Forearms.BIG.value, bodyLook == BodyLook.ROUND_AND_SOFT.value,
+                                        weightTendations == WeightTendations.CAN_GAIN_CAN_NOT_LOSE.value,
+                                        bodyTendations == BodyTendations.CARRY_EXTRA_FAT.value) and
         $bodyTypeDto: BodyTypeDto(type == "")
     then
         $bodyTypeDto.setType("endomorph");
