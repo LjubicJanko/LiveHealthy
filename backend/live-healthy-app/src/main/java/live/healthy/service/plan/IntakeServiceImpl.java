@@ -1,5 +1,6 @@
 package live.healthy.service.plan;
 
+import live.healthy.cep_session.KieSessionSingleton;
 import live.healthy.events.IntakeSubmitEvent;
 import live.healthy.events.IntakeSubmitType;
 import live.healthy.exception.user.UserNotFound;
@@ -27,10 +28,16 @@ public class IntakeServiceImpl implements IntakeService {
     private final DailyNutritionRepository dailyNutritionRepository;
     private final NutritionPlanRepository nutritionPlanRepository;
 
+
     @Override
     public NutritionPlanDto submit(Long userId, int dayIndex, double caloriesDifference) throws UserNotFound {
 
-        KieSession kieSession = kieContainer.newKieSession("intakeSubmitSession");
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        NutritionPlan nutritionPlan = user.getNutritionPlan();
+
+        KieSessionSingleton kieSessionSingleton = KieSessionSingleton.getInstance();
+        KieSession kieSession = kieSessionSingleton.getKieSession();
+
 
         boolean regular = false;
         if (caloriesDifference == 0) {
@@ -38,17 +45,17 @@ public class IntakeServiceImpl implements IntakeService {
             regular = true;
         }
 
+        IntakeSubmitType intakeSubmitType = IntakeSubmitType.REGULAR;
+        if(!regular) {
+            intakeSubmitType = IntakeSubmitType.IRREGULAR;
+        }
+        IntakeSubmitEvent intakeSubmitEvent = new IntakeSubmitEvent(userId, intakeSubmitType);
+        kieSession.insert(intakeSubmitEvent);
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
-        NutritionPlan nutritionPlan = user.getNutritionPlan();
 
         // Remembering new submit in database
         for (DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
             if (dailyNutrition.getDayOfTheWeek() == dayIndex) {
-                IntakeSubmitType intakeSubmitType = IntakeSubmitType.REGULAR;
-                if(!regular) {
-                    intakeSubmitType = IntakeSubmitType.IRREGULAR;
-                }
                 dailyNutrition.setIntakeSubmitType(intakeSubmitType);
                 dailyNutrition = dailyNutritionRepository.save(dailyNutrition);
                 break;
@@ -56,20 +63,16 @@ public class IntakeServiceImpl implements IntakeService {
         }
         nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
 
+
         kieSession.insert(nutritionPlan);
         kieSession.insert(user);
-
-        // ispaljujem dogadjaje za svaki dan submita, moze biti reguar ili iregular, fora je sto pravila treba da skontaju
-        // kolko ih ima i kakvi su i da reaguje
-        for (DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
-            kieSession.insert(new IntakeSubmitEvent(user.getId(), dailyNutrition.getIntakeSubmitType()));
-        }
-
 
         long ruleFireCount = kieSession.fireAllRules();
         System.out.println(ruleFireCount + " rules fired");
 
-        // If user deserved reward and there is still days in this week
+
+
+//         If user deserved reward and there is still days in this week
         if(nutritionPlan.getPlanFollowingEnum() == PlanFollowingEnum.REWARDED && dayIndex != 6) {
             for(DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
                 if(dailyNutrition.getDayOfTheWeek() == dayIndex+1) {
@@ -101,6 +104,96 @@ public class IntakeServiceImpl implements IntakeService {
         System.out.println(nutritionPlan.getPlanFollowingEnum());
         nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
 
+        for( Object object: kieSession.getObjects() ){
+            if(!(object.getClass() == IntakeSubmitEvent.class)) {
+                kieSession.retract( kieSession.getFactHandle( object ) );
+            } else {
+                IntakeSubmitEvent i = (IntakeSubmitEvent) object;
+                System.out.println("Intake submit event executed: " + i.getExecutionTime().toString());
+            }
+        }
+
+        System.out.println("==============================================================");
         return ObjectMapperUtils.map(nutritionPlan, NutritionPlanDto.class);
+
     }
+
+//
+//    @Override
+//    public NutritionPlanDto submit(Long userId, int dayIndex, double caloriesDifference) throws UserNotFound {
+//
+//        KieSession kieSession = kieContainer.newKieSession("intakeSubmitSession");
+//
+//
+//        boolean regular = false;
+//        if (caloriesDifference == 0) {
+//            // input is regular
+//            regular = true;
+//        }
+//
+//
+//        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+//        NutritionPlan nutritionPlan = user.getNutritionPlan();
+//
+//        // Remembering new submit in database
+//        for (DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
+//            if (dailyNutrition.getDayOfTheWeek() == dayIndex) {
+//                IntakeSubmitType intakeSubmitType = IntakeSubmitType.REGULAR;
+//                if(!regular) {
+//                    intakeSubmitType = IntakeSubmitType.IRREGULAR;
+//                }
+//                dailyNutrition.setIntakeSubmitType(intakeSubmitType);
+//                dailyNutrition = dailyNutritionRepository.save(dailyNutrition);
+//                break;
+//            }
+//        }
+//        nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
+//
+//        kieSession.insert(nutritionPlan);
+//        kieSession.insert(user);
+//
+//        // ispaljujem dogadjaje za svaki dan submita, moze biti reguar ili iregular, fora je sto pravila treba da skontaju
+//        // kolko ih ima i kakvi su i da reaguje
+//        for (DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
+//            kieSession.insert(new IntakeSubmitEvent(user.getId(), dailyNutrition.getIntakeSubmitType()));
+//        }
+//
+//
+//        long ruleFireCount = kieSession.fireAllRules();
+//        System.out.println(ruleFireCount + " rules fired");
+//
+//        // If user deserved reward and there is still days in this week
+//        if(nutritionPlan.getPlanFollowingEnum() == PlanFollowingEnum.REWARDED && dayIndex != 6) {
+//            for(DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
+//                if(dailyNutrition.getDayOfTheWeek() == dayIndex+1) {
+//                    // user is rewarded with not needing to follow tomorrows plan
+//                    dailyNutrition.setIntakeSubmitType(IntakeSubmitType.REWARDED_NOT_NEEDED);
+//                } else if (dailyNutrition.getDayOfTheWeek() > dayIndex) {
+//                    dailyNutrition.setIntakeSubmitType(IntakeSubmitType.NONE);
+//                }
+//                else {
+//                    dailyNutrition.setIntakeSubmitType(IntakeSubmitType.REGISTERED_NOT_NEEDED);
+//                }
+//                dailyNutritionRepository.save(dailyNutrition);
+//            }
+//        }
+//
+//        // If user deserved punishment and there is still days in this week
+//        if(nutritionPlan.getPlanFollowingEnum() == PlanFollowingEnum.PUNISHED && dayIndex != 6) {
+//            int daysRemaining = 6 - dayIndex;
+//            double caloriesDifferenceByDay = caloriesDifference / daysRemaining;
+//            nutritionPlan.setCaloriesGoal(nutritionPlan.getCaloriesGoal() + caloriesDifferenceByDay);
+////            for(DailyNutrition dailyNutrition: nutritionPlan.getWeeklyPlan()) {
+////                if(dailyNutrition.getDayOfTheWeek() > dayIndex){
+////
+////                }
+////            }
+//        }
+//
+//
+//        System.out.println(nutritionPlan.getPlanFollowingEnum());
+//        nutritionPlan = nutritionPlanRepository.save(nutritionPlan);
+//
+//        return ObjectMapperUtils.map(nutritionPlan, NutritionPlanDto.class);
+//    }
 }

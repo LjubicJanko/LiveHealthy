@@ -12,34 +12,39 @@ import live.healthy.facts.model.user.User;
 
 rule "count"
     when
-        $number: Number(intValue >= 0) from accumulate(
+        $number: Number() from accumulate(
             $i2: IntakeSubmitEvent(
                 submitType == IntakeSubmitType.REGULAR
             ),
             count($i2)
         )
+
     then
         System.out.println("Number of regular Intake submits: " + $number);
 end
 
+
 rule "More than 4 regular submits"
     salience 3
+    no-loop
     when
         $i1: IntakeSubmitEvent($intakeUserId: userId, submitType == IntakeSubmitType.REGULAR)
         $number: Number(intValue >= 4) from accumulate(
             $i2: IntakeSubmitEvent(
                 this != $i1,
                 submitType == IntakeSubmitType.REGULAR,
-                userId == $intakeUserId
+                userId == $intakeUserId,
+                this meets[7d] $i1
             ),
             count($i2)
         )
         not (IntakeSubmitEvent(userId == $intakeUserId, submitType == IntakeSubmitType.IRREGULAR))
+        not (CreateRewardEvent(userId == $intakeUserId))
         $nutritionPlan: NutritionPlan(planFollowingEnum == PlanFollowingEnum.REGULAR)
         $user: User(id == $intakeUserId, nutritionPlan.id == $nutritionPlan.id)
     then
         insert(new CreateRewardEvent($intakeUserId, $nutritionPlan.id));
-        System.out.println("User has made 4 or more days with planned intakes. User id: " + $number);
+        System.out.println("User has made 5 or more days with planned intakes. User id: " + $number);
 end
 
 

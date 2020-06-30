@@ -139,7 +139,12 @@ export default {
   computed: {
     planLocal: {
       get: function() {
-        return this.nutritionPlan;
+        var nutritionCopy = JSON.parse(JSON.stringify(this.nutritionPlan));
+        nutritionCopy.weeklyPlan.sort(function(a, b) {
+          return a.dayOfTheWeek - b.dayOfTheWeek;
+        });
+        return nutritionCopy;
+        
       },
       set: function(value) {
         this.$emit("planChange", value);

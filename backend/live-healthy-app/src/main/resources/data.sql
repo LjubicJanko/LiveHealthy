@@ -56,14 +56,14 @@ INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_pa
     31.97, 2377.06, 113, 75.96, 27.22, 1, "");
     -- password User123!
 --
--- INSERT INTO user(age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
---  body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp)
---     VALUES (23, 'nikolina1@gmail.com', true, 'Nikolina', 165, 'Laganin', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'nikolina01', 50, null, null,
---     18.4, 1255.00, 50, 56.4, 16);
---     -- password User123!
+INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
+ body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp)
+    VALUES (2, 23, 'nikolina1@gmail.com', true, 'Nikolina', 165, 'Laganin', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'nikolina01', 50, null, null,
+    18.4, 1255.00, 50, 56.4, 16);
+    -- password User123!
 
 INSERT INTO user_authority(user_id, authority_id) VALUES (1, 1);
--- INSERT INTO user_authority(user_id, authority_id) VALUES (2, 1);
+INSERT INTO user_authority(user_id, authority_id) VALUES (2, 1);
 
 
 INSERT INTO food(food_group, description, energy_kcal,  proteins, fats, carbs) VALUES
