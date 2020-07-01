@@ -26,9 +26,9 @@ end
 */
 /***************************Level 1******************************/
 rule "need to gain weight"
-    salience 2
+    salience 3
     when
-        $user: User(weight < idealBodyWeight, startingBmi < 25.0)
+        $user: User(weight < idealBodyWeight - 3, startingBmi < 25.0)
         and
         $planDto: PlanDto()
     then
@@ -40,11 +40,11 @@ end
 
 /***************************Level 2******************************/
 
+
 rule "need to gain weight extreme way" extends "need to gain weight"
+    salience 2
     when
         eval(bodyType == "ECTOMORPH")
-        and
-        eval($planDto.goal == "WEIGHT_GAIN")
     then
         $planDto.setGoal("EXTREME_WEIGHT_GAIN");
         update($planDto);
@@ -52,10 +52,9 @@ rule "need to gain weight extreme way" extends "need to gain weight"
 end
 
 rule "need to gain weight mild way" extends "need to gain weight"
+    salience 2
     when
         eval(bodyType == "MESOMORPH")
-        and
-        eval($planDto.goal == "WEIGHT_GAIN")
     then
         $planDto.setGoal("MILD_WEIGHT_GAIN");
         update($planDto);
@@ -63,10 +62,9 @@ rule "need to gain weight mild way" extends "need to gain weight"
 end
 
 rule "need to gain weight basic way" extends "need to gain weight"
+    salience 2
     when
         eval(bodyType == "ENDOMORPH")
-        and
-        eval($planDto.goal == "WEIGHT_GAIN")
     then
         $planDto.setGoal("MILD_WEIGHT_LOSS");
         update($planDto);
@@ -78,12 +76,16 @@ end
 /***************************Level 3 Male******************************/
 
 rule "need to gain with big fat level - teenager male" extends "need to gain weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
-        eval($user.age < 20) or eval($user.age == 20)
+        (eval($user.age < 20) or eval($user.age == 20))
         and
         eval($user.startingBfp < 8.5)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
@@ -91,48 +93,64 @@ rule "need to gain with big fat level - teenager male" extends "need to gain wei
 end
 
 rule "need to gain with big fat level - young male" extends "need to gain weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
-        eval($user.age > 20) or eval($user.age < 30) or eval($user.age == 30)
+        (eval($user.age > 20) and eval($user.age < 30) or eval($user.age == 30))
         and
         eval($user.startingBfp < 12.7)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
         System.out.println("You should gain weight with taking more fats");
 end
 rule "need to gain with big fat level - midAge male" extends "need to gain weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
-        eval($user.age > 30) or eval($user.age < 40) or eval($user.age == 40)
+        eval($user.age > 30) and eval($user.age < 40) or eval($user.age == 40)
         and
         eval($user.startingBfp < 15.3)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
         System.out.println("You should gain weight with taking more fats");
 end
 rule "need to gain with big fat level - old male" extends "need to gain weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
-        eval($user.age > 40) or eval($user.age < 50) or eval($user.age == 50)
+        eval($user.age > 40) and eval($user.age < 50) or eval($user.age == 50)
         and
         eval($user.startingBfp < 18.9)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
         System.out.println("You should gain weight with taking more fats");
 end
 rule "need to gain with big fat level - very old male" extends "need to gain weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
         eval($user.age > 50)
         and
         eval($user.startingBfp < 20.9)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
@@ -143,12 +161,15 @@ end
 /***************************Level 3 Female******************************/
 
 rule "need to gain with big fat level - teenager female" extends "need to gain weight extreme way"
+    salience 1
     when
         eval($user.sex == false)
         and
         eval($user.age < 20) or eval($user.age == 20)
         and
         eval($user.startingBfp < 17.7)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
@@ -156,48 +177,61 @@ rule "need to gain with big fat level - teenager female" extends "need to gain w
 end
 
 rule "need to gain with big fat level - young female" extends "need to gain weight extreme way"
+    salience 1
     when
         eval($user.sex == false)
         and
-        eval($user.age > 20) or eval($user.age < 30) or eval($user.age == 30)
+        eval($user.age > 20) and eval($user.age < 30) or eval($user.age == 30)
         and
         eval($user.startingBfp < 19.3)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
         System.out.println("You should gain weight with taking more fats");
+        System.out.println($user.isSex());
 end
 rule "need to gain with big fat level - midAge female" extends "need to gain weight extreme way"
+    salience 1
     when
         eval($user.sex == false)
         and
-        eval($user.age > 30) or eval($user.age < 40) or eval($user.age == 40)
+        eval($user.age > 30) and eval($user.age < 40) or eval($user.age == 40)
         and
         eval($user.startingBfp < 22.2)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
         System.out.println("You should gain weight with taking more fats");
 end
 rule "need to gain with big fat level - old female" extends "need to gain weight extreme way"
+    salience 1
     when
         eval($user.sex == false)
         and
-        eval($user.age > 40) or eval($user.age < 50) or eval($user.age == 50)
+        eval($user.age > 40) and eval($user.age < 50) or eval($user.age == 50)
         and
         eval($user.startingBfp < 25.2)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
         System.out.println("You should gain weight with taking more fats");
 end
 rule "need to gain with big fat level - very old female" extends "need to gain weight extreme way"
+    salience 1
     when
         eval($user.sex == false)
         and
         eval($user.age > 50)
         and
         eval($user.startingBfp < 26)
+        and
+        eval($planDto.fatLevelNeeded == 0)
     then
         $planDto.setFatLevelNeeded(1);
         update($planDto)
@@ -227,10 +261,10 @@ end
 /***************************Level 1******************************/
 
 rule "need to lose weight"
-    salience 2
+    salience 3
 
     when
-        $user: User(weight > idealBodyWeight, startingBmi > 25.0)
+        $user: User(weight > idealBodyWeight + 3, startingBmi > 25.0)
         and
         $planDto: PlanDto()
     then
@@ -244,10 +278,9 @@ end
 /***************************Level 2******************************/
 
 rule "need to lose weight extreme way" extends "need to lose weight"
+    salience 2
     when
         eval(bodyType == "ENDOMORPH")
-        and
-        eval($planDto.goal == "WEIGHT_LOSS")
     then
         $planDto.setGoal("EXTREME_WEIGHT_LOSS");
         update($planDto);
@@ -255,10 +288,9 @@ rule "need to lose weight extreme way" extends "need to lose weight"
 end
 
 rule "need to lose weight mild way" extends "need to lose weight"
+    salience 2
     when
         eval(bodyType == "MESOMORPH")
-        and
-        eval($planDto.goal == "WEIGHT_LOSS")
     then
         $planDto.setGoal("MILD_WEIGHT_LOSS");
         update($planDto);
@@ -266,10 +298,9 @@ rule "need to lose weight mild way" extends "need to lose weight"
 end
 
 rule "need to lose weight basic way" extends "need to lose weight"
+    salience 2
     when
         eval(bodyType == "ECTOMORPH")
-        and
-        eval($planDto.goal == "WEIGHT_LOSS")
     then
         $planDto.setGoal("WEIGHT_LOSS");
         update($planDto);
@@ -332,7 +363,8 @@ rule "need to lose with big fat loss - very old male" extends "need to lose weig
     when
         eval($user.sex == true)
         and
-        eval($user.age > 50) and
+        eval($user.age > 50)
+        and
         eval($user.startingBfp > 21.0)
     then
         $planDto.setFatLevelNeeded(-1);
