@@ -11,7 +11,7 @@
         </v-btn>
         <v-divider class="mx-4" vertical ></v-divider>
         <v-toolbar-title>
-            <v-icon large v-if="isUser == true">mdi-alpha-a-box-outline</v-icon>
+            <v-icon large v-if="isUser == true">mdi-alpha-l-box-outline</v-icon>
             <v-icon large v-if="isUser == true">mdi-alpha-h-box</v-icon>
             <v-icon large v-if="isUser == false">mdi-alpha-a-box</v-icon>
             <v-icon large v-if="isUser == false">mdi-alpha-d-box-outline</v-icon>

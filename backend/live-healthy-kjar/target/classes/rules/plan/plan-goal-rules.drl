@@ -162,6 +162,7 @@ end
 
 rule "need to gain with big fat level - teenager female" extends "need to gain weight extreme way"
     salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -178,6 +179,7 @@ end
 
 rule "need to gain with big fat level - young female" extends "need to gain weight extreme way"
     salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -194,6 +196,7 @@ rule "need to gain with big fat level - young female" extends "need to gain weig
 end
 rule "need to gain with big fat level - midAge female" extends "need to gain weight extreme way"
     salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -209,6 +212,7 @@ rule "need to gain with big fat level - midAge female" extends "need to gain wei
 end
 rule "need to gain with big fat level - old female" extends "need to gain weight extreme way"
     salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -224,6 +228,7 @@ rule "need to gain with big fat level - old female" extends "need to gain weight
 end
 rule "need to gain with big fat level - very old female" extends "need to gain weight extreme way"
     salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -311,6 +316,8 @@ end
 /***************************Level 3 Male******************************/
 
 rule "need to lose with big fat loss - teenager male" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
@@ -323,6 +330,8 @@ rule "need to lose with big fat loss - teenager male" extends "need to lose weig
         System.out.println("You should lose weight with taking less fats");
 end
 rule "need to lose with big fat loss - young male" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
@@ -335,6 +344,8 @@ rule "need to lose with big fat loss - young male" extends "need to lose weight 
         System.out.println("You should lose weight with taking less fats");
 end
 rule "need to lose with big fat loss - midAge male" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
@@ -348,6 +359,8 @@ rule "need to lose with big fat loss - midAge male" extends "need to lose weight
 end
 
 rule "need to lose with big fat loss - old male" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
@@ -360,6 +373,8 @@ rule "need to lose with big fat loss - old male" extends "need to lose weight ex
         System.out.println("You should lose weight with taking less fats");
 end
 rule "need to lose with big fat loss - very old male" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == true)
         and
@@ -375,6 +390,8 @@ end
 /***************************Level 3 Feale******************************/
 
 rule "need to lose with big fat loss - teenager female" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -387,6 +404,8 @@ rule "need to lose with big fat loss - teenager female" extends "need to lose we
         System.out.println("You should lose weight with taking less fats");
 end
 rule "need to lose with big fat loss - young female" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -399,6 +418,8 @@ rule "need to lose with big fat loss - young female" extends "need to lose weigh
         System.out.println("You should lose weight with taking less fats");
 end
 rule "need to lose with big fat loss - midAge female" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -412,6 +433,8 @@ rule "need to lose with big fat loss - midAge female" extends "need to lose weig
 end
 
 rule "need to lose with big fat loss - old female" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == false)
         and
@@ -424,6 +447,8 @@ rule "need to lose with big fat loss - old female" extends "need to lose weight 
         System.out.println("You should lose weight with taking less fats");
 end
 rule "need to lose with big fat loss - very old female" extends "need to lose weight extreme way"
+    salience 1
+    no-loop
     when
         eval($user.sex == false)
         and

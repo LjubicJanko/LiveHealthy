@@ -49,24 +49,19 @@ VALUES
     (1, "Long and narrow", "Carry a bit of extra fat", "Small", "Wider than my hips",
      "Gain weight easily, but find it hard to lose");
 
-insert into body_description
-    (id, body_look, body_tendations, forearms, shoulders, weight_tendations)
-VALUES
-    (2, "Long and narrow", "Carry a bit of extra fat", "Small", "Wider than my hips",
-     "Gain weight easily, but find it hard to lose");
 
 
 
 INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
  body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp, body_description_id, determinated_body_type)
-    VALUES (1, 22, 'ljubicjanko1@gmail.com', true, 'Janko', 188, 'Ljubic', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'janko1janko01', 113, 1, null,
-    31.97, 2377.06, 113, 75.96, 27.22, 1, "");
+    VALUES (1, 22, 'ljubicjanko1@gmail.com', true, 'Janko', 188, 'Ljubic', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'janko01', 113, null, null,
+    31.97, 2377.06, 113, 75.96, 27.22, null, null);
     -- password User123!
 --
 INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
- body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp)
-    VALUES (2, 23, 'nikolina1@gmail.com', true, 'Nikolina', 165, 'Laganin', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'nikolina01', 50, 2, null,
-    18.4, 1255.00, 50, 56.4, 16);
+ body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp, body_description_id, determinated_body_type)
+    VALUES (2, 23, 'nikolina1@gmail.com', true, 'Nikolina', 165, 'Laganin', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'user', 50, null, null,
+    18.4, 1255.00, 50, 56.4, 16, null, null);
     -- password User123!
 
 INSERT INTO user_authority(user_id, authority_id) VALUES (1, 1);

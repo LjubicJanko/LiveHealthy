@@ -105,37 +105,4 @@ public class CreatePlanTest {
         assertEquals("EXTREME_WEIGHT_GAIN", planDto.getGoal());
     }
 
-//
-//    @Test
-//    public void extreemeWeightLossNoFatTest() {
-//        KieServices ks = KieServices.Factory.get();
-//        KieContainer kContainer = ks
-//                .newKieContainer(ks.newReleaseId("live.healthy.kjar", "live-healthy-kjar", "0.0.1-SNAPSHOT"));
-//
-//        KieSession kieSession = kContainer.newKieSession("creatingPlan");
-//
-//        User user = new User();
-//        user.setWeight(87.0);
-//        user.setIdealBodyWeight(50.0);
-//        user.setStartingBmi(29.0);
-//        user.setSex(true);
-//        user.setAge(18);
-//        user.setStartingBfp(9.0);
-//
-//        BodyType bodyType = new BodyType();
-//        bodyType.setBodyTypeEnum(BodyTypeEnum.ENDOMORPH);
-//
-//        PlanDto planDto = new PlanDto();
-//        planDto.setGoal("");
-//
-//        kieSession.setGlobal("bodyType", BodyTypeEnum.ENDOMORPH.name());
-//
-//        kieSession.insert(user);
-//        kieSession.insert(planDto);
-//
-//        int numOfRulesFired = kieSession.fireAllRules();
-//
-//        assertEquals(3, numOfRulesFired);
-//        assertEquals("EXTREME_WEIGHT_LOSS", planDto.getGoal());
-//    }
 }
