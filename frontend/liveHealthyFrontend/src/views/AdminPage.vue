@@ -1,5 +1,5 @@
 <template>
-  <v-content id="admin">
+  <v-content id="admin" v-if="isLoggedIn">
     <v-container v-if="!ruleCreated">
       <v-card>
         <v-card-title>Define the rule</v-card-title>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-// import store from "@/store";
+import store from "@/store";
 import DynamicService from "../api-services/dynamic.service.js";
 import ShowRule from "../components/ShowRule";
 
@@ -112,7 +112,15 @@ export default {
     ],
     selected: []
   }),
-  computed: {},
+  computed: {
+    isLoggedIn() {
+      if (store.state.userLoggedIn) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   created() {
     this.ruleCreated = false;
   },

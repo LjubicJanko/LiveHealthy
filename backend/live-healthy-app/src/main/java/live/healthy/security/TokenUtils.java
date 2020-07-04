@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import live.healthy.common.TimeProvider;
+import live.healthy.facts.model.user.AbstractUser;
 import live.healthy.facts.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -125,7 +126,7 @@ public class TokenUtils {
 	// Functions for validating JWT token data
 
 	public Boolean validateToken(String token, UserDetails userDetails) {
-		User user = (User) userDetails;
+		AbstractUser user = (AbstractUser) userDetails;
 		final String username = getUsernameFromToken(token);
 		final Date created = getIssuedAtDateFromToken(token);
 		

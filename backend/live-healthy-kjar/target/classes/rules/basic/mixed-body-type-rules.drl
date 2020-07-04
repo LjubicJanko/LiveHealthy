@@ -10,9 +10,13 @@ import live.healthy.facts.model.body_desc_enums.BodyTendations;
 import live.healthy.facts.model.body_desc_enums.Forearms;
 import live.healthy.facts.model.body_desc_enums.WeightTendations;
 
+
+global Integer ecto_meso;
+global Integer meso_endo;
+
 rule "Ectomorph - mesomorph"
+    salience ecto_meso
     activation-group "body-bodyTypeEnum"
-    salience 1
     when
         $bi: BodyInfoDto(shoulders in (Shoulders.NARROWER_THAN_HIPS.value, Shoulders.SAME_AS_HIPS.value),
                         forearms in (Forearms.SMALL.value, Forearms.AVERAGE.value),
@@ -28,8 +32,8 @@ rule "Ectomorph - mesomorph"
 end
 
 rule "Mesomorph - Endomorph"
+    salience meso_endo
     activation-group "body-bodyTypeEnum"
-    salience 2
     when
         $bi: BodyInfoDto(shoulders in (Shoulders.WIDER_THAN_HIPS.value, Shoulders.SAME_AS_HIPS.value),
                         forearms in (Forearms.BIG.value, Forearms.AVERAGE.value),

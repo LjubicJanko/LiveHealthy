@@ -1,10 +1,8 @@
 package live.healthy.service.dynamic;
 
 import live.healthy.facts.dto.CreateBodyTypeRuleDto;
-import live.healthy.facts.dto.CreateRuleDto;
 import live.healthy.facts.model.BodyType;
 import live.healthy.facts.model.BodyTypeEnum;
-import live.healthy.facts.model.user.BodyDescription;
 import live.healthy.facts.model.user.User;
 import live.healthy.repository.user.BodyTypeRepository;
 import live.healthy.repository.user.UserRepository;
@@ -47,15 +45,19 @@ public class DynamicServiceImpl implements DynamicService {
 
         List<User> allUsers = userRepository.findAll();
         for (User user : allUsers) {
-            ksession.insert(user);
+            if (user.getBodyDescription() != null) {
+                ksession.insert(user);
+            }
         }
 
         ksession.fireAllRules();
 
         for (User user : allUsers) {
-            if(!user.getDeterminatedBodyType().equals("")) {
-                user.setBodyType(extractBodyType(BodyTypeEnum.valueOf(user.getDeterminatedBodyType())));
-                userRepository.save(user);
+            if (user.getDeterminatedBodyType() != null) {
+                if (!user.getDeterminatedBodyType().equals("")) {
+                    user.setBodyType(extractBodyType(BodyTypeEnum.valueOf(user.getDeterminatedBodyType())));
+                    userRepository.save(user);
+                }
             }
         }
 
@@ -64,7 +66,7 @@ public class DynamicServiceImpl implements DynamicService {
 
     private BodyType extractBodyType(BodyTypeEnum bodyTypeEnum) {
         List<BodyType> bodyTypes = bodyTypeRepository.findAll();
-        for (BodyType bodyType: bodyTypes) {
+        for (BodyType bodyType : bodyTypes) {
             if (bodyType.getBodyTypeEnum().equals(bodyTypeEnum.getValue())) {
                 return bodyType;
             }

@@ -49,6 +49,13 @@ VALUES
     (1, "Long and narrow", "Carry a bit of extra fat", "Small", "Wider than my hips",
      "Gain weight easily, but find it hard to lose");
 
+insert into body_description
+    (id, body_look, body_tendations, forearms, shoulders, weight_tendations)
+VALUES
+    (2, "Long and narrow", "Carry a bit of extra fat", "Small", "Wider than my hips",
+     "Gain weight easily, but find it hard to lose");
+
+
 
 INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
  body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp, body_description_id, determinated_body_type)
@@ -58,7 +65,7 @@ INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_pa
 --
 INSERT INTO user(id, age, email, enabled, first_name, height, last_name, last_password_reset_date, password, sex, username, weight,
  body_type_id, nutrition_plan_id, starting_bmi, starting_bmr, starting_weight, ideal_body_weight, starting_bfp)
-    VALUES (2, 23, 'nikolina1@gmail.com', true, 'Nikolina', 165, 'Laganin', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'nikolina01', 50, null, null,
+    VALUES (2, 23, 'nikolina1@gmail.com', true, 'Nikolina', 165, 'Laganin', '2020-01-01 01:01:01', '$2a$10$kmZD4NcJRD4wIE2tmudhAuZK05jTGMpTKBeEPQ8RNW52Fe6EeZMya', true, 'nikolina01', 50, 2, null,
     18.4, 1255.00, 50, 56.4, 16);
     -- password User123!
 

@@ -1,9 +1,32 @@
 
-Z
-java:S1854">Remove this useless assignment to local variable "kieSession".(ÊÑÎ8ƒ‘¡®§.
-O
-java:S1135"2Complete the task associated to this TODO comment.(Þ÷äÏ8ƒ‘¡®§.
-Z	java:S106%"9Replace this use of System.out or System.err by a logger.(žš°˜ÿÿÿÿÿ8ƒ‘¡®§.
-Z	java:S106("9Replace this use of System.out or System.err by a logger.(žš°˜ÿÿÿÿÿ8ƒ‘¡®§.
-K
-java:S1481"/Remove this unused "kieSession" local variable.(ÊÑÎ8ƒ‘¡®§.
+Y	java:S125ƒ"<This block of commented-out lines of code should be removed.(‚âËï8¯Ðï¬°.
+]	java:S125c"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8â®Ù¬°.
+^	java:S125ª"<This block of commented-out lines of code should be removed.(úòÓ½ÿÿÿÿÿ8¯Ðï¬°.
+Y	java:S125€"<This block of commented-out lines of code should be removed.(ì‰Ü¦8¯Ðï¬°.
+U	java:S106h"9Replace this use of System.out or System.err by a logger.(ÚŸ¢¥8¯Ðï¬°.
+^	java:S125˜"<This block of commented-out lines of code should be removed.(¥äŒ½þÿÿÿÿ8¯Ðï¬°.
+^	java:S125Â"<This block of commented-out lines of code should be removed.(¯Ó»çþÿÿÿÿ8¯Ðï¬°.
+Z	java:S106G"9Replace this use of System.out or System.err by a logger.(úœãöøÿÿÿÿ8¯Ðï¬°.
+^	java:S125‹"<This block of commented-out lines of code should be removed.(’‡››üÿÿÿÿ8¯Ðï¬°.
+Y	java:S125Å"<This block of commented-out lines of code should be removed.(²àºà8¯Ðï¬°.
+^	java:S125¶"<This block of commented-out lines of code should be removed.(Œâ§‰ýÿÿÿÿ8¯Ðï¬°.
+Y	java:S125¢"<This block of commented-out lines of code should be removed.(ë¿ŠŒ8¯Ðï¬°.
+o
+java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(â«Î8×ÌÛ¬°.
+L
+java:S1874m"/Remove this use of "retract"; it is deprecated.(Ó Ä‡8¯Ðï¬°.
+]	java:S125`"<This block of commented-out lines of code should be removed.(’‡››üÿÿÿÿ8·‘þ«°.
+d
+java:S1854<"BRemove this useless assignment to local variable "dailyNutrition".(Ü£Ïæûÿÿÿÿ8¯Ðï¬°.
+U	java:S106t"9Replace this use of System.out or System.err by a logger.(ïÝÞ˜8³³±²°.
+X	java:S125{"<This block of commented-out lines of code should be removed.(ôº…8¯Ðï¬°.
+X	java:S125½"<This block of commented-out lines of code should be removed.(ª¯°q8¥õ¶©°.
+F
+java:S1940l")Use the opposite operator ("!=") instead.(Ô©Žƒ8¯Ðï¬°.
+]	java:S125}"<This block of commented-out lines of code should be removed.(¢û±üüÿÿÿÿ8¯Ðï¬°.
+^	java:S125"<This block of commented-out lines of code should be removed.(’‡››üÿÿÿÿ8¯Ðï¬°.
+Y	java:S125¦"<This block of commented-out lines of code should be removed.(‡è™ö8¯Ðï¬°.
+I
+java:S1612#",Replace this lambda with a method reference.(òòœ8¯Ðï¬°.
+U	java:S106p"9Replace this use of System.out or System.err by a logger.(Ä‘©¦8é‡±°.
+Y	java:S125‡"<This block of commented-out lines of code should be removed.(©†ôî8¯Ðï¬°.

@@ -11,8 +11,14 @@ import live.healthy.facts.model.body_desc_enums.BodyTendations;
 import live.healthy.facts.model.body_desc_enums.Forearms;
 import live.healthy.facts.model.body_desc_enums.WeightTendations;
 
+import java.lang.Math.*;
+
+global Integer ecto;
+global Integer meso;
+global Integer endo;
+
 rule "Ectomorph body"
-    salience 3
+    salience ecto
     activation-group "body-bodyTypeEnum"
     when
         $bi: BodyInfoDto(shoulders == Shoulders.NARROWER_THAN_HIPS.value,
@@ -28,7 +34,7 @@ rule "Ectomorph body"
 end
 
 rule "Mesomorph body"
-    salience 4
+    salience meso
     activation-group "body-bodyTypeEnum"
     when
         $bi: BodyInfoDto(shoulders == Shoulders.SAME_AS_HIPS.value,
@@ -44,7 +50,7 @@ rule "Mesomorph body"
 end
 
 rule "Endomorph body"
-    salience 5
+    salience endo
     activation-group "body-bodyTypeEnum"
     when
         $bi: BodyInfoDto(shoulders == Shoulders.WIDER_THAN_HIPS.value,
